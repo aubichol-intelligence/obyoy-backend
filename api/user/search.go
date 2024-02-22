@@ -3,12 +3,12 @@ package user
 import (
 	"net/http"
 
-	"horkora-backend/api/middleware"
-	"horkora-backend/api/routeutils"
-	"horkora-backend/apipattern"
-	"horkora-backend/errors"
-	"horkora-backend/user"
-	"horkora-backend/user/dto"
+	"obyoy-backend/api/middleware"
+	"obyoy-backend/api/routeutils"
+	"obyoy-backend/apipattern"
+	"obyoy-backend/errors"
+	"obyoy-backend/user"
+	"obyoy-backend/user/dto"
 
 	"github.com/sirupsen/logrus"
 )

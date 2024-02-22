@@ -8,17 +8,17 @@ import (
 	//"io/ioutil"
 	"net/http"
 
-	//"horkora-backend/api/routeutils"
+	//"obyoy-backend/api/routeutils"
 
 	//firebase "firebase.google.com/go"
 	//"firebase.google.com/go/messaging"
 	//"github.com/go-chi/chi"
 	//"github.com/sirupsen/logrus"
 
-	//	"horkora-backend/chat/dto"
-	storetoken "horkora-backend/store/token"
+	//	"obyoy-backend/chat/dto"
+	storetoken "obyoy-backend/store/token"
 
-	"horkora-backend/user"
+	"obyoy-backend/user"
 
 	"go.uber.org/dig"
 	//"google.golang.org/api/option"

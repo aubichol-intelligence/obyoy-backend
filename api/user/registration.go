@@ -3,11 +3,11 @@ package user
 import (
 	"net/http"
 
-	"horkora-backend/api/routeutils"
-	"horkora-backend/apipattern"
+	"obyoy-backend/api/routeutils"
+	"obyoy-backend/apipattern"
 
-	"horkora-backend/user"
-	"horkora-backend/user/dto"
+	"obyoy-backend/user"
+	"obyoy-backend/user/dto"
 
 	"github.com/sirupsen/logrus"
 )

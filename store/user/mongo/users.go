@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"horkora-backend/model"
-	storeuser "horkora-backend/store/user"
-	mongoModel "horkora-backend/store/user/mongo/model"
+	"obyoy-backend/model"
+	storeuser "obyoy-backend/store/user"
+	mongoModel "obyoy-backend/store/user/mongo/model"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"

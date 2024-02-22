@@ -7,9 +7,9 @@ import (
 	"sync"
 	"time"
 
-	"horkora-backend/config"
-	"horkora-backend/queue"
-	pkgsync "horkora-backend/sync"
+	"obyoy-backend/config"
+	"obyoy-backend/queue"
+	pkgsync "obyoy-backend/sync"
 
 	"github.com/gorilla/websocket"
 	"github.com/sirupsen/logrus"

@@ -3,8 +3,8 @@ package redis
 import (
 	"fmt"
 
-	"horkora-backend/cache"
-	"horkora-backend/model"
+	"obyoy-backend/cache"
+	"obyoy-backend/model"
 
 	"github.com/go-redis/redis"
 	"github.com/google/uuid"

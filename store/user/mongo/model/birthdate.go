@@ -1,7 +1,7 @@
 package model
 
 import (
-	"horkora-backend/model"
+	"obyoy-backend/model"
 )
 
 //BirthDate defines mongodb data type for BirthDate

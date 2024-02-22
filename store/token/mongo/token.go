@@ -1,6 +1,6 @@
 package token
 
-import "horkora-backend/model"
+import "obyoy-backend/model"
 
 // Token wraps token's store functionality
 type Token interface {
@@ -22,10 +22,10 @@ import (
 	"context"
 	"fmt"
 
-	"horkora-backend/model"
-	storetoken "horkora-backend/store/token"
+	"obyoy-backend/model"
+	storetoken "obyoy-backend/store/token"
 
-	mongoModel "horkora-backend/store/token/mongo/model"
+	mongoModel "obyoy-backend/store/token/mongo/model"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"

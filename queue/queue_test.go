@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"horkora-backend/queue"
+	"obyoy-backend/queue"
 )
 
 func TestQueue(t *testing.T) {

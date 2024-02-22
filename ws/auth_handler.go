@@ -3,7 +3,7 @@ package ws
 import (
 	"errors"
 
-	"horkora-backend/user"
+	"obyoy-backend/user"
 
 	"github.com/sirupsen/logrus"
 )

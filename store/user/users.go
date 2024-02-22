@@ -1,6 +1,6 @@
 package user
 
-import "horkora-backend/model"
+import "obyoy-backend/model"
 
 // Users wraps user's store functionality
 type Users interface {

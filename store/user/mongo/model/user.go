@@ -1,7 +1,7 @@
 package model
 
 import (
-	"horkora-backend/model"
+	"obyoy-backend/model"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"

@@ -1,6 +1,6 @@
 package cache
 
-import "horkora-backend/model"
+import "obyoy-backend/model"
 
 // Session wraps methods to handle session
 type Session interface {

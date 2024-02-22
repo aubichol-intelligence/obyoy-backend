@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"time"
 
-	"horkora-backend/errors"
+	"obyoy-backend/errors"
 
-	"horkora-backend/model"
-	storetoken "horkora-backend/store/token"
-	"horkora-backend/token/dto"
+	"obyoy-backend/model"
+	storetoken "obyoy-backend/store/token"
+	"obyoy-backend/token/dto"
 
 	"github.com/sirupsen/logrus"
 	validator "gopkg.in/go-playground/validator.v9"

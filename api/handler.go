@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"horkora-backend/api/routeutils"
+	"obyoy-backend/api/routeutils"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"

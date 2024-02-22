@@ -1,6 +1,6 @@
 package token
 
-import "horkora-backend/model"
+import "obyoy-backend/model"
 
 // Token wraps token's store functionality
 type Token interface {

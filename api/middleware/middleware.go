@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	"horkora-backend/api/routeutils"
-	"horkora-backend/user"
+	"obyoy-backend/api/routeutils"
+	"obyoy-backend/user"
 
 	"github.com/sirupsen/logrus"
 )
