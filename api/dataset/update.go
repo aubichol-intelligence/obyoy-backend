@@ -1,4 +1,4 @@
-package menuitem
+package dataset
 
 import (
 	"net/http"
@@ -6,8 +6,8 @@ import (
 	"horkora-backend/api/middleware"
 	"horkora-backend/api/routeutils"
 	"horkora-backend/apipattern"
-	"horkora-backend/menuitem"
-	"horkora-backend/menuitem/dto"
+	"horkora-backend/dataset"
+	"horkora-backend/dataset/dto"
 
 	"github.com/go-chi/chi"
 	"github.com/sirupsen/logrus"
@@ -15,14 +15,14 @@ import (
 )
 
 type readHandler struct {
-	reader menuitem.Reader
+	reader dataset.Reader
 }
 
 func (read *readHandler) decodeURL(
 	r *http.Request,
-) (menuitemID string) {
+) (datasetID string) {
 	// Get user id from url
-	menuitemID = chi.URLParam(r, "id")
+	datasetID = chi.URLParam(r, "id")
 	return
 }
 
@@ -69,7 +69,7 @@ func (read *readHandler) handleRead(
 ) {
 
 	req := dto.ReadReq{}
-	req.MenuItemID = read.decodeURL(r)
+	req.datasetID = read.decodeURL(r)
 
 	req.UserID = read.decodeContext(r)
 
@@ -97,11 +97,11 @@ func (read *readHandler) ServeHTTP(
 // ReadRouteParams lists all the parameters for ReadRoute
 type ReadRouteParams struct {
 	dig.In
-	Reader     menuitem.Reader
+	Reader     dataset.Reader
 	Middleware *middleware.Auth
 }
 
-// ReadRoute provides a route to get a menu item
+// ReadRoute provides a route to get a dataset item
 func ReadRoute(params ReadRouteParams) *routeutils.Route {
 
 	handler := readHandler{
@@ -110,12 +110,12 @@ func ReadRoute(params ReadRouteParams) *routeutils.Route {
 
 	return &routeutils.Route{
 		Method:  http.MethodGet,
-		Pattern: apipattern.MenuItemRead,
+		Pattern: apipattern.datasetRead,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
-(base) nelson@NELSONs-MacBook-Pro menuitem % cat update.go
-package menuitem
+(base) nelson@NELSONs-MacBook-Pro dataset % cat update.go
+package dataset
 
 import (
 	"io"
@@ -124,16 +124,16 @@ import (
 	"horkora-backend/api/middleware"
 	"horkora-backend/api/routeutils"
 	"horkora-backend/apipattern"
-	"horkora-backend/menuitem"
-	"horkora-backend/menuitem/dto"
+	"horkora-backend/dataset"
+	"horkora-backend/dataset/dto"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 )
 
-// updateHandler holds menu item update handler
+// updateHandler holds dataset item update handler
 type updateHandler struct {
-	update menuitem.Updater
+	update dataset.Updater
 }
 
 func (uh *updateHandler) decodeBody(
@@ -188,21 +188,21 @@ func (ch *updateHandler) ServeHTTP(
 ) {
 	defer r.Body.Close()
 
-	menuitemDat := dto.Update{}
-	menuitemDat, err := ch.decodeBody(r.Body)
+	datasetDat := dto.Update{}
+	datasetDat, err := ch.decodeBody(r.Body)
 
 	if err != nil {
-		message := "Unable to decode menuitem update error: "
+		message := "Unable to decode dataset update error: "
 		ch.handleError(w, err, message)
 		return
 	}
 
-	menuitemDat.UserID = ch.decodeContext(r)
+	datasetDat.UserID = ch.decodeContext(r)
 
-	data, err := ch.askController(&menuitemDat)
+	data, err := ch.askController(&datasetDat)
 
 	if err != nil {
-		message := "Unable to update menuitem error: "
+		message := "Unable to update dataset error: "
 		ch.handleError(w, err, message)
 		return
 	}
@@ -210,19 +210,19 @@ func (ch *updateHandler) ServeHTTP(
 	ch.responseSuccess(w, data)
 }
 
-// UpdateParams provide parameters for menuitem update handler
+// UpdateParams provide parameters for dataset update handler
 type UpdateParams struct {
 	dig.In
-	Update     menuitem.Updater
+	Update     dataset.Updater
 	Middleware *middleware.Auth
 }
 
-// UpdateRoute provides a route that updates a menuitem
+// UpdateRoute provides a route that updates a dataset
 func UpdateRoute(params UpdateParams) *routeutils.Route {
 	handler := updateHandler{params.Update}
 	return &routeutils.Route{
 		Method:  http.MethodPost,
-		Pattern: apipattern.MenuItemUpdate,
+		Pattern: apipattern.datasetUpdate,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
