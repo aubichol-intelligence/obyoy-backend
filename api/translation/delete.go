@@ -4,11 +4,11 @@ import (
 	"io"
 	"net/http"
 
-	"horkora-backend/api/middleware"
-	"horkora-backend/api/routeutils"
-	"horkora-backend/apipattern"
-	"horkora-backend/translation"
-	"horkora-backend/translation/dto"
+	"obyoy-backend/api/middleware"
+	"obyoy-backend/api/routeutils"
+	"obyoy-backend/apipattern"
+	"obyoy-backend/translation"
+	"obyoy-backend/translation/dto"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
