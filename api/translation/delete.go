@@ -1,4 +1,4 @@
-package menuitem
+package translation
 
 import (
 	"io"
@@ -7,25 +7,25 @@ import (
 	"horkora-backend/api/middleware"
 	"horkora-backend/api/routeutils"
 	"horkora-backend/apipattern"
-	"horkora-backend/menuitem"
-	"horkora-backend/menuitem/dto"
+	"horkora-backend/translation"
+	"horkora-backend/translation/dto"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 )
 
-// deleteHandler holds menu item update handler
+// deleteHandler holds translation item update handler
 type deleteHandler struct {
-	delete menuitem.Deleter
+	delete translation.Deleter
 }
 
 func (dh *deleteHandler) decodeBody(
 	body io.ReadCloser,
 ) (
-	menuitem dto.Delete,
+	translation dto.Delete,
 	err error,
 ) {
-	err = menuitem.FromReader(body)
+	err = translation.FromReader(body)
 	return
 }
 
@@ -71,21 +71,21 @@ func (dh *deleteHandler) ServeHTTP(
 ) {
 	defer r.Body.Close()
 
-	menuitem := dto.Delete{}
-	menuitem, err := dh.decodeBody(r.Body)
+	translation := dto.Delete{}
+	translation, err := dh.decodeBody(r.Body)
 
 	if err != nil {
-		message := "Unable to decode menu item delete error: "
+		message := "Unable to decode translation item delete error: "
 		dh.handleError(w, err, message)
 		return
 	}
 
-	menuitem.UserID = dh.decodeContext(r)
+	translation.UserID = dh.decodeContext(r)
 
-	data, err := dh.askController(&menuitem)
+	data, err := dh.askController(&translation)
 
 	if err != nil {
-		message := "Unable to delete menu item error: "
+		message := "Unable to delete translation item error: "
 		dh.handleError(w, err, message)
 		return
 	}
@@ -93,19 +93,19 @@ func (dh *deleteHandler) ServeHTTP(
 	dh.responseSuccess(w, data)
 }
 
-// DeleteParams provide parameters for menuitem delete handler
+// DeleteParams provide parameters for translation delete handler
 type DeleteParams struct {
 	dig.In
-	Delete     menuitem.Deleter
+	Delete     translation.Deleter
 	Middleware *middleware.Auth
 }
 
-// DeleteRoute provides a route that deletes menuitem
+// DeleteRoute provides a route that deletes translation
 func DeleteRoute(params DeleteParams) *routeutils.Route {
 	handler := deleteHandler{params.Delete}
 	return &routeutils.Route{
 		Method:  http.MethodPost,
-		Pattern: apipattern.MenuItemDelete,
+		Pattern: apipattern.translationDelete,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
