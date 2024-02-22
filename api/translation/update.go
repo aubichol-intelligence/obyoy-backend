@@ -1,4 +1,4 @@
-package menuitem
+package translation
 
 import (
 	"net/http"
@@ -6,8 +6,8 @@ import (
 	"horkora-backend/api/middleware"
 	"horkora-backend/api/routeutils"
 	"horkora-backend/apipattern"
-	"horkora-backend/menuitem"
-	"horkora-backend/menuitem/dto"
+	"horkora-backend/translation"
+	"horkora-backend/translation/dto"
 
 	"github.com/go-chi/chi"
 	"github.com/sirupsen/logrus"
@@ -15,14 +15,14 @@ import (
 )
 
 type readHandler struct {
-	reader menuitem.Reader
+	reader translation.Reader
 }
 
 func (read *readHandler) decodeURL(
 	r *http.Request,
-) (menuitemID string) {
+) (translationID string) {
 	// Get user id from url
-	menuitemID = chi.URLParam(r, "id")
+	translationID = chi.URLParam(r, "id")
 	return
 }
 
@@ -69,7 +69,7 @@ func (read *readHandler) handleRead(
 ) {
 
 	req := dto.ReadReq{}
-	req.MenuItemID = read.decodeURL(r)
+	req.translationID = read.decodeURL(r)
 
 	req.UserID = read.decodeContext(r)
 
@@ -97,11 +97,11 @@ func (read *readHandler) ServeHTTP(
 // ReadRouteParams lists all the parameters for ReadRoute
 type ReadRouteParams struct {
 	dig.In
-	Reader     menuitem.Reader
+	Reader     translation.Reader
 	Middleware *middleware.Auth
 }
 
-// ReadRoute provides a route to get a menu item
+// ReadRoute provides a route to get a translation item
 func ReadRoute(params ReadRouteParams) *routeutils.Route {
 
 	handler := readHandler{
@@ -110,12 +110,12 @@ func ReadRoute(params ReadRouteParams) *routeutils.Route {
 
 	return &routeutils.Route{
 		Method:  http.MethodGet,
-		Pattern: apipattern.MenuItemRead,
+		Pattern: apipattern.translationRead,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
-(base) nelson@NELSONs-MacBook-Pro menuitem % cat update.go
-package menuitem
+(base) nelson@NELSONs-MacBook-Pro translation % cat update.go
+package translation
 
 import (
 	"io"
@@ -124,16 +124,16 @@ import (
 	"horkora-backend/api/middleware"
 	"horkora-backend/api/routeutils"
 	"horkora-backend/apipattern"
-	"horkora-backend/menuitem"
-	"horkora-backend/menuitem/dto"
+	"horkora-backend/translation"
+	"horkora-backend/translation/dto"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 )
 
-// updateHandler holds menu item update handler
+// updateHandler holds translation item update handler
 type updateHandler struct {
-	update menuitem.Updater
+	update translation.Updater
 }
 
 func (uh *updateHandler) decodeBody(
@@ -188,21 +188,21 @@ func (ch *updateHandler) ServeHTTP(
 ) {
 	defer r.Body.Close()
 
-	menuitemDat := dto.Update{}
-	menuitemDat, err := ch.decodeBody(r.Body)
+	translationDat := dto.Update{}
+	translationDat, err := ch.decodeBody(r.Body)
 
 	if err != nil {
-		message := "Unable to decode menuitem update error: "
+		message := "Unable to decode translation update error: "
 		ch.handleError(w, err, message)
 		return
 	}
 
-	menuitemDat.UserID = ch.decodeContext(r)
+	translationDat.UserID = ch.decodeContext(r)
 
-	data, err := ch.askController(&menuitemDat)
+	data, err := ch.askController(&translationDat)
 
 	if err != nil {
-		message := "Unable to update menuitem error: "
+		message := "Unable to update translation error: "
 		ch.handleError(w, err, message)
 		return
 	}
@@ -210,19 +210,19 @@ func (ch *updateHandler) ServeHTTP(
 	ch.responseSuccess(w, data)
 }
 
-// UpdateParams provide parameters for menuitem update handler
+// UpdateParams provide parameters for translation update handler
 type UpdateParams struct {
 	dig.In
-	Update     menuitem.Updater
+	Update     translation.Updater
 	Middleware *middleware.Auth
 }
 
-// UpdateRoute provides a route that updates a menuitem
+// UpdateRoute provides a route that updates a translation
 func UpdateRoute(params UpdateParams) *routeutils.Route {
 	handler := updateHandler{params.Update}
 	return &routeutils.Route{
 		Method:  http.MethodPost,
-		Pattern: apipattern.MenuItemUpdate,
+		Pattern: apipattern.translationUpdate,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
