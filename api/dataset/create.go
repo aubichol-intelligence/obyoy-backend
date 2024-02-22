@@ -1,4 +1,4 @@
-package menuitem
+package dataset
 
 import (
 	"io"
@@ -7,25 +7,25 @@ import (
 	"horkora-backend/api/middleware"
 	"horkora-backend/api/routeutils"
 	"horkora-backend/apipattern"
-	"horkora-backend/menuitem"
-	"horkora-backend/menuitem/dto"
+	"horkora-backend/dataset"
+	"horkora-backend/dataset/dto"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 )
 
-// createHandler holds handler for creating menu items
+// createHandler holds handler for creating dataset items
 type createHandler struct {
-	create menuitem.Creater
+	create dataset.Creater
 }
 
 func (ch *createHandler) decodeBody(
 	body io.ReadCloser,
 ) (
-	menuitem dto.MenuItem,
+	dataset dto.dataset,
 	err error,
 ) {
-	err = menuitem.FromReader(body)
+	err = dataset.FromReader(body)
 	return
 }
 
@@ -39,12 +39,12 @@ func (ch *createHandler) handleError(
 }
 
 func (ch *createHandler) askController(
-	menuitem *dto.MenuItem,
+	dataset *dto.dataset,
 ) (
 	data *dto.CreateResponse,
 	err error,
 ) {
-	data, err = ch.create.Create(menuitem)
+	data, err = ch.create.Create(dataset)
 	return
 }
 
@@ -73,7 +73,7 @@ func (ch *createHandler) ServeHTTP(
 ) {
 	defer r.Body.Close()
 
-	menuitemDat, err := ch.decodeBody(r.Body)
+	datasetDat, err := ch.decodeBody(r.Body)
 
 	if err != nil {
 		message := "Unable to decode error: "
@@ -81,11 +81,11 @@ func (ch *createHandler) ServeHTTP(
 		return
 	}
 
-	menuitemDat.UserID = ch.decodeContext(r)
-	data, err := ch.askController(&menuitemDat)
+	datasetDat.UserID = ch.decodeContext(r)
+	data, err := ch.askController(&datasetDat)
 
 	if err != nil {
-		message := "Unable to create menuitem error: "
+		message := "Unable to create dataset error: "
 		ch.handleError(w, err, message)
 		return
 	}
@@ -96,16 +96,16 @@ func (ch *createHandler) ServeHTTP(
 // CreateParams provide parameters for CreateRoute
 type CreateParams struct {
 	dig.In
-	Create     menuitem.Creater
+	Create     dataset.Creater
 	Middleware *middleware.Auth
 }
 
-// CreateRoute provides a route that lets to take menuitems
+// CreateRoute provides a route that lets to take datasets
 func CreateRoute(params CreateParams) *routeutils.Route {
 	handler := createHandler{params.Create}
 	return &routeutils.Route{
 		Method:  http.MethodPost,
-		Pattern: apipattern.MenuItemCreate,
+		Pattern: apipattern.datasetCreate,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
