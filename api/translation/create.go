@@ -1,4 +1,4 @@
-package menuitem
+package translation
 
 import (
 	"io"
@@ -7,25 +7,25 @@ import (
 	"horkora-backend/api/middleware"
 	"horkora-backend/api/routeutils"
 	"horkora-backend/apipattern"
-	"horkora-backend/menuitem"
-	"horkora-backend/menuitem/dto"
+	"horkora-backend/translation"
+	"horkora-backend/translation/dto"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 )
 
-// createHandler holds handler for creating menu items
+// createHandler holds handler for creating translation items
 type createHandler struct {
-	create menuitem.Creater
+	create translation.Creater
 }
 
 func (ch *createHandler) decodeBody(
 	body io.ReadCloser,
 ) (
-	menuitem dto.MenuItem,
+	translation dto.translation,
 	err error,
 ) {
-	err = menuitem.FromReader(body)
+	err = translation.FromReader(body)
 	return
 }
 
@@ -39,12 +39,12 @@ func (ch *createHandler) handleError(
 }
 
 func (ch *createHandler) askController(
-	menuitem *dto.MenuItem,
+	translation *dto.translation,
 ) (
 	data *dto.CreateResponse,
 	err error,
 ) {
-	data, err = ch.create.Create(menuitem)
+	data, err = ch.create.Create(translation)
 	return
 }
 
@@ -73,7 +73,7 @@ func (ch *createHandler) ServeHTTP(
 ) {
 	defer r.Body.Close()
 
-	menuitemDat, err := ch.decodeBody(r.Body)
+	translationDat, err := ch.decodeBody(r.Body)
 
 	if err != nil {
 		message := "Unable to decode error: "
@@ -81,11 +81,11 @@ func (ch *createHandler) ServeHTTP(
 		return
 	}
 
-	menuitemDat.UserID = ch.decodeContext(r)
-	data, err := ch.askController(&menuitemDat)
+	translationDat.UserID = ch.decodeContext(r)
+	data, err := ch.askController(&translationDat)
 
 	if err != nil {
-		message := "Unable to create menuitem error: "
+		message := "Unable to create translation error: "
 		ch.handleError(w, err, message)
 		return
 	}
@@ -96,16 +96,16 @@ func (ch *createHandler) ServeHTTP(
 // CreateParams provide parameters for CreateRoute
 type CreateParams struct {
 	dig.In
-	Create     menuitem.Creater
+	Create     translation.Creater
 	Middleware *middleware.Auth
 }
 
-// CreateRoute provides a route that lets to take menuitems
+// CreateRoute provides a route that lets to take translations
 func CreateRoute(params CreateParams) *routeutils.Route {
 	handler := createHandler{params.Create}
 	return &routeutils.Route{
 		Method:  http.MethodPost,
-		Pattern: apipattern.MenuItemCreate,
+		Pattern: apipattern.translationCreate,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
