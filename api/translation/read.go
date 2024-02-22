@@ -1,4 +1,4 @@
-package menuitem
+package translation
 
 import (
 	"net/http"
@@ -6,8 +6,8 @@ import (
 	"horkora-backend/api/middleware"
 	"horkora-backend/api/routeutils"
 	"horkora-backend/apipattern"
-	"horkora-backend/menuitem"
-	"horkora-backend/menuitem/dto"
+	"horkora-backend/translation"
+	"horkora-backend/translation/dto"
 
 	"github.com/go-chi/chi"
 	"github.com/sirupsen/logrus"
@@ -15,14 +15,14 @@ import (
 )
 
 type readHandler struct {
-	reader menuitem.Reader
+	reader translation.Reader
 }
 
 func (read *readHandler) decodeURL(
 	r *http.Request,
-) (menuitemID string) {
+) (translationID string) {
 	// Get user id from url
-	menuitemID = chi.URLParam(r, "id")
+	translationID = chi.URLParam(r, "id")
 	return
 }
 
@@ -69,7 +69,7 @@ func (read *readHandler) handleRead(
 ) {
 
 	req := dto.ReadReq{}
-	req.MenuItemID = read.decodeURL(r)
+	req.translationID = read.decodeURL(r)
 
 	req.UserID = read.decodeContext(r)
 
@@ -97,11 +97,11 @@ func (read *readHandler) ServeHTTP(
 // ReadRouteParams lists all the parameters for ReadRoute
 type ReadRouteParams struct {
 	dig.In
-	Reader     menuitem.Reader
+	Reader     translation.Reader
 	Middleware *middleware.Auth
 }
 
-// ReadRoute provides a route to get a menu item
+// ReadRoute provides a route to get a translation item
 func ReadRoute(params ReadRouteParams) *routeutils.Route {
 
 	handler := readHandler{
@@ -110,7 +110,7 @@ func ReadRoute(params ReadRouteParams) *routeutils.Route {
 
 	return &routeutils.Route{
 		Method:  http.MethodGet,
-		Pattern: apipattern.MenuItemRead,
+		Pattern: apipattern.translationRead,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
