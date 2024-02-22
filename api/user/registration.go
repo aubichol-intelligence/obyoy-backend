@@ -1,0 +1,69 @@
+package user
+
+import (
+	"net/http"
+
+	"horkora-backend/api/routeutils"
+	"horkora-backend/apipattern"
+
+	"horkora-backend/user"
+	"horkora-backend/user/dto"
+
+	"github.com/sirupsen/logrus"
+)
+
+// registrationHandler holds registration handler
+type registrationHandler struct {
+	registry user.Registry
+}
+
+func (rh *registrationHandler) responseSuccess(
+	w http.ResponseWriter,
+	resp *dto.BaseResponse,
+) {
+	routeutils.ServeResponse(w, http.StatusOK, resp)
+}
+
+func (rh *registrationHandler) handleError(
+	w http.ResponseWriter,
+	err error,
+	message string,
+) {
+	logrus.Error(message, err)
+	routeutils.ServeError(w, err)
+}
+
+// ServeHTTP implements http.Handler interface
+func (rh *registrationHandler) ServeHTTP(
+	w http.ResponseWriter,
+	r *http.Request,
+) {
+	defer r.Body.Close()
+
+	register := dto.Register{}
+	if err := register.FromReader(r.Body); err != nil {
+		message := "Unable to decode err: "
+		rh.handleError(w, err, message)
+		return
+	}
+
+	data, err := rh.registry.Register(&register)
+	if err != nil {
+		message := "Unable to register user err: "
+		rh.handleError(w, err, message)
+		return
+	}
+
+	rh.responseSuccess(w, data)
+}
+
+// RegistrationRoute provides a route that registers users
+func RegistrationRoute(
+	userRegistry user.Registry,
+) *routeutils.Route {
+	handler := registrationHandler{userRegistry}
+	return &routeutils.Route{
+		Method:  http.MethodPost,
+		Pattern: apipattern.UserRegistration,
+		Handler: &handler,
+	}
