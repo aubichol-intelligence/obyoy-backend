@@ -1,2 +1,2 @@
-This is the back-end for ObyoyYY
+This is the back-end for Obyoy
 
