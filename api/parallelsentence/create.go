@@ -105,7 +105,7 @@ func CreateRoute(params CreateParams) *routeutils.Route {
 	handler := createHandler{params.Create}
 	return &routeutils.Route{
 		Method:  http.MethodPost,
-		Pattern: apipattern.parallelsentenceCreate,
+		Pattern: apipattern.ParallelsentenceCreate,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
