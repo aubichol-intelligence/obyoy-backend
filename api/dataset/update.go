@@ -5,6 +5,7 @@ import (
 
 	"obyoy-backend/api/middleware"
 	"obyoy-backend/api/routeutils"
+	"obyoy-backend/apipattern"
 	"obyoy-backend/dataset"
 	"obyoy-backend/dataset/dto"
 
@@ -109,7 +110,7 @@ func ReadRoute(params ReadRouteParams) *routeutils.Route {
 
 	return &routeutils.Route{
 		Method:  http.MethodGet,
-		Pattern: apipattern.datasetRead,
+		Pattern: apipattern.DatasetUpdate,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
