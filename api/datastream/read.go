@@ -110,7 +110,7 @@ func ReadRoute(params ReadRouteParams) *routeutils.Route {
 
 	return &routeutils.Route{
 		Method:  http.MethodGet,
-		Pattern: apipattern.datastreamRead,
+		Pattern: apipattern.DatastreamRead,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
