@@ -157,7 +157,7 @@ func ListRoute(
 	handler := listHandler{searcher}
 	return &routeutils.Route{
 		Method:  http.MethodPost,
-		Pattern: apipattern.SpecificUserList,
+		Pattern: apipattern.UserList,
 		Handler: middleware.Middleware(&handler),
 	}
 }
