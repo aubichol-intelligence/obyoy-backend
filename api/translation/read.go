@@ -110,7 +110,7 @@ func ReadRoute(params ReadRouteParams) *routeutils.Route {
 
 	return &routeutils.Route{
 		Method:  http.MethodGet,
-		Pattern: apipattern.translationRead,
+		Pattern: apipattern.TranslationRead,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
