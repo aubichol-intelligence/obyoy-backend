@@ -105,7 +105,7 @@ func DeleteRoute(params DeleteParams) *routeutils.Route {
 	handler := deleteHandler{params.Delete}
 	return &routeutils.Route{
 		Method:  http.MethodPost,
-		Pattern: apipattern.datastreamDelete,
+		Pattern: apipattern.DatastreamDelete,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
