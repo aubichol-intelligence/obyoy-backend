@@ -67,3 +67,4 @@ func RegistrationRoute(
 		Pattern: apipattern.UserRegistration,
 		Handler: &handler,
 	}
+}
