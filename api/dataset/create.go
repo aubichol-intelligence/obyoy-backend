@@ -6,7 +6,6 @@ import (
 
 	"obyoy-backend/api/middleware"
 	"obyoy-backend/api/routeutils"
-	"obyoy-backend/apipattern"
 	"obyoy-backend/dataset"
 	"obyoy-backend/dataset/dto"
 
