@@ -5,7 +5,6 @@ import (
 
 	"obyoy-backend/api/middleware"
 	"obyoy-backend/api/routeutils"
-	"obyoy-backend/apipattern"
 	"obyoy-backend/dataset"
 	"obyoy-backend/dataset/dto"
 
@@ -14,11 +13,11 @@ import (
 	"go.uber.org/dig"
 )
 
-type readHandler struct {
+type updateHandler struct {
 	reader dataset.Reader
 }
 
-func (read *readHandler) decodeURL(
+func (read *updateHandler) decodeURL(
 	r *http.Request,
 ) (datasetID string) {
 	// Get user id from url
@@ -26,14 +25,14 @@ func (read *readHandler) decodeURL(
 	return
 }
 
-func (read *readHandler) decodeContext(
+func (read *updateHandler) decodeContext(
 	r *http.Request,
 ) (userID string) {
 	userID = r.Context().Value("userID").(string)
 	return
 }
 
-func (read *readHandler) askController(
+func (read *updateHandler) askController(
 	req *dto.ReadReq,
 ) (
 	resp *dto.ReadResp,
@@ -43,7 +42,7 @@ func (read *readHandler) askController(
 	return
 }
 
-func (read *readHandler) handleError(
+func (read *updateHandler) handleError(
 	w http.ResponseWriter,
 	err error,
 ) {
@@ -51,7 +50,7 @@ func (read *readHandler) handleError(
 	routeutils.ServeError(w, err)
 }
 
-func (read *readHandler) responseSuccess(
+func (read *updateHandler) responseSuccess(
 	w http.ResponseWriter,
 	resp *dto.ReadResp,
 ) {
@@ -63,7 +62,7 @@ func (read *readHandler) responseSuccess(
 	)
 }
 
-func (read *readHandler) handleRead(
+func (read *updateHandler) handleRead(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
@@ -85,7 +84,7 @@ func (read *readHandler) handleRead(
 }
 
 // ServeHTTP implements http.Handler
-func (read *readHandler) ServeHTTP(
+func (read *updateHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
@@ -95,14 +94,14 @@ func (read *readHandler) ServeHTTP(
 }
 
 // ReadRouteParams lists all the parameters for ReadRoute
-type ReadRouteParams struct {
+type UpdateRouteParams struct {
 	dig.In
 	Reader     dataset.Reader
 	Middleware *middleware.Auth
 }
 
 // ReadRoute provides a route to get a dataset item
-func ReadRoute(params ReadRouteParams) *routeutils.Route {
+func UpdateRoute(params ReadRouteParams) *routeutils.Route {
 
 	handler := readHandler{
 		reader: params.Reader,
@@ -110,7 +109,7 @@ func ReadRoute(params ReadRouteParams) *routeutils.Route {
 
 	return &routeutils.Route{
 		Method:  http.MethodGet,
-		Pattern: apipattern.datasetRead,
+		Pattern: apipattern.DatasetRead,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
