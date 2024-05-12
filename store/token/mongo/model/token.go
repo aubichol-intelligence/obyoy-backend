@@ -1,21 +1,3 @@
-package token
-
-import "obyoy-backend/model"
-
-// Token wraps token's store functionality
-type Token interface {
-	Save(*model.Token) error
-	FindByID(id string) (*model.Token, error)
-	FindByUser(id string) ([]*model.Token, error)
-	FindByIDs(id ...string) ([]*model.Token, error)
-	Search(q string, skip, limit int64) ([]*model.Token, error)
-}
-(base) nelson@NELSONs-MacBook-Pro token % ls
-mongo		token.go
-(base) nelson@NELSONs-MacBook-Pro token % cd mongo
-(base) nelson@NELSONs-MacBook-Pro mongo % ls
-model		token.go
-(base) nelson@NELSONs-MacBook-Pro mongo % cat token.go
 package mongo
 
 import (
@@ -174,57 +156,4 @@ type Params struct {
 // Store provides store for registration tokens
 func Store(params Params) storetoken.Token {
 	return &tokens{params.Collection}
-}
-(base) nelson@NELSONs-MacBook-Pro mongo % ls
-model		token.go
-(base) nelson@NELSONs-MacBook-Pro mongo % cd model 
-(base) nelson@NELSONs-MacBook-Pro model % ls
-token.go
-(base) nelson@NELSONs-MacBook-Pro model % cat token.go
-package model
-
-import (
-	"time"
-
-	"obyoy-backend/model"
-
-	"go.mongodb.org/mongo-driver/bson/primitive"
-)
-
-// Token defines mongodb data type for Token
-type Token struct {
-	ID        primitive.ObjectID `bson:"_id,omitempty"`
-	Token     string             `bson:"token"`
-	UserID    primitive.ObjectID `bson:"user_id"`
-	CreatedAt time.Time          `bson:"created_at"`
-	UpdatedAt time.Time          `bson:"updated_at"`
-}
-
-// FromModel converts model data to bson data
-func (t *Token) FromModel(modelToken *model.Token) error {
-	t.Token = modelToken.Token
-	t.CreatedAt = modelToken.CreatedAt
-	t.UpdatedAt = modelToken.UpdatedAt
-
-	var err error
-
-	t.UserID, err = primitive.ObjectIDFromHex(modelToken.UserID)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-// ModelToken converts bson to model for token
-func (t *Token) ModelToken() *model.Token {
-	token := model.Token{}
-	token.ID = t.ID.Hex()
-	token.Token = t.Token
-	token.UserID = t.ID.Hex()
-	token.CreatedAt = t.CreatedAt
-	token.UpdatedAt = t.UpdatedAt
-
-	return &token
 }
