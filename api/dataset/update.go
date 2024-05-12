@@ -5,7 +5,6 @@ import (
 
 	"obyoy-backend/api/middleware"
 	"obyoy-backend/api/routeutils"
-	"obyoy-backend/apipattern"
 	"obyoy-backend/dataset"
 	"obyoy-backend/dataset/dto"
 
@@ -111,118 +110,6 @@ func ReadRoute(params ReadRouteParams) *routeutils.Route {
 	return &routeutils.Route{
 		Method:  http.MethodGet,
 		Pattern: apipattern.datasetRead,
-		Handler: params.Middleware.Middleware(&handler),
-	}
-}
-(base) nelson@NELSONs-MacBook-Pro dataset % cat update.go
-package dataset
-
-import (
-	"io"
-	"net/http"
-
-	"obyoy-backend/api/middleware"
-	"obyoy-backend/api/routeutils"
-	"obyoy-backend/apipattern"
-	"obyoy-backend/dataset"
-	"obyoy-backend/dataset/dto"
-
-	"github.com/sirupsen/logrus"
-	"go.uber.org/dig"
-)
-
-// updateHandler holds dataset item update handler
-type updateHandler struct {
-	update dataset.Updater
-}
-
-func (uh *updateHandler) decodeBody(
-	body io.ReadCloser,
-) (
-	bloodreqAtt dto.Update,
-	err error,
-) {
-	err = bloodreqAtt.FromReader(body)
-	return
-}
-
-func (uh *updateHandler) handleError(
-	w http.ResponseWriter,
-	err error,
-	message string,
-) {
-	logrus.Error(message, err)
-	routeutils.ServeError(w, err)
-}
-
-func (uh *updateHandler) decodeContext(
-	r *http.Request,
-) (userID string) {
-	userID = r.Context().Value("userID").(string)
-	return
-}
-
-func (uh *updateHandler) askController(update *dto.Update) (
-	resp *dto.UpdateResponse,
-	err error,
-) {
-	resp, err = uh.update.Update(update)
-	return
-}
-
-func (uh *updateHandler) responseSuccess(
-	w http.ResponseWriter,
-	resp *dto.UpdateResponse,
-) {
-	routeutils.ServeResponse(
-		w,
-		http.StatusOK,
-		resp,
-	)
-}
-
-// ServeHTTP implements http.Handler interface
-func (ch *updateHandler) ServeHTTP(
-	w http.ResponseWriter,
-	r *http.Request,
-) {
-	defer r.Body.Close()
-
-	datasetDat := dto.Update{}
-	datasetDat, err := ch.decodeBody(r.Body)
-
-	if err != nil {
-		message := "Unable to decode dataset update error: "
-		ch.handleError(w, err, message)
-		return
-	}
-
-	datasetDat.UserID = ch.decodeContext(r)
-
-	data, err := ch.askController(&datasetDat)
-
-	if err != nil {
-		message := "Unable to update dataset error: "
-		ch.handleError(w, err, message)
-		return
-	}
-
-	ch.responseSuccess(w, data)
-}
-
-// UpdateParams provide parameters for dataset update handler
-type UpdateParams struct {
-	dig.In
-	Update     dataset.Updater
-	Middleware *middleware.Auth
-}
-
-// UpdateRoute provides a route that updates a dataset
-func UpdateRoute(params UpdateParams) *routeutils.Route {
-	handler := updateHandler{params.Update}
-	return &routeutils.Route{
-		Method:  http.MethodPost,
-		Pattern: apipattern.datasetUpdate,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
