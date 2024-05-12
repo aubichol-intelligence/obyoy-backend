@@ -1,3 +1,5 @@
+package apipattern
+
 // UserList holds the api for giving user list
 const UserList string = "/api/v1/alluser"
 
