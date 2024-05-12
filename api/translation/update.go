@@ -222,7 +222,7 @@ func UpdateRoute(params UpdateParams) *routeutils.Route {
 	handler := updateHandler{params.Update}
 	return &routeutils.Route{
 		Method:  http.MethodPost,
-		Pattern: apipattern.translationUpdate,
+		Pattern: apipattern.TranslationUpdate,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
