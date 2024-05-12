@@ -1,10 +1,10 @@
 package main
 
 import (
+	"net/http"
 	"obyoy-backend/bootstrap/server"
 	"obyoy-backend/config"
 	"obyoy-backend/container"
-	"net/http"
 
 	"github.com/sirupsen/logrus"
 )
