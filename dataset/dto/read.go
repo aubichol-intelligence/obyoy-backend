@@ -1,6 +1,6 @@
 package dto
 
-import "ardent-backend/model"
+import "obyoy-backend/model"
 
 // ReadReq stores order read request data
 type ReadReq struct {

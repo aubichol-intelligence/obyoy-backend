@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"ardent-backend/errors"
+	"obyoy-backend/errors"
 
 	validator "gopkg.in/go-playground/validator.v9"
 )
