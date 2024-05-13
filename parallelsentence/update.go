@@ -30,7 +30,6 @@ func (u *update) toModel(userparallelsentence *dto.Update) (parallelsentence *mo
 
 	parallelsentence.UpdatedAt = time.Now().UTC()
 	parallelsentence.ID = userparallelsentence.ID
-	parallelsentence.Note = userparallelsentence.Note
 
 	return
 }
