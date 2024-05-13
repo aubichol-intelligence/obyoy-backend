@@ -2,22 +2,6 @@ package model
 
 import "time"
 
-// Token defines token model
-type Token struct {
-	ID        string
-	UserID    string
-	Token     string
-	CreatedAt time.Time
-	UpdatedAt time.Time
-}
-(base) nelson@NELSONs-MacBook-Pro model % ls        
-delivery.go		maps.go			order.go		session.go		state.go		token.go
-email.go		menuitem.go		restaurant.go		sms.go			staticcontent.go	user.go
-(base) nelson@NELSONs-MacBook-Pro model % cat user.go 
-package model
-
-import "time"
-
 // User defines user model
 type User struct {
 	ID           string
