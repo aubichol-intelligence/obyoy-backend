@@ -46,7 +46,6 @@ type Credentials struct {
 func (d *Datastream) FromModel(modelDelivery *model.Datastream) error {
 	d.CreatedAt = modelDelivery.CreatedAt
 	d.UpdatedAt = modelDelivery.UpdatedAt
-	d.Note = modelDelivery.Note
 
 	var err error
 
@@ -69,8 +68,6 @@ func (d *Datastream) ModelDatastream() *model.Datastream {
 	Datastream.ID = d.ID.Hex()
 	Datastream.CreatedAt = d.CreatedAt
 	Datastream.UpdatedAt = d.UpdatedAt
-
-	Datastream.Note = d.Note
 
 	return &Datastream
 }
