@@ -4,8 +4,6 @@ import (
 	"obyoy-backend/model"
 	"time"
 
-	"obyoy-backend/model"
-
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -47,7 +45,6 @@ type Credentials struct {
 func (d *Dataset) FromModel(modelDelivery *model.Dataset) error {
 	d.CreatedAt = modelDelivery.CreatedAt
 	d.UpdatedAt = modelDelivery.UpdatedAt
-	d.Note = modelDelivery.Note
 
 	var err error
 
@@ -70,8 +67,6 @@ func (d *Dataset) ModelDataset() *model.Dataset {
 	Dataset.ID = d.ID.Hex()
 	Dataset.CreatedAt = d.CreatedAt
 	Dataset.UpdatedAt = d.UpdatedAt
-
-	Dataset.Note = d.Note
 
 	return &Dataset
 }
