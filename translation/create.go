@@ -1,4 +1,4 @@
-package contest
+package translation
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	storetranslation "obyoy-backend/store/translation"
 	"obyoy-backend/translation/dto"
 
 	"github.com/sirupsen/logrus"
@@ -14,28 +14,28 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Creater provides create method for creating contest
+// Creater provides create method for creating translation
 type Creater interface {
 	Create(create *dto.Create) (*dto.CreateResponse, error)
 }
 
-// create creates contest
+// create creates translation
 type create struct {
-	storecontest storecontest.Contests
-	validate     *validator.Validate
+	storetranslation storetranslation.Translations
+	validate         *validator.Validate
 }
 
-func (c *create) toModel(usercontest *dto.Create) (
-	contest *model.Contest,
+func (c *create) toModel(usertranslation *dto.Create) (
+	translation *model.Translation,
 ) {
-	contest = &model.Contest{}
-	contest.CreatedAt = time.Now().UTC()
-	contest.UpdatedAt = contest.CreatedAt
-	contest.ID = usercontest.ID
-	contest.LandingURL = usercontest.LandingURL
-	contest.ImageURL = usercontest.ImageURL
-	contest.Name = usercontest.Name
-	contest.Stadings = usercontest.Standings
+	translation = &model.Translation{}
+	translation.CreatedAt = time.Now().UTC()
+	translation.UpdatedAt = translation.CreatedAt
+	translation.ID = usertranslation.ID
+	translation.LandingURL = usertranslation.LandingURL
+	translation.ImageURL = usertranslation.ImageURL
+	translation.Name = usertranslation.Name
+	translation.Stadings = usertranslation.Standings
 
 	return
 }
@@ -48,35 +48,35 @@ func (c *create) validateData(create *dto.Create) (
 }
 
 func (c *create) convertData(create *dto.Create) (
-	modelcontest *model.Contest,
+	modeltranslation *model.Translation,
 ) {
-	modelcontest = c.toModel(create)
+	modeltranslation = c.toModel(create)
 	return
 }
 
-func (c *create) askStore(model *model.Contest) (
+func (c *create) askStore(model *model.Translation) (
 	id string,
 	err error,
 ) {
-	id, err = c.storecontest.Save(model)
+	id, err = c.storetranslation.Save(model)
 	return
 }
 
-func (c *create) giveResponse(modelcontest *model.Contest, id string) (
+func (c *create) giveResponse(modeltranslation *model.Translation, id string) (
 	*dto.CreateResponse, error,
 ) {
-	logrus.WithFields(logrus.Fields{}).Debug("User created contest successfully")
+	logrus.WithFields(logrus.Fields{}).Debug("User created translation successfully")
 
 	return &dto.CreateResponse{
-		Message: "contest created",
+		Message: "translation created",
 		OK:      true,
-		//		contestTime: modelcontest.CreatedAt.String(),
+		//		translationTime: modeltranslation.CreatedAt.String(),
 		ID: id,
 	}, nil
 }
 
 func (c *create) giveError() (err error) {
-	logrus.Error("Could not create contest. Error: ", err)
+	logrus.Error("Could not create translation. Error: ", err)
 	errResp := errors.Unknown{
 		Base: errors.Base{
 			OK:      false,
@@ -97,10 +97,10 @@ func (c *create) Create(create *dto.Create) (
 		return nil, err
 	}
 
-	modelcontest := c.convertData(create)
-	id, err := c.askStore(modelcontest)
+	modeltranslation := c.convertData(create)
+	id, err := c.askStore(modeltranslation)
 	if err == nil {
-		return c.giveResponse(modelcontest, id)
+		return c.giveResponse(modeltranslation, id)
 	}
 
 	err = c.giveError()
@@ -110,14 +110,14 @@ func (c *create) Create(create *dto.Create) (
 // CreateParams give parameters for NewCreate
 type CreateParams struct {
 	dig.In
-	Storecontests storecontest.Contests
-	Validate      *validator.Validate
+	Storetranslations storetranslation.Translations
+	Validate          *validator.Validate
 }
 
 // NewCreate returns new instance of NewCreate
 func NewCreate(params CreateParams) Creater {
 	return &create{
-		params.Storecontests,
+		params.Storetranslations,
 		params.Validate,
 	}
 }
