@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"obyoy-backend/contest/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
+	"obyoy-backend/parallelsentence/dto"
 	storecontest "obyoy-backend/store/contest"
 
 	"github.com/sirupsen/logrus"
