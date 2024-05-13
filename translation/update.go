@@ -1,36 +1,36 @@
-package contest
+package translation
 
 import (
 	"fmt"
 	"time"
 
-	"obyoy-backend/contest/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	storetranslation "obyoy-backend/store/translation"
+	"obyoy-backend/translation/dto"
 
 	"github.com/sirupsen/logrus"
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Updater provides an interface for updating contests
+// Updater provides an interface for updating translations
 type Updater interface {
 	Update(*dto.Update) (*dto.UpdateResponse, error)
 }
 
-// update updates contest
+// update updates translation
 type update struct {
-	storecontest storecontest.Contests
-	validate     *validator.Validate
+	storetranslation storetranslation.Translations
+	validate         *validator.Validate
 }
 
-func (u *update) toModel(usercontest *dto.Update) (contest *model.Contest) {
+func (u *update) toModel(usertranslation *dto.Update) (translation *model.Translation) {
 
-	contest = &model.Contest{}
+	translation = &model.Translation{}
 
-	contest.UpdatedAt = time.Now().UTC()
-	contest.ID = usercontest.ID
-	contest.Note = usercontest.Note
+	translation.UpdatedAt = time.Now().UTC()
+	translation.ID = usertranslation.ID
+	translation.Note = usertranslation.Note
 
 	return
 }
@@ -41,33 +41,33 @@ func (u *update) validateData(update *dto.Update) (err error) {
 }
 
 func (u *update) convertData(update *dto.Update) (
-	modelcontest *model.Contest,
+	modeltranslation *model.Translation,
 ) {
-	modelcontest = u.toModel(update)
+	modeltranslation = u.toModel(update)
 	return
 }
 
-func (u *update) askStore(modelcontest *model.Contest) (
+func (u *update) askStore(modeltranslation *model.Translation) (
 	id string,
 	err error,
 ) {
-	id, err = u.storecontest.Save(modelcontest)
+	id, err = u.storetranslation.Save(modeltranslation)
 	return
 }
 
 func (u *update) giveResponse(
-	modelcontest *model.Contest,
+	modeltranslation *model.Translation,
 	id string,
 ) *dto.UpdateResponse {
 	logrus.WithFields(logrus.Fields{
-		//		"id": modelcontest.UserID,
-	}).Debug("User updated contest successfully")
+		//		"id": modeltranslation.UserID,
+	}).Debug("User updated translation successfully")
 
 	return &dto.UpdateResponse{
-		Message:    "contest updated",
+		Message:    "translation updated",
 		OK:         true,
 		ID:         id,
-		UpdateTime: modelcontest.UpdatedAt.String(),
+		UpdateTime: modeltranslation.UpdatedAt.String(),
 	}
 }
 
@@ -94,19 +94,19 @@ func (u *update) Update(update *dto.Update) (
 		return nil, err
 	}
 
-	modelcontest := u.convertData(update)
-	id, err := u.askStore(modelcontest)
+	modeltranslation := u.convertData(update)
+	id, err := u.askStore(modeltranslation)
 	if err == nil {
-		return u.giveResponse(modelcontest, id), nil
+		return u.giveResponse(modeltranslation, id), nil
 	}
 
-	logrus.Error("Could not update contest ", err)
+	logrus.Error("Could not update translation ", err)
 	err = u.giveError()
 	return nil, err
 }
 
 // NewUpdate returns new instance of NewUpdate
-func NewUpdate(store storecontest.Contests, validate *validator.Validate) Updater {
+func NewUpdate(store storetranslation.Translations, validate *validator.Validate) Updater {
 	return &update{
 		store,
 		validate,
