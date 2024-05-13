@@ -15,7 +15,7 @@ import (
 )
 
 type readHandler struct {
-	reader dataset.Reader
+	reader dataset.Updater
 }
 
 func (read *readHandler) decodeURL(
