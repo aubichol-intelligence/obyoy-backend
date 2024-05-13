@@ -32,10 +32,6 @@ func (c *create) toModel(userparallelsentence *dto.Create) (
 	parallelsentence.CreatedAt = time.Now().UTC()
 	parallelsentence.UpdatedAt = parallelsentence.CreatedAt
 	parallelsentence.ID = userparallelsentence.ID
-	parallelsentence.LandingURL = userparallelsentence.LandingURL
-	parallelsentence.ImageURL = userparallelsentence.ImageURL
-	parallelsentence.Name = userparallelsentence.Name
-	parallelsentence.Stadings = userparallelsentence.Standings
 
 	return
 }
