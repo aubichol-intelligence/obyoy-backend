@@ -32,10 +32,10 @@ func (c *create) toModel(userdatastream *dto.Create) (
 	datastream.CreatedAt = time.Now().UTC()
 	datastream.UpdatedAt = datastream.CreatedAt
 	datastream.ID = userdatastream.ID
-	datastream.LandingURL = userdatastream.LandingURL
-	datastream.ImageURL = userdatastream.ImageURL
-	datastream.Name = userdatastream.Name
-	datastream.Stadings = userdatastream.Standings
+	//	datastream.LandingURL = userdatastream.LandingURL
+	//	datastream.ImageURL = userdatastream.ImageURL
+	//	datastream.Name = userdatastream.Name
+	//	datastream.Stadings = userdatastream.Standings
 
 	return
 }
