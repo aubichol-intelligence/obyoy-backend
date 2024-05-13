@@ -29,8 +29,8 @@ func (u *update) toModel(userdataset *dto.Update) (dataset *model.Dataset) {
 	dataset = &model.Dataset{}
 
 	dataset.UpdatedAt = time.Now().UTC()
-	dataset.ID = userdataset.ID
-	dataset.Note = userdataset.Note
+	//	dataset.ID = userdataset.ID
+	//	dataset.Note = userdataset.Note
 
 	return
 }
