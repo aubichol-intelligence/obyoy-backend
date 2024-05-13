@@ -1,34 +1,34 @@
-package contest
+package parallelsentence
 
 import (
-	"obyoy-backend/contest/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	"obyoy-backend/parallelsentence/dto"
+	storeparallelsentence "obyoy-backend/store/parallelsentence"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 )
 
-// Reader provides an interface for reading contestes
+// Reader provides an interface for reading parallelsentencees
 type Lister interface {
 	List(req *dto.ListReq, skip int64, limit int64) ([]dto.ReadResp, error)
 }
 
-// contestReader implements Reader interface
-type contestLister struct {
-	contests storecontest.Contests
+// parallelsentenceReader implements Reader interface
+type parallelsentenceLister struct {
+	parallelsentences storeparallelsentence.Parallelsentences
 }
 
-func (list *contestLister) askStore(state string, skip int64, limit int64) (
-	contest []*model.Contest,
+func (list *parallelsentenceLister) askStore(state string, skip int64, limit int64) (
+	parallelsentence []*model.Parallelsentence,
 	err error,
 ) {
-	contest, err = list.contests.FindByContestID(state, skip, limit)
+	parallelsentence, err = list.parallelsentences.FindByParallelsentenceID(state, skip, limit)
 	return
 }
 
-func (list *contestLister) giveError() (err error) {
+func (list *parallelsentenceLister) giveError() (err error) {
 	err = &errors.Unknown{
 		errors.Base{
 			"Invalid request", false,
@@ -37,30 +37,30 @@ func (list *contestLister) giveError() (err error) {
 	return
 }
 
-func (list *contestLister) prepareResponse(
-	contests []*model.Contest,
+func (list *parallelsentenceLister) prepareResponse(
+	parallelsentences []*model.Parallelsentence,
 ) (
 	resp []dto.ReadResp,
 ) {
-	for _, contest := range contests {
+	for _, parallelsentence := range parallelsentences {
 		var tmp dto.ReadResp
-		tmp.FromModel(contest)
+		tmp.FromModel(parallelsentence)
 		resp = append(resp, tmp)
 	}
-	//resp.FromModel(contest)
+	//resp.FromModel(parallelsentence)
 	return
 }
 
-func (read *contestLister) List(contestReq *dto.ListReq, skip int64, limit int64) ([]dto.ReadResp, error) {
+func (read *parallelsentenceLister) List(parallelsentenceReq *dto.ListReq, skip int64, limit int64) ([]dto.ReadResp, error) {
 	//TO-DO: some validation on the input data is required
-	contests, err := read.askStore(contestReq.UserID, skip, limit)
+	parallelsentences, err := read.askStore(parallelsentenceReq.UserID, skip, limit)
 	if err != nil {
-		logrus.Error("Could not find contest error : ", err)
+		logrus.Error("Could not find parallelsentence error : ", err)
 		return nil, read.giveError()
 	}
 
 	var resp []dto.ReadResp
-	resp = read.prepareResponse(contests)
+	resp = read.prepareResponse(parallelsentences)
 
 	return resp, nil
 }
@@ -68,12 +68,12 @@ func (read *contestLister) List(contestReq *dto.ListReq, skip int64, limit int64
 // NewReaderParams lists params for the NewReader
 type NewListerParams struct {
 	dig.In
-	Contest storecontest.Contests
+	Parallelsentence storeparallelsentence.Parallelsentences
 }
 
 // NewReader provides Reader
 func NewList(params NewReaderParams) Lister {
-	return &contestLister{
-		contests: params.Contest,
+	return &parallelsentenceLister{
+		parallelsentences: params.Parallelsentence,
 	}
 }
