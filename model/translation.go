@@ -13,11 +13,12 @@ type Translation struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
-func (s *Session) ToByte() ([]byte, error) {
+func (s *Translation) ToByte() ([]byte, error) {
 	return json.Marshal(s)
 }
-	//Username  string
 
-func (s *Session) FromBytes(bytes []byte) error {
+//Username  string
+
+func (s *Translation) FromBytes(bytes []byte) error {
 	return json.Unmarshal(bytes, s)
 }
