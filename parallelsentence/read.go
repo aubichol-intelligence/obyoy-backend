@@ -1,34 +1,34 @@
-package contest
+package parallelsentence
 
 import (
-	"obyoy-backend/contest/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	"obyoy-backend/parallelsentence/dto"
+	storeparallelsentence "obyoy-backend/store/parallelsentence"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 )
 
-// Reader provides an interface for reading contestes
+// Reader provides an interface for reading parallelsentencees
 type Reader interface {
 	Read(*dto.ReadReq) (*dto.ReadResp, error)
 }
 
-// contestReader implements Reader interface
-type contestReader struct {
-	contests storecontest.Contests
+// parallelsentenceReader implements Reader interface
+type parallelsentenceReader struct {
+	parallelsentences storeparallelsentence.Parallelsentences
 }
 
-func (read *contestReader) askStore(contestID string) (
-	contest *model.Contest,
+func (read *parallelsentenceReader) askStore(parallelsentenceID string) (
+	parallelsentence *model.Parallelsentence,
 	err error,
 ) {
-	contest, err = read.contests.FindByID(contestID)
+	parallelsentence, err = read.parallelsentences.FindByID(parallelsentenceID)
 	return
 }
 
-func (read *contestReader) giveError() (err error) {
+func (read *parallelsentenceReader) giveError() (err error) {
 	err = &errors.Unknown{
 		errors.Base{
 			"Invalid request", false,
@@ -37,25 +37,25 @@ func (read *contestReader) giveError() (err error) {
 	return
 }
 
-func (read *contestReader) prepareResponse(
-	contest *model.Contest,
+func (read *parallelsentenceReader) prepareResponse(
+	parallelsentence *model.Parallelsentence,
 ) (
 	resp dto.ReadResp,
 ) {
-	resp.FromModel(contest)
+	resp.FromModel(parallelsentence)
 	return
 }
 
-func (read *contestReader) Read(contestReq *dto.ReadReq) (*dto.ReadResp, error) {
+func (read *parallelsentenceReader) Read(parallelsentenceReq *dto.ReadReq) (*dto.ReadResp, error) {
 	//TO-DO: some validation on the input data is required
-	contest, err := read.askStore(contestReq.ContestID)
+	parallelsentence, err := read.askStore(parallelsentenceReq.ParallelsentenceID)
 	if err != nil {
-		logrus.Error("Could not find contest error : ", err)
+		logrus.Error("Could not find parallelsentence error : ", err)
 		return nil, read.giveError()
 	}
 
 	var resp dto.ReadResp
-	resp = read.prepareResponse(contest)
+	resp = read.prepareResponse(parallelsentence)
 
 	return &resp, nil
 }
@@ -63,12 +63,12 @@ func (read *contestReader) Read(contestReq *dto.ReadReq) (*dto.ReadResp, error) 
 // NewReaderParams lists params for the NewReader
 type NewReaderParams struct {
 	dig.In
-	Contest storecontest.Contests
+	Parallelsentence storeparallelsentence.Parallelsentences
 }
 
 // NewReader provides Reader
 func NewReader(params NewReaderParams) Reader {
-	return &contestReader{
-		contests: params.Contest,
+	return &parallelsentenceReader{
+		parallelsentences: params.Parallelsentence,
 	}
 }
