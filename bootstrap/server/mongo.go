@@ -36,11 +36,10 @@ func Mongo(c container.Container) {
 func MongoCollections(c container.Container) {
 	registerCollectionProvider(c, "users")
 	registerCollectionProvider(c, "tokens")
-	registerCollectionProvider(c, "orders")
-	registerCollectionProvider(c, "deliveries")
-	registerCollectionProvider(c, "restaurants")
-	registerCollectionProvider(c, "menuitems")
-	registerCollectionProvider(c, "states")
+	registerCollectionProvider(c, "datasets")
+	registerCollectionProvider(c, "datastreams")
+	registerCollectionProvider(c, "trnslations")
+	registerCollectionProvider(c, "parallelsentences")
 }
 
 func registerCollectionProvider(c container.Container, collectionName string) {
