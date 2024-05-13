@@ -28,7 +28,7 @@ func (d *delete) toModel(userparallelsentence *dto.Delete) (parallelsentence *mo
 	parallelsentence = &model.Parallelsentence{}
 
 	parallelsentence.UpdatedAt = time.Now().UTC()
-	parallelsentence.IsDeleted = true
+	//	parallelsentence.IsDeleted = true
 	return
 }
 
