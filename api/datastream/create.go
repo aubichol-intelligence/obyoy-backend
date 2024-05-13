@@ -22,7 +22,7 @@ type createHandler struct {
 func (ch *createHandler) decodeBody(
 	body io.ReadCloser,
 ) (
-	datastream dto.Datastream,
+	datastream dto.Create,
 	err error,
 ) {
 	err = datastream.FromReader(body)
@@ -39,7 +39,7 @@ func (ch *createHandler) handleError(
 }
 
 func (ch *createHandler) askController(
-	datastream *dto.datastream,
+	datastream *dto.Create,
 ) (
 	data *dto.CreateResponse,
 	err error,
@@ -81,7 +81,7 @@ func (ch *createHandler) ServeHTTP(
 		return
 	}
 
-	datastreamDat.UserID = ch.decodeContext(r)
+	//	datastreamDat.UserID = ch.decodeContext(r)
 	data, err := ch.askController(&datastreamDat)
 
 	if err != nil {

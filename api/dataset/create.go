@@ -7,6 +7,7 @@ import (
 	"obyoy-backend/api/middleware"
 	"obyoy-backend/api/routeutils"
 	"obyoy-backend/apipattern"
+	"obyoy-backend/dataset"
 	"obyoy-backend/dataset/dto"
 
 	"github.com/sirupsen/logrus"
@@ -21,7 +22,7 @@ type createHandler struct {
 func (ch *createHandler) decodeBody(
 	body io.ReadCloser,
 ) (
-	dataset dto.Dataset,
+	dataset dto.Create,
 	err error,
 ) {
 	err = dataset.FromReader(body)
@@ -38,7 +39,7 @@ func (ch *createHandler) handleError(
 }
 
 func (ch *createHandler) askController(
-	dataset *dto.Dataset,
+	dataset *dto.Create,
 ) (
 	data *dto.CreateResponse,
 	err error,
@@ -80,7 +81,7 @@ func (ch *createHandler) ServeHTTP(
 		return
 	}
 
-	datasetDat.UserID = ch.decodeContext(r)
+	//	datasetDat.UserID = ch.decodeContext(r)
 	data, err := ch.askController(&datasetDat)
 
 	if err != nil {

@@ -22,7 +22,7 @@ type createHandler struct {
 func (ch *createHandler) decodeBody(
 	body io.ReadCloser,
 ) (
-	parallelsentence dto.parallelsentence,
+	parallelsentence dto.Create,
 	err error,
 ) {
 	err = parallelsentence.FromReader(body)
@@ -39,7 +39,7 @@ func (ch *createHandler) handleError(
 }
 
 func (ch *createHandler) askController(
-	parallelsentence *dto.parallelsentence,
+	parallelsentence *dto.Create,
 ) (
 	data *dto.CreateResponse,
 	err error,
@@ -81,7 +81,7 @@ func (ch *createHandler) ServeHTTP(
 		return
 	}
 
-	parallelsentenceDat.UserID = ch.decodeContext(r)
+	//	parallelsentenceDat.UserID = ch.decodeContext(r)
 	data, err := ch.askController(&parallelsentenceDat)
 
 	if err != nil {

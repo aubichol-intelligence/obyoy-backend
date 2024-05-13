@@ -69,7 +69,7 @@ func (read *readHandler) handleRead(
 ) {
 
 	req := dto.ReadReq{}
-	req.parallelsentenceID = read.decodeURL(r)
+	//	req.parallelsentenceID = read.decodeURL(r)
 
 	req.UserID = read.decodeContext(r)
 
@@ -110,7 +110,7 @@ func ReadRoute(params ReadRouteParams) *routeutils.Route {
 
 	return &routeutils.Route{
 		Method:  http.MethodGet,
-		Pattern: apipattern.parallelsentenceRead,
+		Pattern: apipattern.ParallelsentenceRead,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }

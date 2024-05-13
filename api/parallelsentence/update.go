@@ -14,11 +14,11 @@ import (
 	"go.uber.org/dig"
 )
 
-type readHandler struct {
+type updateHandler struct {
 	reader parallelsentence.Reader
 }
 
-func (read *readHandler) decodeURL(
+func (read *updateHandler) decodeURL(
 	r *http.Request,
 ) (parallelsentenceID string) {
 	// Get user id from url
@@ -26,14 +26,14 @@ func (read *readHandler) decodeURL(
 	return
 }
 
-func (read *readHandler) decodeContext(
+func (read *updateHandler) decodeContext(
 	r *http.Request,
 ) (userID string) {
 	userID = r.Context().Value("userID").(string)
 	return
 }
 
-func (read *readHandler) askController(
+func (read *updateHandler) askController(
 	req *dto.ReadReq,
 ) (
 	resp *dto.ReadResp,
@@ -43,7 +43,7 @@ func (read *readHandler) askController(
 	return
 }
 
-func (read *readHandler) handleError(
+func (read *updateHandler) handleError(
 	w http.ResponseWriter,
 	err error,
 ) {
@@ -51,7 +51,7 @@ func (read *readHandler) handleError(
 	routeutils.ServeError(w, err)
 }
 
-func (read *readHandler) responseSuccess(
+func (read *updateHandler) responseSuccess(
 	w http.ResponseWriter,
 	resp *dto.ReadResp,
 ) {
@@ -63,13 +63,13 @@ func (read *readHandler) responseSuccess(
 	)
 }
 
-func (read *readHandler) handleRead(
+func (read *updateHandler) handleRead(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
 
 	req := dto.ReadReq{}
-	req.parallelsentenceID = read.decodeURL(r)
+	//	req.parallelsentenceID = read.decodeURL(r)
 
 	req.UserID = read.decodeContext(r)
 
@@ -85,7 +85,7 @@ func (read *readHandler) handleRead(
 }
 
 // ServeHTTP implements http.Handler
-func (read *readHandler) ServeHTTP(
+func (read *updateHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
@@ -95,134 +95,22 @@ func (read *readHandler) ServeHTTP(
 }
 
 // ReadRouteParams lists all the parameters for ReadRoute
-type ReadRouteParams struct {
+type UpdateRouteParams struct {
 	dig.In
 	Reader     parallelsentence.Reader
 	Middleware *middleware.Auth
 }
 
 // ReadRoute provides a route to get a parallelsentence item
-func ReadRoute(params ReadRouteParams) *routeutils.Route {
+func UpdateRoute(params ReadRouteParams) *routeutils.Route {
 
-	handler := readHandler{
+	handler := updateHandler{
 		reader: params.Reader,
 	}
 
 	return &routeutils.Route{
 		Method:  http.MethodGet,
-		Pattern: apipattern.parallelsentenceRead,
-		Handler: params.Middleware.Middleware(&handler),
-	}
-}
-(base) nelson@NELSONs-MacBook-Pro parallelsentence % cat update.go
-package parallelsentence
-
-import (
-	"io"
-	"net/http"
-
-	"obyoy-backend/api/middleware"
-	"obyoy-backend/api/routeutils"
-	"obyoy-backend/apipattern"
-	"obyoy-backend/parallelsentence"
-	"obyoy-backend/parallelsentence/dto"
-
-	"github.com/sirupsen/logrus"
-	"go.uber.org/dig"
-)
-
-// updateHandler holds parallelsentence item update handler
-type updateHandler struct {
-	update parallelsentence.Updater
-}
-
-func (uh *updateHandler) decodeBody(
-	body io.ReadCloser,
-) (
-	bloodreqAtt dto.Update,
-	err error,
-) {
-	err = bloodreqAtt.FromReader(body)
-	return
-}
-
-func (uh *updateHandler) handleError(
-	w http.ResponseWriter,
-	err error,
-	message string,
-) {
-	logrus.Error(message, err)
-	routeutils.ServeError(w, err)
-}
-
-func (uh *updateHandler) decodeContext(
-	r *http.Request,
-) (userID string) {
-	userID = r.Context().Value("userID").(string)
-	return
-}
-
-func (uh *updateHandler) askController(update *dto.Update) (
-	resp *dto.UpdateResponse,
-	err error,
-) {
-	resp, err = uh.update.Update(update)
-	return
-}
-
-func (uh *updateHandler) responseSuccess(
-	w http.ResponseWriter,
-	resp *dto.UpdateResponse,
-) {
-	routeutils.ServeResponse(
-		w,
-		http.StatusOK,
-		resp,
-	)
-}
-
-// ServeHTTP implements http.Handler interface
-func (ch *updateHandler) ServeHTTP(
-	w http.ResponseWriter,
-	r *http.Request,
-) {
-	defer r.Body.Close()
-
-	parallelsentenceDat := dto.Update{}
-	parallelsentenceDat, err := ch.decodeBody(r.Body)
-
-	if err != nil {
-		message := "Unable to decode parallelsentence update error: "
-		ch.handleError(w, err, message)
-		return
-	}
-
-	parallelsentenceDat.UserID = ch.decodeContext(r)
-
-	data, err := ch.askController(&parallelsentenceDat)
-
-	if err != nil {
-		message := "Unable to update parallelsentence error: "
-		ch.handleError(w, err, message)
-		return
-	}
-
-	ch.responseSuccess(w, data)
-}
-
-// UpdateParams provide parameters for parallelsentence update handler
-type UpdateParams struct {
-	dig.In
-	Update     parallelsentence.Updater
-	Middleware *middleware.Auth
-}
-
-// UpdateRoute provides a route that updates a parallelsentence
-func UpdateRoute(params UpdateParams) *routeutils.Route {
-	handler := updateHandler{params.Update}
-	return &routeutils.Route{
-		Method:  http.MethodPost,
-		Pattern: apipattern.parallelsentenceUpdate,
+		Pattern: apipattern.ParallelsentenceUpdate,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }

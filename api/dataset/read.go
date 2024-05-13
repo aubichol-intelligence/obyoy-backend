@@ -14,11 +14,11 @@ import (
 	"go.uber.org/dig"
 )
 
-type updateHandler struct {
+type readHandler struct {
 	reader dataset.Reader
 }
 
-func (read *updateHandler) decodeURL(
+func (read *readHandler) decodeURL(
 	r *http.Request,
 ) (datasetID string) {
 	// Get user id from url
@@ -26,14 +26,14 @@ func (read *updateHandler) decodeURL(
 	return
 }
 
-func (read *updateHandler) decodeContext(
+func (read *readHandler) decodeContext(
 	r *http.Request,
 ) (userID string) {
 	userID = r.Context().Value("userID").(string)
 	return
 }
 
-func (read *updateHandler) askController(
+func (read *readHandler) askController(
 	req *dto.ReadReq,
 ) (
 	resp *dto.ReadResp,
@@ -43,7 +43,7 @@ func (read *updateHandler) askController(
 	return
 }
 
-func (read *updateHandler) handleError(
+func (read *readHandler) handleError(
 	w http.ResponseWriter,
 	err error,
 ) {
@@ -51,7 +51,7 @@ func (read *updateHandler) handleError(
 	routeutils.ServeError(w, err)
 }
 
-func (read *updateHandler) responseSuccess(
+func (read *readHandler) responseSuccess(
 	w http.ResponseWriter,
 	resp *dto.ReadResp,
 ) {
@@ -63,7 +63,7 @@ func (read *updateHandler) responseSuccess(
 	)
 }
 
-func (read *updateHandler) handleRead(
+func (read *readHandler) handleRead(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
@@ -85,7 +85,7 @@ func (read *updateHandler) handleRead(
 }
 
 // ServeHTTP implements http.Handler
-func (read *updateHandler) ServeHTTP(
+func (read *readHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
@@ -95,7 +95,7 @@ func (read *updateHandler) ServeHTTP(
 }
 
 // ReadRouteParams lists all the parameters for ReadRoute
-type UpdateRouteParams struct {
+type ReadRouteParams struct {
 	dig.In
 	Reader     dataset.Reader
 	Middleware *middleware.Auth

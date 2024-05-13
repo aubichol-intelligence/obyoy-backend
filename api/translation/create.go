@@ -22,7 +22,7 @@ type createHandler struct {
 func (ch *createHandler) decodeBody(
 	body io.ReadCloser,
 ) (
-	translation dto.translation,
+	translation dto.Create,
 	err error,
 ) {
 	err = translation.FromReader(body)
@@ -39,7 +39,7 @@ func (ch *createHandler) handleError(
 }
 
 func (ch *createHandler) askController(
-	translation *dto.translation,
+	translation *dto.Create,
 ) (
 	data *dto.CreateResponse,
 	err error,
@@ -81,7 +81,7 @@ func (ch *createHandler) ServeHTTP(
 		return
 	}
 
-	translationDat.UserID = ch.decodeContext(r)
+	//	translationDat.UserID = ch.decodeContext(r)
 	data, err := ch.askController(&translationDat)
 
 	if err != nil {

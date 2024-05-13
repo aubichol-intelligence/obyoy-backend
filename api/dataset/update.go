@@ -14,11 +14,11 @@ import (
 	"go.uber.org/dig"
 )
 
-type readHandler struct {
-	reader dataset.Updater
+type updateHandler struct {
+	updater dataset.Updater
 }
 
-func (read *readHandler) decodeURL(
+func (read *updateHandler) decodeURL(
 	r *http.Request,
 ) (datasetID string) {
 	// Get user id from url
@@ -26,24 +26,24 @@ func (read *readHandler) decodeURL(
 	return
 }
 
-func (read *readHandler) decodeContext(
+func (read *updateHandler) decodeContext(
 	r *http.Request,
 ) (userID string) {
 	userID = r.Context().Value("userID").(string)
 	return
 }
 
-func (read *readHandler) askController(
+func (read *updateHandler) askController(
 	req *dto.ReadReq,
 ) (
-	resp *dto.ReadResp,
+	resp *dto.UpdateResponse,
 	err error,
 ) {
-	resp, err = read.reader.Read(req)
+	resp, err = read.updater.Update(req)
 	return
 }
 
-func (read *readHandler) handleError(
+func (read *updateHandler) handleError(
 	w http.ResponseWriter,
 	err error,
 ) {
@@ -51,7 +51,7 @@ func (read *readHandler) handleError(
 	routeutils.ServeError(w, err)
 }
 
-func (read *readHandler) responseSuccess(
+func (read *updateHandler) responseSuccess(
 	w http.ResponseWriter,
 	resp *dto.ReadResp,
 ) {
@@ -63,13 +63,13 @@ func (read *readHandler) responseSuccess(
 	)
 }
 
-func (read *readHandler) handleRead(
+func (read *updateHandler) handleRead(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
 
 	req := dto.ReadReq{}
-	req.datasetID = read.decodeURL(r)
+	//	req.datasetID = read.decodeURL(r)
 
 	req.UserID = read.decodeContext(r)
 
@@ -85,7 +85,7 @@ func (read *readHandler) handleRead(
 }
 
 // ServeHTTP implements http.Handler
-func (read *readHandler) ServeHTTP(
+func (read *updateHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
@@ -95,17 +95,17 @@ func (read *readHandler) ServeHTTP(
 }
 
 // ReadRouteParams lists all the parameters for ReadRoute
-type ReadRouteParams struct {
+type UpdateRouteParams struct {
 	dig.In
-	Reader     dataset.Reader
+	Updater    dataset.Updater
 	Middleware *middleware.Auth
 }
 
 // ReadRoute provides a route to get a dataset item
-func ReadRoute(params ReadRouteParams) *routeutils.Route {
+func ReadRoute(params UpdateRouteParams) *routeutils.Route {
 
-	handler := readHandler{
-		reader: params.Reader,
+	handler := updateHandler{
+		updater: params.Updater,
 	}
 
 	return &routeutils.Route{
