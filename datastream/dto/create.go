@@ -12,7 +12,7 @@ import (
 
 // contest provides dto for contest request
 type Create struct {
-	ID         string `json:"contest_id"`
+	ID         string `json:"datastream_id"`
 	ImageURL   string `json:"image_url"`
 	Standings  string `json:"standings"`
 	LandingURL string `json:"landing_url"`
