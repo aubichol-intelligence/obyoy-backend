@@ -1,15 +1,15 @@
-package contest
+package datastream
 
-import "ardent-backend/model"
+import "obyoy-backend/model"
 
-// Contests wraps delivery's functionality
-type Contests interface {
-	Save(*model.Contest) (id string, err error)
-	FindByID(id string) (*model.Contest, error)
-	FindByContestID(id string, skip int64, limit int64) ([]*model.Contest, error)
-	CountByContestID(id string) (int64, error)
-	FindByIDs(id ...string) ([]*model.Contest, error)
-	Search(q string, skip, limit int64) ([]*model.Contest, error)
-	FindByUser(id string, skip, limit int64) ([]*model.Contest, error)
-	FindByDriver(id string) (*model.Contest, error)
+// Datastreams wraps delivery's functionality
+type Datastreams interface {
+	Save(*model.Datastream) (id string, err error)
+	FindByID(id string) (*model.Datastream, error)
+	FindByDatastreamID(id string, skip int64, limit int64) ([]*model.Datastream, error)
+	CountByDatastreamID(id string) (int64, error)
+	FindByIDs(id ...string) ([]*model.Datastream, error)
+	Search(q string, skip, limit int64) ([]*model.Datastream, error)
+	FindByUser(id string, skip, limit int64) ([]*model.Datastream, error)
+	FindByDriver(id string) (*model.Datastream, error)
 }
