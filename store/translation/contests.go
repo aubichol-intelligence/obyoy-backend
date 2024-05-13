@@ -1,15 +1,15 @@
-package contest
+package translation
 
-import "ardent-backend/model"
+import "obyoy-backend/model"
 
-// Contests wraps delivery's functionality
-type Contests interface {
-	Save(*model.Contest) (id string, err error)
-	FindByID(id string) (*model.Contest, error)
-	FindByContestID(id string, skip int64, limit int64) ([]*model.Contest, error)
-	CountByContestID(id string) (int64, error)
-	FindByIDs(id ...string) ([]*model.Contest, error)
-	Search(q string, skip, limit int64) ([]*model.Contest, error)
-	FindByUser(id string, skip, limit int64) ([]*model.Contest, error)
-	FindByDriver(id string) (*model.Contest, error)
+// Translations wraps delivery's functionality
+type Translations interface {
+	Save(*model.Translation) (id string, err error)
+	FindByID(id string) (*model.Translation, error)
+	FindByTranslationID(id string, skip int64, limit int64) ([]*model.Translation, error)
+	CountByTranslationID(id string) (int64, error)
+	FindByIDs(id ...string) ([]*model.Translation, error)
+	Search(q string, skip, limit int64) ([]*model.Translation, error)
+	FindByUser(id string, skip, limit int64) ([]*model.Translation, error)
+	FindByDriver(id string) (*model.Translation, error)
 }
