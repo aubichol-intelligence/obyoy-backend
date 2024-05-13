@@ -3,13 +3,13 @@ package model
 import (
 	"time"
 
-	"ardent-backend/model"
+	"obyoy-backend/model"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// Contest holds db data type for deliveries
-type Contest struct {
+// Datastream holds db data type for deliveries
+type Datastream struct {
 	ID                primitive.ObjectID `bson:"_id,omitempty"`
 	Name              string             `bson:"name,omitempty"`
 	Phone             string             `bson:"phone_number,omitempty"`
@@ -43,7 +43,7 @@ type Credentials struct {
 }
 
 // FromModel converts model data to db data for deliveries
-func (d *Contest) FromModel(modelDelivery *model.Contest) error {
+func (d *Datastream) FromModel(modelDelivery *model.Datastream) error {
 	d.CreatedAt = modelDelivery.CreatedAt
 	d.UpdatedAt = modelDelivery.UpdatedAt
 	d.Note = modelDelivery.Note
@@ -64,13 +64,13 @@ func (d *Contest) FromModel(modelDelivery *model.Contest) error {
 }
 
 // ModelDelivery converts bson to model
-func (d *Contest) ModelContest() *model.Contest {
-	Contest := model.Contest{}
-	Contest.ID = d.ID.Hex()
-	Contest.CreatedAt = d.CreatedAt
-	Contest.UpdatedAt = d.UpdatedAt
+func (d *Datastream) ModelDatastream() *model.Datastream {
+	Datastream := model.Datastream{}
+	Datastream.ID = d.ID.Hex()
+	Datastream.CreatedAt = d.CreatedAt
+	Datastream.UpdatedAt = d.UpdatedAt
 
-	Contest.Note = d.Note
+	Datastream.Note = d.Note
 
-	return &Contest
+	return &Datastream
 }
