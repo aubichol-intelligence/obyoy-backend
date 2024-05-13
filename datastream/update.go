@@ -1,36 +1,36 @@
-package contest
+package datastream
 
 import (
 	"fmt"
 	"time"
 
-	"obyoy-backend/contest/dto"
+	"obyoy-backend/datastream/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	storedatastream "obyoy-backend/store/datastream"
 
 	"github.com/sirupsen/logrus"
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Updater provides an interface for updating contests
+// Updater provides an interface for updating datastreams
 type Updater interface {
 	Update(*dto.Update) (*dto.UpdateResponse, error)
 }
 
-// update updates contest
+// update updates datastream
 type update struct {
-	storecontest storecontest.Contests
-	validate     *validator.Validate
+	storedatastream storedatastream.Datastreams
+	validate        *validator.Validate
 }
 
-func (u *update) toModel(usercontest *dto.Update) (contest *model.Contest) {
+func (u *update) toModel(userdatastream *dto.Update) (datastream *model.Datastream) {
 
-	contest = &model.Contest{}
+	datastream = &model.Datastream{}
 
-	contest.UpdatedAt = time.Now().UTC()
-	contest.ID = usercontest.ID
-	contest.Note = usercontest.Note
+	datastream.UpdatedAt = time.Now().UTC()
+	datastream.ID = userdatastream.ID
+	datastream.Note = userdatastream.Note
 
 	return
 }
@@ -41,33 +41,33 @@ func (u *update) validateData(update *dto.Update) (err error) {
 }
 
 func (u *update) convertData(update *dto.Update) (
-	modelcontest *model.Contest,
+	modeldatastream *model.Datastream,
 ) {
-	modelcontest = u.toModel(update)
+	modeldatastream = u.toModel(update)
 	return
 }
 
-func (u *update) askStore(modelcontest *model.Contest) (
+func (u *update) askStore(modeldatastream *model.Datastream) (
 	id string,
 	err error,
 ) {
-	id, err = u.storecontest.Save(modelcontest)
+	id, err = u.storedatastream.Save(modeldatastream)
 	return
 }
 
 func (u *update) giveResponse(
-	modelcontest *model.Contest,
+	modeldatastream *model.Datastream,
 	id string,
 ) *dto.UpdateResponse {
 	logrus.WithFields(logrus.Fields{
-		//		"id": modelcontest.UserID,
-	}).Debug("User updated contest successfully")
+		//		"id": modeldatastream.UserID,
+	}).Debug("User updated datastream successfully")
 
 	return &dto.UpdateResponse{
-		Message:    "contest updated",
+		Message:    "datastream updated",
 		OK:         true,
 		ID:         id,
-		UpdateTime: modelcontest.UpdatedAt.String(),
+		UpdateTime: modeldatastream.UpdatedAt.String(),
 	}
 }
 
@@ -94,19 +94,19 @@ func (u *update) Update(update *dto.Update) (
 		return nil, err
 	}
 
-	modelcontest := u.convertData(update)
-	id, err := u.askStore(modelcontest)
+	modeldatastream := u.convertData(update)
+	id, err := u.askStore(modeldatastream)
 	if err == nil {
-		return u.giveResponse(modelcontest, id), nil
+		return u.giveResponse(modeldatastream, id), nil
 	}
 
-	logrus.Error("Could not update contest ", err)
+	logrus.Error("Could not update datastream ", err)
 	err = u.giveError()
 	return nil, err
 }
 
 // NewUpdate returns new instance of NewUpdate
-func NewUpdate(store storecontest.Contests, validate *validator.Validate) Updater {
+func NewUpdate(store storedatastream.Datastreams, validate *validator.Validate) Updater {
 	return &update{
 		store,
 		validate,
