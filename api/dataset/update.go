@@ -34,7 +34,7 @@ func (read *updateHandler) decodeContext(
 }
 
 func (read *updateHandler) askController(
-	req *dto.ReadReq,
+	req *dto.Update,
 ) (
 	resp *dto.UpdateResponse,
 	err error,
@@ -53,7 +53,7 @@ func (read *updateHandler) handleError(
 
 func (read *updateHandler) responseSuccess(
 	w http.ResponseWriter,
-	resp *dto.ReadResp,
+	resp *dto.UpdateResponse,
 ) {
 	// Serve a response to the client
 	routeutils.ServeResponse(
@@ -68,7 +68,7 @@ func (read *updateHandler) handleRead(
 	r *http.Request,
 ) {
 
-	req := dto.ReadReq{}
+	req := dto.Update{}
 	//	req.datasetID = read.decodeURL(r)
 
 	req.UserID = read.decodeContext(r)
