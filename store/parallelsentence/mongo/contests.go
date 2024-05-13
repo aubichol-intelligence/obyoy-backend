@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"ardent-backend/model"
-	storecontest "ardent-backend/store/contest"
-	mongoModel "ardent-backend/store/contest/mongo/model"
+	"obyoy-backend/model"
+	storecontest "obyoy-backend/store/contest"
+	mongoModel "obyoy-backend/store/contest/mongo/model"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
