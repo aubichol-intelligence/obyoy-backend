@@ -1,34 +1,34 @@
-package contest
+package translation
 
 import (
-	"obyoy-backend/contest/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	storetranslation "obyoy-backend/store/translation"
+	"obyoy-backend/translation/dto"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 )
 
-// Reader provides an interface for reading contestes
+// Reader provides an interface for reading translationes
 type Reader interface {
 	Read(*dto.ReadReq) (*dto.ReadResp, error)
 }
 
-// contestReader implements Reader interface
-type contestReader struct {
-	contests storecontest.Contests
+// translationReader implements Reader interface
+type translationReader struct {
+	translations storetranslation.Translations
 }
 
-func (read *contestReader) askStore(contestID string) (
-	contest *model.Contest,
+func (read *translationReader) askStore(translationID string) (
+	translation *model.Translation,
 	err error,
 ) {
-	contest, err = read.contests.FindByID(contestID)
+	translation, err = read.translations.FindByID(translationID)
 	return
 }
 
-func (read *contestReader) giveError() (err error) {
+func (read *translationReader) giveError() (err error) {
 	err = &errors.Unknown{
 		errors.Base{
 			"Invalid request", false,
@@ -37,25 +37,25 @@ func (read *contestReader) giveError() (err error) {
 	return
 }
 
-func (read *contestReader) prepareResponse(
-	contest *model.Contest,
+func (read *translationReader) prepareResponse(
+	translation *model.Translation,
 ) (
 	resp dto.ReadResp,
 ) {
-	resp.FromModel(contest)
+	resp.FromModel(translation)
 	return
 }
 
-func (read *contestReader) Read(contestReq *dto.ReadReq) (*dto.ReadResp, error) {
+func (read *translationReader) Read(translationReq *dto.ReadReq) (*dto.ReadResp, error) {
 	//TO-DO: some validation on the input data is required
-	contest, err := read.askStore(contestReq.ContestID)
+	translation, err := read.askStore(translationReq.TranslationID)
 	if err != nil {
-		logrus.Error("Could not find contest error : ", err)
+		logrus.Error("Could not find translation error : ", err)
 		return nil, read.giveError()
 	}
 
 	var resp dto.ReadResp
-	resp = read.prepareResponse(contest)
+	resp = read.prepareResponse(translation)
 
 	return &resp, nil
 }
@@ -63,12 +63,12 @@ func (read *contestReader) Read(contestReq *dto.ReadReq) (*dto.ReadResp, error) 
 // NewReaderParams lists params for the NewReader
 type NewReaderParams struct {
 	dig.In
-	Contest storecontest.Contests
+	Translation storetranslation.Translations
 }
 
 // NewReader provides Reader
 func NewReader(params NewReaderParams) Reader {
-	return &contestReader{
-		contests: params.Contest,
+	return &translationReader{
+		translations: params.Translation,
 	}
 }
