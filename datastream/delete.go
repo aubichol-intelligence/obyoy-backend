@@ -1,34 +1,34 @@
-package contest
+package datastream
 
 import (
 	"fmt"
 	"time"
 
-	"obyoy-backend/contest/dto"
+	"obyoy-backend/datastream/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	storedatastream "obyoy-backend/store/datastream"
 
 	"github.com/sirupsen/logrus"
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Deleter provides an interface for updating contests
+// Deleter provides an interface for updating datastreams
 type Deleter interface {
 	Delete(*dto.Delete) (*dto.DeleteResponse, error)
 }
 
-// delete deletes contest
+// delete deletes datastream
 type delete struct {
-	storecontest storecontest.Contests
-	validate     *validator.Validate
+	storedatastream storedatastream.Datastreams
+	validate        *validator.Validate
 }
 
-func (d *delete) toModel(usercontest *dto.Delete) (contest *model.Contest) {
-	contest = &model.Contest{}
+func (d *delete) toModel(userdatastream *dto.Delete) (datastream *model.Datastream) {
+	datastream = &model.Datastream{}
 
-	contest.UpdatedAt = time.Now().UTC()
-	contest.IsDeleted = true
+	datastream.UpdatedAt = time.Now().UTC()
+	datastream.IsDeleted = true
 	return
 }
 
@@ -38,28 +38,28 @@ func (d *delete) validateData(delete *dto.Delete) (err error) {
 }
 
 func (d *delete) convertData(delete *dto.Delete) (
-	modelcontest *model.Contest,
+	modeldatastream *model.Datastream,
 ) {
-	modelcontest = d.toModel(delete)
+	modeldatastream = d.toModel(delete)
 	return
 }
 
-func (d *delete) askStore(modelcontest *model.Contest) (
+func (d *delete) askStore(modeldatastream *model.Datastream) (
 	id string,
 	err error,
 ) {
-	id, err = d.storecontest.Save(modelcontest)
+	id, err = d.storedatastream.Save(modeldatastream)
 	return
 }
 
 func (d *delete) giveResponse(
-	modelNotice *model.Contest,
+	modelNotice *model.Datastream,
 	id string,
 ) *dto.DeleteResponse {
-	logrus.WithFields(logrus.Fields{}).Debug("User deleted contest successfully")
+	logrus.WithFields(logrus.Fields{}).Debug("User deleted datastream successfully")
 
 	return &dto.DeleteResponse{
-		Message: "contest deleted",
+		Message: "datastream deleted",
 		OK:      true,
 		ID:      id,
 		//		DeleteTime: modelNotice.DeletedAt.String(),
@@ -89,19 +89,19 @@ func (d *delete) Delete(delete *dto.Delete) (
 		return nil, err
 	}
 
-	modelcontest := d.convertData(delete)
-	id, err := d.askStore(modelcontest)
+	modeldatastream := d.convertData(delete)
+	id, err := d.askStore(modeldatastream)
 	if err == nil {
-		return d.giveResponse(modelcontest, id), nil
+		return d.giveResponse(modeldatastream, id), nil
 	}
 
-	logrus.Error("Could not delete contest ", err)
+	logrus.Error("Could not delete datastream ", err)
 	err = d.giveError()
 	return nil, err
 }
 
 // NewDelete returns new instance of NewDelete
-func NewDelete(store storecontest.Contests, validate *validator.Validate) Deleter {
+func NewDelete(store storedatastream.Datastreams, validate *validator.Validate) Deleter {
 	return &delete{
 		store,
 		validate,
