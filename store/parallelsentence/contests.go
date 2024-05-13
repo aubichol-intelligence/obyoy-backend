@@ -1,6 +1,6 @@
 package contest
 
-import "ardent-backend/model"
+import "obyoy-backend/model"
 
 // Contests wraps delivery's functionality
 type Contests interface {
