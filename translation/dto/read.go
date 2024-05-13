@@ -4,8 +4,8 @@ import "obyoy-backend/model"
 
 // ReadReq stores order read request data
 type ReadReq struct {
-	UserID    string
-	ContestID string
+	UserID        string
+	TranslationID string
 }
 
 // ReadReq stores order read request data
@@ -15,7 +15,7 @@ type ReadResp struct {
 }
 
 // FromModel converts the model data to response data
-func (r *ReadResp) FromModel(delivery *model.Contest) {
+func (r *ReadResp) FromModel(delivery *model.Translation) {
 	// r.Name = delivery.Name
 	// r.Phone = delivery.Phone
 	// r.Address = delivery.Address
