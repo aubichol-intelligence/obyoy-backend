@@ -2,14 +2,14 @@ package dataset
 
 import "obyoy-backend/model"
 
-// Contests wraps delivery's functionality
+// Datasets wraps delivery's functionality
 type Datasets interface {
-	Save(*model.Contest) (id string, err error)
-	FindByID(id string) (*model.Contest, error)
-	FindByContestID(id string, skip int64, limit int64) ([]*model.Contest, error)
-	CountByContestID(id string) (int64, error)
-	FindByIDs(id ...string) ([]*model.Contest, error)
-	Search(q string, skip, limit int64) ([]*model.Contest, error)
-	FindByUser(id string, skip, limit int64) ([]*model.Contest, error)
-	FindByDriver(id string) (*model.Contest, error)
+	Save(*model.Dataset) (id string, err error)
+	FindByID(id string) (*model.Dataset, error)
+	FindByDatasetID(id string, skip int64, limit int64) ([]*model.Dataset, error)
+	CountByDatasetID(id string) (int64, error)
+	FindByIDs(id ...string) ([]*model.Dataset, error)
+	Search(q string, skip, limit int64) ([]*model.Dataset, error)
+	FindByUser(id string, skip, limit int64) ([]*model.Dataset, error)
+	FindByDriver(id string) (*model.Dataset, error)
 }
