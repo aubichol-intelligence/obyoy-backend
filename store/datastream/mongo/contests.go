@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"ardent-backend/model"
-	storecontest "ardent-backend/store/contest"
-	mongoModel "ardent-backend/store/contest/mongo/model"
+	"obyoy-backend/model"
+	storedatastream "obyoy-backend/store/datastream"
+	mongoModel "obyoy-backend/store/datastream/mongo/model"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -15,34 +15,34 @@ import (
 	"go.uber.org/dig"
 )
 
-// Authors handles contest related database queries
+// Authors handles datastream related database queries
 type Authors struct {
 	c *mongo.Collection
 }
 
-func (d *Authors) convertData(modelContest *model.Contest) (
-	mongoContest mongoModel.Contest,
+func (d *Authors) convertData(modelDatastream *model.Datastream) (
+	mongoDatastream mongoModel.Datastream,
 	err error,
 ) {
-	err = mongoContest.FromModel(modelContest)
+	err = mongoDatastream.FromModel(modelDatastream)
 	return
 }
 
 // Save saves Authors from model to database
-func (d *Authors) Save(modelContest *model.Contest) (string, error) {
-	mongoContest := mongoModel.Contest{}
+func (d *Authors) Save(modelDatastream *model.Datastream) (string, error) {
+	mongoDatastream := mongoModel.Datastream{}
 	var err error
-	mongoContest, err = d.convertData(modelContest)
+	mongoDatastream, err = d.convertData(modelDatastream)
 	if err != nil {
-		return "", fmt.Errorf("Could not convert model contest to mongo contest: %w", err)
+		return "", fmt.Errorf("Could not convert model datastream to mongo datastream: %w", err)
 	}
 
-	if modelContest.ID == "" {
-		mongoContest.ID = primitive.NewObjectID()
+	if modelDatastream.ID == "" {
+		mongoDatastream.ID = primitive.NewObjectID()
 	}
 
-	filter := bson.M{"_id": mongoContest.ID}
-	update := bson.M{"$set": mongoContest}
+	filter := bson.M{"_id": mongoDatastream.ID}
+	update := bson.M{"$set": mongoDatastream}
 	upsert := true
 
 	_, err = d.c.UpdateOne(
@@ -54,11 +54,11 @@ func (d *Authors) Save(modelContest *model.Contest) (string, error) {
 		},
 	)
 
-	return mongoContest.ID.Hex(), err
+	return mongoDatastream.ID.Hex(), err
 }
 
-// FindByID finds a contest by id
-func (d *Authors) FindByID(id string) (*model.Contest, error) {
+// FindByID finds a datastream by id
+func (d *Authors) FindByID(id string) (*model.Datastream, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid id %s : %w", id, err)
@@ -74,22 +74,22 @@ func (d *Authors) FindByID(id string) (*model.Contest, error) {
 		return nil, err
 	}
 
-	contest := mongoModel.Contest{}
-	if err := result.Decode(&contest); err != nil {
+	datastream := mongoModel.Datastream{}
+	if err := result.Decode(&datastream); err != nil {
 		return nil, fmt.Errorf("Could not decode mongo model to model : %w", err)
 	}
 
-	return contest.ModelContest(), nil
+	return datastream.ModelDatastream(), nil
 }
 
-// FindByContestID finds a contest by contest id
-func (d *Authors) FindByContestID(id string, skip int64, limit int64) ([]*model.Contest, error) {
+// FindByDatastreamID finds a datastream by datastream id
+func (d *Authors) FindByDatastreamID(id string, skip int64, limit int64) ([]*model.Datastream, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid id %s : %w", id, err)
 	}
 
-	filter := bson.M{"contest_id": objectID}
+	filter := bson.M{"datastream_id": objectID}
 
 	findOptions := options.Find()
 	findOptions.SetSort(map[string]int{"updated_at": -1})
@@ -105,8 +105,8 @@ func (d *Authors) FindByContestID(id string, skip int64, limit int64) ([]*model.
 	return d.cursorToDeliveries(cursor)
 }
 
-// CountByContestID returns Authors from contest id
-func (d *Authors) CountByContestID(id string) (int64, error) {
+// CountByDatastreamID returns Authors from datastream id
+func (d *Authors) CountByDatastreamID(id string) (int64, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 
 	if err != nil {
@@ -123,8 +123,8 @@ func (d *Authors) CountByContestID(id string) (int64, error) {
 	return cnt, nil
 }
 
-// FindByIDs returns all the Authors from multiple contest ids
-func (d *Authors) FindByIDs(ids ...string) ([]*model.Contest, error) {
+// FindByIDs returns all the Authors from multiple datastream ids
+func (d *Authors) FindByIDs(ids ...string) ([]*model.Datastream, error) {
 	objectIDs := []primitive.ObjectID{}
 	for _, id := range ids {
 		objectID, err := primitive.ObjectIDFromHex(id)
@@ -150,7 +150,7 @@ func (d *Authors) FindByIDs(ids ...string) ([]*model.Contest, error) {
 }
 
 // Search search for Authors given the text, skip and limit
-func (d *Authors) Search(text string, skip, limit int64) ([]*model.Contest, error) {
+func (d *Authors) Search(text string, skip, limit int64) ([]*model.Datastream, error) {
 	filter := bson.M{"$text": bson.M{"$search": text}}
 	cursor, err := d.c.Find(
 		context.Background(),
@@ -168,7 +168,7 @@ func (d *Authors) Search(text string, skip, limit int64) ([]*model.Contest, erro
 }
 
 // Search search for Authors given the text, skip and limit
-func (d *Authors) FindByUser(id string, skip, limit int64) ([]*model.Contest, error) {
+func (d *Authors) FindByUser(id string, skip, limit int64) ([]*model.Datastream, error) {
 	filter := bson.M{"_id": id}
 	cursor, err := d.c.Find(
 		context.Background(),
@@ -186,7 +186,7 @@ func (d *Authors) FindByUser(id string, skip, limit int64) ([]*model.Contest, er
 }
 
 // Search search for Authors given the text, skip and limit
-func (d *Authors) FindByDriver(id string) (*model.Contest, error) {
+func (d *Authors) FindByDriver(id string) (*model.Datastream, error) {
 	driverID, _ := primitive.ObjectIDFromHex(id)
 	filter := bson.M{"driver_id": driverID, "is_active": true, "state": "pending"}
 
@@ -200,38 +200,38 @@ func (d *Authors) FindByDriver(id string) (*model.Contest, error) {
 		return nil, err
 	}
 
-	contest := mongoModel.Contest{}
-	if err := result.Decode(&contest); err != nil {
+	datastream := mongoModel.Datastream{}
+	if err := result.Decode(&datastream); err != nil {
 		return nil, fmt.Errorf("Could not decode mongo model to model : %w", err)
 	}
 
-	return contest.ModelContest(), nil
+	return datastream.ModelDatastream(), nil
 }
 
 // cursorToDeliveries decodes Authors one by one from the search result
-func (d *Authors) cursorToDeliveries(cursor *mongo.Cursor) ([]*model.Contest, error) {
+func (d *Authors) cursorToDeliveries(cursor *mongo.Cursor) ([]*model.Datastream, error) {
 	defer cursor.Close(context.Background())
-	modelDeliveries := []*model.Contest{}
+	modelDeliveries := []*model.Datastream{}
 
 	for cursor.Next(context.Background()) {
-		contest := mongoModel.Contest{}
-		if err := cursor.Decode(&contest); err != nil {
+		datastream := mongoModel.Datastream{}
+		if err := cursor.Decode(&datastream); err != nil {
 			return nil, fmt.Errorf("Could not decode data from mongo %w", err)
 		}
 
-		modelDeliveries = append(modelDeliveries, contest.ModelContest())
+		modelDeliveries = append(modelDeliveries, datastream.ModelDatastream())
 	}
 
 	return modelDeliveries, nil
 }
 
-// DeliveriesParams provides parameters for contest specific Collection
+// DeliveriesParams provides parameters for datastream specific Collection
 type DeliveriesParams struct {
 	dig.In
-	Collection *mongo.Collection `name:"contests"`
+	Collection *mongo.Collection `name:"datastreams"`
 }
 
 // Store provides store for Authors
-func Store(params DeliveriesParams) storecontest.Contests {
+func Store(params DeliveriesParams) storedatastream.Datastreams {
 	return &Authors{params.Collection}
 }
