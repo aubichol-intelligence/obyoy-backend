@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"ardent-backend/model"
+	"obyoy-backend/model"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
