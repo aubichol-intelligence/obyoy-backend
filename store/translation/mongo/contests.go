@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
-	mongoModel "obyoy-backend/store/contest/mongo/model"
+	storetranslation "obyoy-backend/store/translation"
+	mongoModel "obyoy-backend/store/translation/mongo/model"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -15,34 +15,34 @@ import (
 	"go.uber.org/dig"
 )
 
-// Authors handles contest related database queries
+// Authors handles translation related database queries
 type Authors struct {
 	c *mongo.Collection
 }
 
-func (d *Authors) convertData(modelContest *model.Contest) (
-	mongoContest mongoModel.Contest,
+func (d *Authors) convertData(modelTranslation *model.Translation) (
+	mongoTranslation mongoModel.Translation,
 	err error,
 ) {
-	err = mongoContest.FromModel(modelContest)
+	err = mongoTranslation.FromModel(modelTranslation)
 	return
 }
 
 // Save saves Authors from model to database
-func (d *Authors) Save(modelContest *model.Contest) (string, error) {
-	mongoContest := mongoModel.Contest{}
+func (d *Authors) Save(modelTranslation *model.Translation) (string, error) {
+	mongoTranslation := mongoModel.Translation{}
 	var err error
-	mongoContest, err = d.convertData(modelContest)
+	mongoTranslation, err = d.convertData(modelTranslation)
 	if err != nil {
-		return "", fmt.Errorf("Could not convert model contest to mongo contest: %w", err)
+		return "", fmt.Errorf("Could not convert model translation to mongo translation: %w", err)
 	}
 
-	if modelContest.ID == "" {
-		mongoContest.ID = primitive.NewObjectID()
+	if modelTranslation.ID == "" {
+		mongoTranslation.ID = primitive.NewObjectID()
 	}
 
-	filter := bson.M{"_id": mongoContest.ID}
-	update := bson.M{"$set": mongoContest}
+	filter := bson.M{"_id": mongoTranslation.ID}
+	update := bson.M{"$set": mongoTranslation}
 	upsert := true
 
 	_, err = d.c.UpdateOne(
@@ -54,11 +54,11 @@ func (d *Authors) Save(modelContest *model.Contest) (string, error) {
 		},
 	)
 
-	return mongoContest.ID.Hex(), err
+	return mongoTranslation.ID.Hex(), err
 }
 
-// FindByID finds a contest by id
-func (d *Authors) FindByID(id string) (*model.Contest, error) {
+// FindByID finds a translation by id
+func (d *Authors) FindByID(id string) (*model.Translation, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid id %s : %w", id, err)
@@ -74,22 +74,22 @@ func (d *Authors) FindByID(id string) (*model.Contest, error) {
 		return nil, err
 	}
 
-	contest := mongoModel.Contest{}
-	if err := result.Decode(&contest); err != nil {
+	translation := mongoModel.Translation{}
+	if err := result.Decode(&translation); err != nil {
 		return nil, fmt.Errorf("Could not decode mongo model to model : %w", err)
 	}
 
-	return contest.ModelContest(), nil
+	return translation.ModelTranslation(), nil
 }
 
-// FindByContestID finds a contest by contest id
-func (d *Authors) FindByContestID(id string, skip int64, limit int64) ([]*model.Contest, error) {
+// FindByTranslationID finds a translation by translation id
+func (d *Authors) FindByTranslationID(id string, skip int64, limit int64) ([]*model.Translation, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid id %s : %w", id, err)
 	}
 
-	filter := bson.M{"contest_id": objectID}
+	filter := bson.M{"translation_id": objectID}
 
 	findOptions := options.Find()
 	findOptions.SetSort(map[string]int{"updated_at": -1})
@@ -105,8 +105,8 @@ func (d *Authors) FindByContestID(id string, skip int64, limit int64) ([]*model.
 	return d.cursorToDeliveries(cursor)
 }
 
-// CountByContestID returns Authors from contest id
-func (d *Authors) CountByContestID(id string) (int64, error) {
+// CountByTranslationID returns Authors from translation id
+func (d *Authors) CountByTranslationID(id string) (int64, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 
 	if err != nil {
@@ -123,8 +123,8 @@ func (d *Authors) CountByContestID(id string) (int64, error) {
 	return cnt, nil
 }
 
-// FindByIDs returns all the Authors from multiple contest ids
-func (d *Authors) FindByIDs(ids ...string) ([]*model.Contest, error) {
+// FindByIDs returns all the Authors from multiple translation ids
+func (d *Authors) FindByIDs(ids ...string) ([]*model.Translation, error) {
 	objectIDs := []primitive.ObjectID{}
 	for _, id := range ids {
 		objectID, err := primitive.ObjectIDFromHex(id)
@@ -150,7 +150,7 @@ func (d *Authors) FindByIDs(ids ...string) ([]*model.Contest, error) {
 }
 
 // Search search for Authors given the text, skip and limit
-func (d *Authors) Search(text string, skip, limit int64) ([]*model.Contest, error) {
+func (d *Authors) Search(text string, skip, limit int64) ([]*model.Translation, error) {
 	filter := bson.M{"$text": bson.M{"$search": text}}
 	cursor, err := d.c.Find(
 		context.Background(),
@@ -168,7 +168,7 @@ func (d *Authors) Search(text string, skip, limit int64) ([]*model.Contest, erro
 }
 
 // Search search for Authors given the text, skip and limit
-func (d *Authors) FindByUser(id string, skip, limit int64) ([]*model.Contest, error) {
+func (d *Authors) FindByUser(id string, skip, limit int64) ([]*model.Translation, error) {
 	filter := bson.M{"_id": id}
 	cursor, err := d.c.Find(
 		context.Background(),
@@ -186,7 +186,7 @@ func (d *Authors) FindByUser(id string, skip, limit int64) ([]*model.Contest, er
 }
 
 // Search search for Authors given the text, skip and limit
-func (d *Authors) FindByDriver(id string) (*model.Contest, error) {
+func (d *Authors) FindByDriver(id string) (*model.Translation, error) {
 	driverID, _ := primitive.ObjectIDFromHex(id)
 	filter := bson.M{"driver_id": driverID, "is_active": true, "state": "pending"}
 
@@ -200,38 +200,38 @@ func (d *Authors) FindByDriver(id string) (*model.Contest, error) {
 		return nil, err
 	}
 
-	contest := mongoModel.Contest{}
-	if err := result.Decode(&contest); err != nil {
+	translation := mongoModel.Translation{}
+	if err := result.Decode(&translation); err != nil {
 		return nil, fmt.Errorf("Could not decode mongo model to model : %w", err)
 	}
 
-	return contest.ModelContest(), nil
+	return translation.ModelTranslation(), nil
 }
 
 // cursorToDeliveries decodes Authors one by one from the search result
-func (d *Authors) cursorToDeliveries(cursor *mongo.Cursor) ([]*model.Contest, error) {
+func (d *Authors) cursorToDeliveries(cursor *mongo.Cursor) ([]*model.Translation, error) {
 	defer cursor.Close(context.Background())
-	modelDeliveries := []*model.Contest{}
+	modelDeliveries := []*model.Translation{}
 
 	for cursor.Next(context.Background()) {
-		contest := mongoModel.Contest{}
-		if err := cursor.Decode(&contest); err != nil {
+		translation := mongoModel.Translation{}
+		if err := cursor.Decode(&translation); err != nil {
 			return nil, fmt.Errorf("Could not decode data from mongo %w", err)
 		}
 
-		modelDeliveries = append(modelDeliveries, contest.ModelContest())
+		modelDeliveries = append(modelDeliveries, translation.ModelTranslation())
 	}
 
 	return modelDeliveries, nil
 }
 
-// DeliveriesParams provides parameters for contest specific Collection
+// DeliveriesParams provides parameters for translation specific Collection
 type DeliveriesParams struct {
 	dig.In
-	Collection *mongo.Collection `name:"contests"`
+	Collection *mongo.Collection `name:"translations"`
 }
 
 // Store provides store for Authors
-func Store(params DeliveriesParams) storecontest.Contests {
+func Store(params DeliveriesParams) storetranslation.Translations {
 	return &Authors{params.Collection}
 }
