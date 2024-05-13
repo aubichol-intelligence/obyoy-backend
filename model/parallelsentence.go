@@ -6,7 +6,7 @@ import (
 )
 
 // Translation defines user's translation
-type Datastream struct {
+type Parallelsentence struct {
 	ID        string    `json:"id"`
 	Key       string    `json:"key"`
 	UserID    string    `json:"user_id"`
@@ -15,12 +15,12 @@ type Datastream struct {
 	UpdatedAt time.Time `json":"updated_at"`
 }
 
-func (s *Datastream) ToByte() ([]byte, error) {
+func (s *Parallelsentence) ToByte() ([]byte, error) {
 	return json.Marshal(s)
 }
 
 //Username  string
 
-func (s *Datastream) FromBytes(bytes []byte) error {
+func (s *Parallelsentence) FromBytes(bytes []byte) error {
 	return json.Unmarshal(bytes, s)
 }
