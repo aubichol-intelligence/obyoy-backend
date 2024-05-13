@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"time"
 
-	"obyoy-backend/contest/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
 	storecontest "obyoy-backend/store/contest"
+	"obyoy-backend/translation/dto"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
