@@ -1,4 +1,4 @@
-package contest
+package parallelsentence
 
 import (
 	"fmt"
@@ -7,35 +7,35 @@ import (
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
 	"obyoy-backend/parallelsentence/dto"
-	storecontest "obyoy-backend/store/contest"
+	storeparallelsentence "obyoy-backend/store/parallelsentence"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Creater provides create method for creating contest
+// Creater provides create method for creating parallelsentence
 type Creater interface {
 	Create(create *dto.Create) (*dto.CreateResponse, error)
 }
 
-// create creates contest
+// create creates parallelsentence
 type create struct {
-	storecontest storecontest.Contests
-	validate     *validator.Validate
+	storeparallelsentence storeparallelsentence.Parallelsentences
+	validate              *validator.Validate
 }
 
-func (c *create) toModel(usercontest *dto.Create) (
-	contest *model.Contest,
+func (c *create) toModel(userparallelsentence *dto.Create) (
+	parallelsentence *model.Parallelsentence,
 ) {
-	contest = &model.Contest{}
-	contest.CreatedAt = time.Now().UTC()
-	contest.UpdatedAt = contest.CreatedAt
-	contest.ID = usercontest.ID
-	contest.LandingURL = usercontest.LandingURL
-	contest.ImageURL = usercontest.ImageURL
-	contest.Name = usercontest.Name
-	contest.Stadings = usercontest.Standings
+	parallelsentence = &model.Parallelsentence{}
+	parallelsentence.CreatedAt = time.Now().UTC()
+	parallelsentence.UpdatedAt = parallelsentence.CreatedAt
+	parallelsentence.ID = userparallelsentence.ID
+	parallelsentence.LandingURL = userparallelsentence.LandingURL
+	parallelsentence.ImageURL = userparallelsentence.ImageURL
+	parallelsentence.Name = userparallelsentence.Name
+	parallelsentence.Stadings = userparallelsentence.Standings
 
 	return
 }
@@ -48,35 +48,35 @@ func (c *create) validateData(create *dto.Create) (
 }
 
 func (c *create) convertData(create *dto.Create) (
-	modelcontest *model.Contest,
+	modelparallelsentence *model.Parallelsentence,
 ) {
-	modelcontest = c.toModel(create)
+	modelparallelsentence = c.toModel(create)
 	return
 }
 
-func (c *create) askStore(model *model.Contest) (
+func (c *create) askStore(model *model.Parallelsentence) (
 	id string,
 	err error,
 ) {
-	id, err = c.storecontest.Save(model)
+	id, err = c.storeparallelsentence.Save(model)
 	return
 }
 
-func (c *create) giveResponse(modelcontest *model.Contest, id string) (
+func (c *create) giveResponse(modelparallelsentence *model.Parallelsentence, id string) (
 	*dto.CreateResponse, error,
 ) {
-	logrus.WithFields(logrus.Fields{}).Debug("User created contest successfully")
+	logrus.WithFields(logrus.Fields{}).Debug("User created parallelsentence successfully")
 
 	return &dto.CreateResponse{
-		Message: "contest created",
+		Message: "parallelsentence created",
 		OK:      true,
-		//		contestTime: modelcontest.CreatedAt.String(),
+		//		parallelsentenceTime: modelparallelsentence.CreatedAt.String(),
 		ID: id,
 	}, nil
 }
 
 func (c *create) giveError() (err error) {
-	logrus.Error("Could not create contest. Error: ", err)
+	logrus.Error("Could not create parallelsentence. Error: ", err)
 	errResp := errors.Unknown{
 		Base: errors.Base{
 			OK:      false,
@@ -97,10 +97,10 @@ func (c *create) Create(create *dto.Create) (
 		return nil, err
 	}
 
-	modelcontest := c.convertData(create)
-	id, err := c.askStore(modelcontest)
+	modelparallelsentence := c.convertData(create)
+	id, err := c.askStore(modelparallelsentence)
 	if err == nil {
-		return c.giveResponse(modelcontest, id)
+		return c.giveResponse(modelparallelsentence, id)
 	}
 
 	err = c.giveError()
@@ -110,14 +110,14 @@ func (c *create) Create(create *dto.Create) (
 // CreateParams give parameters for NewCreate
 type CreateParams struct {
 	dig.In
-	Storecontests storecontest.Contests
-	Validate      *validator.Validate
+	Storeparallelsentences storeparallelsentence.Parallelsentences
+	Validate               *validator.Validate
 }
 
 // NewCreate returns new instance of NewCreate
 func NewCreate(params CreateParams) Creater {
 	return &create{
-		params.Storecontests,
+		params.Storeparallelsentences,
 		params.Validate,
 	}
 }
