@@ -1,41 +1,41 @@
-package contest
+package datastream
 
 import (
 	"fmt"
 	"time"
 
-	"obyoy-backend/contest/dto"
+	"obyoy-backend/datastream/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	storedatastream "obyoy-backend/store/datastream"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Creater provides create method for creating contest
+// Creater provides create method for creating datastream
 type Creater interface {
 	Create(create *dto.Create) (*dto.CreateResponse, error)
 }
 
-// create creates contest
+// create creates datastream
 type create struct {
-	storecontest storecontest.Contests
-	validate     *validator.Validate
+	storedatastream storedatastream.Datastreams
+	validate        *validator.Validate
 }
 
-func (c *create) toModel(usercontest *dto.Create) (
-	contest *model.Contest,
+func (c *create) toModel(userdatastream *dto.Create) (
+	datastream *model.Datastream,
 ) {
-	contest = &model.Contest{}
-	contest.CreatedAt = time.Now().UTC()
-	contest.UpdatedAt = contest.CreatedAt
-	contest.ID = usercontest.ID
-	contest.LandingURL = usercontest.LandingURL
-	contest.ImageURL = usercontest.ImageURL
-	contest.Name = usercontest.Name
-	contest.Stadings = usercontest.Standings
+	datastream = &model.Datastream{}
+	datastream.CreatedAt = time.Now().UTC()
+	datastream.UpdatedAt = datastream.CreatedAt
+	datastream.ID = userdatastream.ID
+	datastream.LandingURL = userdatastream.LandingURL
+	datastream.ImageURL = userdatastream.ImageURL
+	datastream.Name = userdatastream.Name
+	datastream.Stadings = userdatastream.Standings
 
 	return
 }
@@ -48,35 +48,35 @@ func (c *create) validateData(create *dto.Create) (
 }
 
 func (c *create) convertData(create *dto.Create) (
-	modelcontest *model.Contest,
+	modeldatastream *model.Datastream,
 ) {
-	modelcontest = c.toModel(create)
+	modeldatastream = c.toModel(create)
 	return
 }
 
-func (c *create) askStore(model *model.Contest) (
+func (c *create) askStore(model *model.Datastream) (
 	id string,
 	err error,
 ) {
-	id, err = c.storecontest.Save(model)
+	id, err = c.storedatastream.Save(model)
 	return
 }
 
-func (c *create) giveResponse(modelcontest *model.Contest, id string) (
+func (c *create) giveResponse(modeldatastream *model.Datastream, id string) (
 	*dto.CreateResponse, error,
 ) {
-	logrus.WithFields(logrus.Fields{}).Debug("User created contest successfully")
+	logrus.WithFields(logrus.Fields{}).Debug("User created datastream successfully")
 
 	return &dto.CreateResponse{
-		Message: "contest created",
+		Message: "datastream created",
 		OK:      true,
-		//		contestTime: modelcontest.CreatedAt.String(),
+		//		datastreamTime: modeldatastream.CreatedAt.String(),
 		ID: id,
 	}, nil
 }
 
 func (c *create) giveError() (err error) {
-	logrus.Error("Could not create contest. Error: ", err)
+	logrus.Error("Could not create datastream. Error: ", err)
 	errResp := errors.Unknown{
 		Base: errors.Base{
 			OK:      false,
@@ -97,10 +97,10 @@ func (c *create) Create(create *dto.Create) (
 		return nil, err
 	}
 
-	modelcontest := c.convertData(create)
-	id, err := c.askStore(modelcontest)
+	modeldatastream := c.convertData(create)
+	id, err := c.askStore(modeldatastream)
 	if err == nil {
-		return c.giveResponse(modelcontest, id)
+		return c.giveResponse(modeldatastream, id)
 	}
 
 	err = c.giveError()
@@ -110,14 +110,14 @@ func (c *create) Create(create *dto.Create) (
 // CreateParams give parameters for NewCreate
 type CreateParams struct {
 	dig.In
-	Storecontests storecontest.Contests
-	Validate      *validator.Validate
+	Storedatastreams storedatastream.Datastreams
+	Validate         *validator.Validate
 }
 
 // NewCreate returns new instance of NewCreate
 func NewCreate(params CreateParams) Creater {
 	return &create{
-		params.Storecontests,
+		params.Storedatastreams,
 		params.Validate,
 	}
 }
