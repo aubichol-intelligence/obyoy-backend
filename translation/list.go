@@ -1,34 +1,34 @@
-package contest
+package translation
 
 import (
-	"obyoy-backend/contest/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	storetranslation "obyoy-backend/store/translation"
+	"obyoy-backend/translation/dto"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 )
 
-// Reader provides an interface for reading contestes
+// Reader provides an interface for reading translationes
 type Lister interface {
 	List(req *dto.ListReq, skip int64, limit int64) ([]dto.ReadResp, error)
 }
 
-// contestReader implements Reader interface
-type contestLister struct {
-	contests storecontest.Contests
+// translationReader implements Reader interface
+type translationLister struct {
+	translations storetranslation.Translations
 }
 
-func (list *contestLister) askStore(state string, skip int64, limit int64) (
-	contest []*model.Contest,
+func (list *translationLister) askStore(state string, skip int64, limit int64) (
+	translation []*model.Translation,
 	err error,
 ) {
-	contest, err = list.contests.FindByContestID(state, skip, limit)
+	translation, err = list.translations.FindByTranslationID(state, skip, limit)
 	return
 }
 
-func (list *contestLister) giveError() (err error) {
+func (list *translationLister) giveError() (err error) {
 	err = &errors.Unknown{
 		errors.Base{
 			"Invalid request", false,
@@ -37,30 +37,30 @@ func (list *contestLister) giveError() (err error) {
 	return
 }
 
-func (list *contestLister) prepareResponse(
-	contests []*model.Contest,
+func (list *translationLister) prepareResponse(
+	translations []*model.Translation,
 ) (
 	resp []dto.ReadResp,
 ) {
-	for _, contest := range contests {
+	for _, translation := range translations {
 		var tmp dto.ReadResp
-		tmp.FromModel(contest)
+		tmp.FromModel(translation)
 		resp = append(resp, tmp)
 	}
-	//resp.FromModel(contest)
+	//resp.FromModel(translation)
 	return
 }
 
-func (read *contestLister) List(contestReq *dto.ListReq, skip int64, limit int64) ([]dto.ReadResp, error) {
+func (read *translationLister) List(translationReq *dto.ListReq, skip int64, limit int64) ([]dto.ReadResp, error) {
 	//TO-DO: some validation on the input data is required
-	contests, err := read.askStore(contestReq.UserID, skip, limit)
+	translations, err := read.askStore(translationReq.UserID, skip, limit)
 	if err != nil {
-		logrus.Error("Could not find contest error : ", err)
+		logrus.Error("Could not find translation error : ", err)
 		return nil, read.giveError()
 	}
 
 	var resp []dto.ReadResp
-	resp = read.prepareResponse(contests)
+	resp = read.prepareResponse(translations)
 
 	return resp, nil
 }
@@ -68,12 +68,12 @@ func (read *contestLister) List(contestReq *dto.ListReq, skip int64, limit int64
 // NewReaderParams lists params for the NewReader
 type NewListerParams struct {
 	dig.In
-	Contest storecontest.Contests
+	Translation storetranslation.Translations
 }
 
 // NewReader provides Reader
 func NewList(params NewReaderParams) Lister {
-	return &contestLister{
-		contests: params.Contest,
+	return &translationLister{
+		translations: params.Translation,
 	}
 }
