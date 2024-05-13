@@ -38,7 +38,7 @@ func MongoCollections(c container.Container) {
 	registerCollectionProvider(c, "tokens")
 	registerCollectionProvider(c, "datasets")
 	registerCollectionProvider(c, "datastreams")
-	registerCollectionProvider(c, "trnslations")
+	registerCollectionProvider(c, "translations")
 	registerCollectionProvider(c, "parallelsentences")
 }
 
