@@ -22,7 +22,7 @@ type createHandler struct {
 func (ch *createHandler) decodeBody(
 	body io.ReadCloser,
 ) (
-	datastream dto.datastream,
+	datastream dto.Datastream,
 	err error,
 ) {
 	err = datastream.FromReader(body)
