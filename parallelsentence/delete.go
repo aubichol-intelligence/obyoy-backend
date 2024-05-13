@@ -1,34 +1,34 @@
-package contest
+package parallelsentence
 
 import (
 	"fmt"
 	"time"
 
-	"obyoy-backend/contest/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	"obyoy-backend/parallelsentence/dto"
+	storeparallelsentence "obyoy-backend/store/parallelsentence"
 
 	"github.com/sirupsen/logrus"
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Deleter provides an interface for updating contests
+// Deleter provides an interface for updating parallelsentences
 type Deleter interface {
 	Delete(*dto.Delete) (*dto.DeleteResponse, error)
 }
 
-// delete deletes contest
+// delete deletes parallelsentence
 type delete struct {
-	storecontest storecontest.Contests
-	validate     *validator.Validate
+	storeparallelsentence storeparallelsentence.Parallelsentences
+	validate              *validator.Validate
 }
 
-func (d *delete) toModel(usercontest *dto.Delete) (contest *model.Contest) {
-	contest = &model.Contest{}
+func (d *delete) toModel(userparallelsentence *dto.Delete) (parallelsentence *model.Parallelsentence) {
+	parallelsentence = &model.Parallelsentence{}
 
-	contest.UpdatedAt = time.Now().UTC()
-	contest.IsDeleted = true
+	parallelsentence.UpdatedAt = time.Now().UTC()
+	parallelsentence.IsDeleted = true
 	return
 }
 
@@ -38,28 +38,28 @@ func (d *delete) validateData(delete *dto.Delete) (err error) {
 }
 
 func (d *delete) convertData(delete *dto.Delete) (
-	modelcontest *model.Contest,
+	modelparallelsentence *model.Parallelsentence,
 ) {
-	modelcontest = d.toModel(delete)
+	modelparallelsentence = d.toModel(delete)
 	return
 }
 
-func (d *delete) askStore(modelcontest *model.Contest) (
+func (d *delete) askStore(modelparallelsentence *model.Parallelsentence) (
 	id string,
 	err error,
 ) {
-	id, err = d.storecontest.Save(modelcontest)
+	id, err = d.storeparallelsentence.Save(modelparallelsentence)
 	return
 }
 
 func (d *delete) giveResponse(
-	modelNotice *model.Contest,
+	modelNotice *model.Parallelsentence,
 	id string,
 ) *dto.DeleteResponse {
-	logrus.WithFields(logrus.Fields{}).Debug("User deleted contest successfully")
+	logrus.WithFields(logrus.Fields{}).Debug("User deleted parallelsentence successfully")
 
 	return &dto.DeleteResponse{
-		Message: "contest deleted",
+		Message: "parallelsentence deleted",
 		OK:      true,
 		ID:      id,
 		//		DeleteTime: modelNotice.DeletedAt.String(),
@@ -89,19 +89,19 @@ func (d *delete) Delete(delete *dto.Delete) (
 		return nil, err
 	}
 
-	modelcontest := d.convertData(delete)
-	id, err := d.askStore(modelcontest)
+	modelparallelsentence := d.convertData(delete)
+	id, err := d.askStore(modelparallelsentence)
 	if err == nil {
-		return d.giveResponse(modelcontest, id), nil
+		return d.giveResponse(modelparallelsentence, id), nil
 	}
 
-	logrus.Error("Could not delete contest ", err)
+	logrus.Error("Could not delete parallelsentence ", err)
 	err = d.giveError()
 	return nil, err
 }
 
 // NewDelete returns new instance of NewDelete
-func NewDelete(store storecontest.Contests, validate *validator.Validate) Deleter {
+func NewDelete(store storeparallelsentence.Parallelsentences, validate *validator.Validate) Deleter {
 	return &delete{
 		store,
 		validate,
