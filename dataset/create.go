@@ -1,41 +1,41 @@
-package contest
+package dataset
 
 import (
 	"fmt"
 	"time"
 
-	"obyoy-backend/contest/dto"
+	"obyoy-backend/dataset/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	storedataset "obyoy-backend/store/dataset"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Creater provides create method for creating contest
+// Creater provides create method for creating dataset
 type Creater interface {
 	Create(create *dto.Create) (*dto.CreateResponse, error)
 }
 
-// create creates contest
+// create creates dataset
 type create struct {
-	storecontest storecontest.Contests
+	storedataset storedataset.Datasets
 	validate     *validator.Validate
 }
 
-func (c *create) toModel(usercontest *dto.Create) (
-	contest *model.Contest,
+func (c *create) toModel(userdataset *dto.Create) (
+	dataset *model.Dataset,
 ) {
-	contest = &model.Contest{}
-	contest.CreatedAt = time.Now().UTC()
-	contest.UpdatedAt = contest.CreatedAt
-	contest.ID = usercontest.ID
-	contest.LandingURL = usercontest.LandingURL
-	contest.ImageURL = usercontest.ImageURL
-	contest.Name = usercontest.Name
-	contest.Stadings = usercontest.Standings
+	dataset = &model.Dataset{}
+	dataset.CreatedAt = time.Now().UTC()
+	dataset.UpdatedAt = dataset.CreatedAt
+	dataset.ID = userdataset.ID
+	dataset.LandingURL = userdataset.LandingURL
+	dataset.ImageURL = userdataset.ImageURL
+	dataset.Name = userdataset.Name
+	dataset.Stadings = userdataset.Standings
 
 	return
 }
@@ -48,35 +48,35 @@ func (c *create) validateData(create *dto.Create) (
 }
 
 func (c *create) convertData(create *dto.Create) (
-	modelcontest *model.Contest,
+	modeldataset *model.Dataset,
 ) {
-	modelcontest = c.toModel(create)
+	modeldataset = c.toModel(create)
 	return
 }
 
-func (c *create) askStore(model *model.Contest) (
+func (c *create) askStore(model *model.Dataset) (
 	id string,
 	err error,
 ) {
-	id, err = c.storecontest.Save(model)
+	id, err = c.storedataset.Save(model)
 	return
 }
 
-func (c *create) giveResponse(modelcontest *model.Contest, id string) (
+func (c *create) giveResponse(modeldataset *model.Dataset, id string) (
 	*dto.CreateResponse, error,
 ) {
-	logrus.WithFields(logrus.Fields{}).Debug("User created contest successfully")
+	logrus.WithFields(logrus.Fields{}).Debug("User created dataset successfully")
 
 	return &dto.CreateResponse{
-		Message: "contest created",
+		Message: "dataset created",
 		OK:      true,
-		//		contestTime: modelcontest.CreatedAt.String(),
+		//		datasetTime: modeldataset.CreatedAt.String(),
 		ID: id,
 	}, nil
 }
 
 func (c *create) giveError() (err error) {
-	logrus.Error("Could not create contest. Error: ", err)
+	logrus.Error("Could not create dataset. Error: ", err)
 	errResp := errors.Unknown{
 		Base: errors.Base{
 			OK:      false,
@@ -97,10 +97,10 @@ func (c *create) Create(create *dto.Create) (
 		return nil, err
 	}
 
-	modelcontest := c.convertData(create)
-	id, err := c.askStore(modelcontest)
+	modeldataset := c.convertData(create)
+	id, err := c.askStore(modeldataset)
 	if err == nil {
-		return c.giveResponse(modelcontest, id)
+		return c.giveResponse(modeldataset, id)
 	}
 
 	err = c.giveError()
@@ -110,14 +110,14 @@ func (c *create) Create(create *dto.Create) (
 // CreateParams give parameters for NewCreate
 type CreateParams struct {
 	dig.In
-	Storecontests storecontest.Contests
+	Storedatasets storedataset.Datasets
 	Validate      *validator.Validate
 }
 
 // NewCreate returns new instance of NewCreate
 func NewCreate(params CreateParams) Creater {
 	return &create{
-		params.Storecontests,
+		params.Storedatasets,
 		params.Validate,
 	}
 }
