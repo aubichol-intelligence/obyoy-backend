@@ -30,7 +30,7 @@ func (u *update) toModel(userdatastream *dto.Update) (datastream *model.Datastre
 
 	datastream.UpdatedAt = time.Now().UTC()
 	datastream.ID = userdatastream.ID
-	datastream.Note = userdatastream.Note
+	//	datastream.Note = userdatastream.Note
 
 	return
 }
