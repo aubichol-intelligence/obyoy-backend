@@ -1,34 +1,34 @@
-package contest
+package datastream
 
 import (
-	"obyoy-backend/contest/dto"
+	"obyoy-backend/datastream/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	storedatastream "obyoy-backend/store/datastream"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 )
 
-// Reader provides an interface for reading contestes
+// Reader provides an interface for reading datastreames
 type Reader interface {
 	Read(*dto.ReadReq) (*dto.ReadResp, error)
 }
 
-// contestReader implements Reader interface
-type contestReader struct {
-	contests storecontest.Contests
+// datastreamReader implements Reader interface
+type datastreamReader struct {
+	datastreams storedatastream.Datastreams
 }
 
-func (read *contestReader) askStore(contestID string) (
-	contest *model.Contest,
+func (read *datastreamReader) askStore(datastreamID string) (
+	datastream *model.Datastream,
 	err error,
 ) {
-	contest, err = read.contests.FindByID(contestID)
+	datastream, err = read.datastreams.FindByID(datastreamID)
 	return
 }
 
-func (read *contestReader) giveError() (err error) {
+func (read *datastreamReader) giveError() (err error) {
 	err = &errors.Unknown{
 		errors.Base{
 			"Invalid request", false,
@@ -37,25 +37,25 @@ func (read *contestReader) giveError() (err error) {
 	return
 }
 
-func (read *contestReader) prepareResponse(
-	contest *model.Contest,
+func (read *datastreamReader) prepareResponse(
+	datastream *model.Datastream,
 ) (
 	resp dto.ReadResp,
 ) {
-	resp.FromModel(contest)
+	resp.FromModel(datastream)
 	return
 }
 
-func (read *contestReader) Read(contestReq *dto.ReadReq) (*dto.ReadResp, error) {
+func (read *datastreamReader) Read(datastreamReq *dto.ReadReq) (*dto.ReadResp, error) {
 	//TO-DO: some validation on the input data is required
-	contest, err := read.askStore(contestReq.ContestID)
+	datastream, err := read.askStore(datastreamReq.DatastreamID)
 	if err != nil {
-		logrus.Error("Could not find contest error : ", err)
+		logrus.Error("Could not find datastream error : ", err)
 		return nil, read.giveError()
 	}
 
 	var resp dto.ReadResp
-	resp = read.prepareResponse(contest)
+	resp = read.prepareResponse(datastream)
 
 	return &resp, nil
 }
@@ -63,12 +63,12 @@ func (read *contestReader) Read(contestReq *dto.ReadReq) (*dto.ReadResp, error) 
 // NewReaderParams lists params for the NewReader
 type NewReaderParams struct {
 	dig.In
-	Contest storecontest.Contests
+	Datastream storedatastream.Datastreams
 }
 
 // NewReader provides Reader
 func NewReader(params NewReaderParams) Reader {
-	return &contestReader{
-		contests: params.Contest,
+	return &datastreamReader{
+		datastreams: params.Datastream,
 	}
 }
