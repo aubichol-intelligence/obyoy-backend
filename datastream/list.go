@@ -1,34 +1,34 @@
-package contest
+package datastream
 
 import (
-	"obyoy-backend/contest/dto"
+	"obyoy-backend/datastream/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	storedatastream "obyoy-backend/store/datastream"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 )
 
-// Reader provides an interface for reading contestes
+// Reader provides an interface for reading datastreames
 type Lister interface {
 	List(req *dto.ListReq, skip int64, limit int64) ([]dto.ReadResp, error)
 }
 
-// contestReader implements Reader interface
-type contestLister struct {
-	contests storecontest.Contests
+// datastreamReader implements Reader interface
+type datastreamLister struct {
+	datastreams storedatastream.Datastreams
 }
 
-func (list *contestLister) askStore(state string, skip int64, limit int64) (
-	contest []*model.Contest,
+func (list *datastreamLister) askStore(state string, skip int64, limit int64) (
+	datastream []*model.Datastream,
 	err error,
 ) {
-	contest, err = list.contests.FindByContestID(state, skip, limit)
+	datastream, err = list.datastreams.FindByDatastreamID(state, skip, limit)
 	return
 }
 
-func (list *contestLister) giveError() (err error) {
+func (list *datastreamLister) giveError() (err error) {
 	err = &errors.Unknown{
 		errors.Base{
 			"Invalid request", false,
@@ -37,30 +37,30 @@ func (list *contestLister) giveError() (err error) {
 	return
 }
 
-func (list *contestLister) prepareResponse(
-	contests []*model.Contest,
+func (list *datastreamLister) prepareResponse(
+	datastreams []*model.Datastream,
 ) (
 	resp []dto.ReadResp,
 ) {
-	for _, contest := range contests {
+	for _, datastream := range datastreams {
 		var tmp dto.ReadResp
-		tmp.FromModel(contest)
+		tmp.FromModel(datastream)
 		resp = append(resp, tmp)
 	}
-	//resp.FromModel(contest)
+	//resp.FromModel(datastream)
 	return
 }
 
-func (read *contestLister) List(contestReq *dto.ListReq, skip int64, limit int64) ([]dto.ReadResp, error) {
+func (read *datastreamLister) List(datastreamReq *dto.ListReq, skip int64, limit int64) ([]dto.ReadResp, error) {
 	//TO-DO: some validation on the input data is required
-	contests, err := read.askStore(contestReq.UserID, skip, limit)
+	datastreams, err := read.askStore(datastreamReq.UserID, skip, limit)
 	if err != nil {
-		logrus.Error("Could not find contest error : ", err)
+		logrus.Error("Could not find datastream error : ", err)
 		return nil, read.giveError()
 	}
 
 	var resp []dto.ReadResp
-	resp = read.prepareResponse(contests)
+	resp = read.prepareResponse(datastreams)
 
 	return resp, nil
 }
@@ -68,12 +68,12 @@ func (read *contestLister) List(contestReq *dto.ListReq, skip int64, limit int64
 // NewReaderParams lists params for the NewReader
 type NewListerParams struct {
 	dig.In
-	Contest storecontest.Contests
+	Datastream storedatastream.Datastreams
 }
 
 // NewReader provides Reader
 func NewList(params NewReaderParams) Lister {
-	return &contestLister{
-		contests: params.Contest,
+	return &datastreamLister{
+		datastreams: params.Datastream,
 	}
 }
