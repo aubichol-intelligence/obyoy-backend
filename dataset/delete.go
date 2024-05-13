@@ -1,34 +1,34 @@
-package contest
+package dataset
 
 import (
 	"fmt"
 	"time"
 
-	"obyoy-backend/contest/dto"
+	"obyoy-backend/dataset/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	storedataset "obyoy-backend/store/dataset"
 
 	"github.com/sirupsen/logrus"
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Deleter provides an interface for updating contests
+// Deleter provides an interface for updating datasets
 type Deleter interface {
 	Delete(*dto.Delete) (*dto.DeleteResponse, error)
 }
 
-// delete deletes contest
+// delete deletes dataset
 type delete struct {
-	storecontest storecontest.Contests
+	storedataset storedataset.Datasets
 	validate     *validator.Validate
 }
 
-func (d *delete) toModel(usercontest *dto.Delete) (contest *model.Contest) {
-	contest = &model.Contest{}
+func (d *delete) toModel(userdataset *dto.Delete) (dataset *model.Dataset) {
+	dataset = &model.Dataset{}
 
-	contest.UpdatedAt = time.Now().UTC()
-	contest.IsDeleted = true
+	dataset.UpdatedAt = time.Now().UTC()
+	dataset.IsDeleted = true
 	return
 }
 
@@ -38,28 +38,28 @@ func (d *delete) validateData(delete *dto.Delete) (err error) {
 }
 
 func (d *delete) convertData(delete *dto.Delete) (
-	modelcontest *model.Contest,
+	modeldataset *model.Dataset,
 ) {
-	modelcontest = d.toModel(delete)
+	modeldataset = d.toModel(delete)
 	return
 }
 
-func (d *delete) askStore(modelcontest *model.Contest) (
+func (d *delete) askStore(modeldataset *model.Dataset) (
 	id string,
 	err error,
 ) {
-	id, err = d.storecontest.Save(modelcontest)
+	id, err = d.storedataset.Save(modeldataset)
 	return
 }
 
 func (d *delete) giveResponse(
-	modelNotice *model.Contest,
+	modelNotice *model.Dataset,
 	id string,
 ) *dto.DeleteResponse {
-	logrus.WithFields(logrus.Fields{}).Debug("User deleted contest successfully")
+	logrus.WithFields(logrus.Fields{}).Debug("User deleted dataset successfully")
 
 	return &dto.DeleteResponse{
-		Message: "contest deleted",
+		Message: "dataset deleted",
 		OK:      true,
 		ID:      id,
 		//		DeleteTime: modelNotice.DeletedAt.String(),
@@ -89,19 +89,19 @@ func (d *delete) Delete(delete *dto.Delete) (
 		return nil, err
 	}
 
-	modelcontest := d.convertData(delete)
-	id, err := d.askStore(modelcontest)
+	modeldataset := d.convertData(delete)
+	id, err := d.askStore(modeldataset)
 	if err == nil {
-		return d.giveResponse(modelcontest, id), nil
+		return d.giveResponse(modeldataset, id), nil
 	}
 
-	logrus.Error("Could not delete contest ", err)
+	logrus.Error("Could not delete dataset ", err)
 	err = d.giveError()
 	return nil, err
 }
 
 // NewDelete returns new instance of NewDelete
-func NewDelete(store storecontest.Contests, validate *validator.Validate) Deleter {
+func NewDelete(store storedataset.Datasets, validate *validator.Validate) Deleter {
 	return &delete{
 		store,
 		validate,
