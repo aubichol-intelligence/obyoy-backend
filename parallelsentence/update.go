@@ -1,36 +1,36 @@
-package contest
+package parallelsentence
 
 import (
 	"fmt"
 	"time"
 
-	"obyoy-backend/contest/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
-	storecontest "obyoy-backend/store/contest"
+	"obyoy-backend/parallelsentence/dto"
+	storeparallelsentence "obyoy-backend/store/parallelsentence"
 
 	"github.com/sirupsen/logrus"
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Updater provides an interface for updating contests
+// Updater provides an interface for updating parallelsentences
 type Updater interface {
 	Update(*dto.Update) (*dto.UpdateResponse, error)
 }
 
-// update updates contest
+// update updates parallelsentence
 type update struct {
-	storecontest storecontest.Contests
-	validate     *validator.Validate
+	storeparallelsentence storeparallelsentence.Parallelsentences
+	validate              *validator.Validate
 }
 
-func (u *update) toModel(usercontest *dto.Update) (contest *model.Contest) {
+func (u *update) toModel(userparallelsentence *dto.Update) (parallelsentence *model.Parallelsentence) {
 
-	contest = &model.Contest{}
+	parallelsentence = &model.Parallelsentence{}
 
-	contest.UpdatedAt = time.Now().UTC()
-	contest.ID = usercontest.ID
-	contest.Note = usercontest.Note
+	parallelsentence.UpdatedAt = time.Now().UTC()
+	parallelsentence.ID = userparallelsentence.ID
+	parallelsentence.Note = userparallelsentence.Note
 
 	return
 }
@@ -41,33 +41,33 @@ func (u *update) validateData(update *dto.Update) (err error) {
 }
 
 func (u *update) convertData(update *dto.Update) (
-	modelcontest *model.Contest,
+	modelparallelsentence *model.Parallelsentence,
 ) {
-	modelcontest = u.toModel(update)
+	modelparallelsentence = u.toModel(update)
 	return
 }
 
-func (u *update) askStore(modelcontest *model.Contest) (
+func (u *update) askStore(modelparallelsentence *model.Parallelsentence) (
 	id string,
 	err error,
 ) {
-	id, err = u.storecontest.Save(modelcontest)
+	id, err = u.storeparallelsentence.Save(modelparallelsentence)
 	return
 }
 
 func (u *update) giveResponse(
-	modelcontest *model.Contest,
+	modelparallelsentence *model.Parallelsentence,
 	id string,
 ) *dto.UpdateResponse {
 	logrus.WithFields(logrus.Fields{
-		//		"id": modelcontest.UserID,
-	}).Debug("User updated contest successfully")
+		//		"id": modelparallelsentence.UserID,
+	}).Debug("User updated parallelsentence successfully")
 
 	return &dto.UpdateResponse{
-		Message:    "contest updated",
+		Message:    "parallelsentence updated",
 		OK:         true,
 		ID:         id,
-		UpdateTime: modelcontest.UpdatedAt.String(),
+		UpdateTime: modelparallelsentence.UpdatedAt.String(),
 	}
 }
 
@@ -94,19 +94,19 @@ func (u *update) Update(update *dto.Update) (
 		return nil, err
 	}
 
-	modelcontest := u.convertData(update)
-	id, err := u.askStore(modelcontest)
+	modelparallelsentence := u.convertData(update)
+	id, err := u.askStore(modelparallelsentence)
 	if err == nil {
-		return u.giveResponse(modelcontest, id), nil
+		return u.giveResponse(modelparallelsentence, id), nil
 	}
 
-	logrus.Error("Could not update contest ", err)
+	logrus.Error("Could not update parallelsentence ", err)
 	err = u.giveError()
 	return nil, err
 }
 
 // NewUpdate returns new instance of NewUpdate
-func NewUpdate(store storecontest.Contests, validate *validator.Validate) Updater {
+func NewUpdate(store storeparallelsentence.Parallelsentences, validate *validator.Validate) Updater {
 	return &update{
 		store,
 		validate,
