@@ -30,7 +30,6 @@ func (u *update) toModel(usertranslation *dto.Update) (translation *model.Transl
 
 	translation.UpdatedAt = time.Now().UTC()
 	translation.ID = usertranslation.ID
-	translation.Note = usertranslation.Note
 
 	return
 }
