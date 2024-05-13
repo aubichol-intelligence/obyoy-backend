@@ -6,7 +6,7 @@ import (
 
 	"obyoy-backend/api/middleware"
 	"obyoy-backend/api/routeutils"
-	"obyoy-backend/dataset"
+	"obyoy-backend/apipattern"
 	"obyoy-backend/dataset/dto"
 
 	"github.com/sirupsen/logrus"
@@ -21,7 +21,7 @@ type createHandler struct {
 func (ch *createHandler) decodeBody(
 	body io.ReadCloser,
 ) (
-	dataset dto.dataset,
+	dataset dto.Dataset,
 	err error,
 ) {
 	err = dataset.FromReader(body)
@@ -38,7 +38,7 @@ func (ch *createHandler) handleError(
 }
 
 func (ch *createHandler) askController(
-	dataset *dto.dataset,
+	dataset *dto.Dataset,
 ) (
 	data *dto.CreateResponse,
 	err error,
