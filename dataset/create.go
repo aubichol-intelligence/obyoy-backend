@@ -31,11 +31,11 @@ func (c *create) toModel(userdataset *dto.Create) (
 	dataset = &model.Dataset{}
 	dataset.CreatedAt = time.Now().UTC()
 	dataset.UpdatedAt = dataset.CreatedAt
-	dataset.ID = userdataset.ID
-	dataset.LandingURL = userdataset.LandingURL
-	dataset.ImageURL = userdataset.ImageURL
-	dataset.Name = userdataset.Name
-	dataset.Stadings = userdataset.Standings
+	//	dataset.ID = userdataset.ID
+	//	dataset.LandingURL = userdataset.LandingURL
+	//	dataset.ImageURL = userdataset.ImageURL
+	//	dataset.Name = userdataset.Name
+	//	dataset.Stadings = userdataset.Standings
 
 	return
 }
