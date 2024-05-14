@@ -49,11 +49,8 @@ func (l *login) CreateToken(loginDto *dto.Login) (*dto.Token, error) {
 	}
 
 	return &dto.Token{
-		Token:        session.Key,
-		ID:           user.ID,
-		Latitude:     user.Latitude,
-		Longitude:    user.Longitude,
-		RestaurantID: user.RestaurantID,
+		Token: session.Key,
+		ID:    user.ID,
 	}, nil
 }
 
