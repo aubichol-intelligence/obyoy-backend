@@ -33,6 +33,7 @@ func Route(c container.Container) {
 	c.RegisterGroup(user.LoginRoute, "route")
 	c.RegisterGroup(user.SearchRoute, "route")
 	c.RegisterGroup(user.ListRoute, "route")
+	c.RegisterGroup(user.LogoutRoute, "route")
 
 	c.RegisterGroup(parallelsentence.CreateRoute, "route")
 	c.RegisterGroup(parallelsentence.UpdateRoute, "route")
