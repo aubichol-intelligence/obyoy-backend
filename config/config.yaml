@@ -10,7 +10,7 @@ connection_cache:
 
 mongo:
   uri: mongodb://localhost:27017
-  database: horkora
+  database: obyoy
 
 redis:
   address: localhost:6379
