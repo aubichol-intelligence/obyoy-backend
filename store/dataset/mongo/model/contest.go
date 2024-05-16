@@ -9,28 +9,17 @@ import (
 
 // Dataset holds db data type for deliveries
 type Dataset struct {
-	ID                primitive.ObjectID `bson:"_id,omitempty"`
-	Name              string             `bson:"name,omitempty"`
-	Phone             string             `bson:"phone_number,omitempty"`
-	Address           string             `bson:"address,omitempty"`
-	UserID            primitive.ObjectID `bson:"user_id,omitempty"`
-	DriverID          primitive.ObjectID `bson:"driver_id,omitempty"`
-	OrderID           primitive.ObjectID `bson:"order_id,omitempty"`
-	RestaurantID      primitive.ObjectID `bson:"restaurant_id,omitempty"`
-	RestaurantName    string             `bson:"restaurant_name,omitempty"`
-	RestaurantAddress string             `bson:"restaurant_address,omitempty"`
-	RestaurantPhone   string             `bson:"restaurant_phone,omitempty"`
-	CustomerDetails   Credentials        `bson:"customer_details,omitempty"`
-	RestaurantDetails Credentials        `bson:"restaurant_details,omitempty"`
-	Note              string             `bson:"note,omitempty,omitempty"`
-	Amount            float64            `bson:"amount,omitempty"`
-	IsActive          bool               `bson:"is_active,omitempty"`
-	Distance          string             `bson:"distance,omitempty"`
-	State             string             `bson:"state,omitempty"`
-	ItemCount         int                `bson:"item_count,omitempty"`
-	CreatedAt         time.Time          `bson:"created_at,omitempty"`
-	UpdatedAt         time.Time          `bson:"updated_at,omitempty"`
-	IsDeleted         bool               `bson:"is_deleted,omitempty"`
+	ID              primitive.ObjectID `bson:"_id,omitempty"`
+	Name            string             `bson:"name,omitempty"`
+	Set             string             `bson:"set,omitempty"`
+	UploaderID      primitive.ObjectID `bson:"uploader_id"`
+	SourceLanguage  string             `bson:"source_language"`
+	TotalLines      int32              `bson:"total_lines"`
+	TranslatedLines int32              `bson:"translated_lines"`
+	ReviewedLines   int32              `bson:"reviewed_lines"`
+	CreatedAt       time.Time          `bson:"created_at,omitempty"`
+	UpdatedAt       time.Time          `bson:"updated_at,omitempty"`
+	IsDeleted       bool               `bson:"is_deleted,omitempty"`
 }
 
 type Credentials struct {
@@ -42,16 +31,29 @@ type Credentials struct {
 }
 
 // FromModel converts model data to db data for deliveries
-func (d *Dataset) FromModel(modelDelivery *model.Dataset) error {
-	d.CreatedAt = modelDelivery.CreatedAt
-	d.UpdatedAt = modelDelivery.UpdatedAt
+func (d *Dataset) FromModel(modelDataset *model.Dataset) error {
+	d.CreatedAt = modelDataset.CreatedAt
+	d.UpdatedAt = modelDataset.UpdatedAt
+	d.Set = modelDataset.Set
+	d.SourceLanguage = modelDataset.SourceLanguage
+	d.TotalLines = modelDataset.TotalLines
+	d.TranslatedLines = modelDataset.TranslatedLines
+	d.ReviewedLines = modelDataset.ReviewedLines
 
 	var err error
 
-	if modelDelivery.ID != "" {
-		d.ID, err = primitive.ObjectIDFromHex(modelDelivery.ID)
+	if modelDataset.ID != "" {
+		d.ID, err = primitive.ObjectIDFromHex(modelDataset.ID)
 	} else {
 		d.ID = primitive.NewObjectID()
+	}
+
+	if err != nil {
+		return err
+	}
+
+	if modelDataset.UploaderID != "" {
+		d.UploaderID, err = primitive.ObjectIDFromHex(modelDataset.UploaderID)
 	}
 
 	if err != nil {
