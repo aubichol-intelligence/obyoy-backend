@@ -31,6 +31,9 @@ func (lh *logoutHandler) responseSuccess(
 	w http.ResponseWriter,
 ) {
 	var resp dto.Token
+	resp.Token = "log-out-token"
+	resp.AccountType = "anything"
+	resp.ID = "no-id-required"
 	routeutils.ServeResponse(w, http.StatusOK, resp)
 }
 
