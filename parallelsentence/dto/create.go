@@ -12,12 +12,19 @@ import (
 
 // contest provides dto for contest request
 type Create struct {
-	ID         string `json:"contest_id"`
-	ImageURL   string `json:"image_url"`
-	Standings  string `json:"standings"`
-	LandingURL string `json:"landing_url"`
-	Name       string `json:"name"`
-	IsDeleted  bool   `json:"is_deleted"`
+	ID                  string   `json:"contest_id"`
+	SourceSentence      string   `json:"source_sentence"`
+	SourceLanguage      string   `json:"source_language"`
+	DestinationSentence string   `json:"destination_sentence"`
+	DestinationLanguage string   `json:"destination_language"`
+	TranslatorID        string   `json:"translator_id"`
+	Reviewers           []string `json:"reviewers"`
+	ReviewedLines       []string `json:"reviewed_lines"`
+	ImageURL            string   `json:"image_url"`
+	Standings           string   `json:"standings"`
+	LandingURL          string   `json:"landing_url"`
+	Name                string   `json:"name"`
+	IsDeleted           bool     `json:"is_deleted"`
 }
 
 // Validate validates contest request data
