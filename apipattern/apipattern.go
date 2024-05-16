@@ -6,6 +6,9 @@ const UserList string = "/api/v1/alluser"
 // LoginUser holds the api for logging user
 const LoginUser string = "/api/v1/users/login"
 
+// LoginUser holds the api for logging user
+const LogoutUser string = "/api/v1/users/logout"
+
 // RegistrationToken holds holds the api for giving registration token
 const RegistrationToken string = "/api/v1/registration/token"
 
