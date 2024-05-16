@@ -49,8 +49,9 @@ func (l *login) CreateToken(loginDto *dto.Login) (*dto.Token, error) {
 	}
 
 	return &dto.Token{
-		Token: session.Key,
-		ID:    user.ID,
+		Token:       session.Key,
+		ID:          user.ID,
+		AccountType: user.AccountType,
 	}, nil
 }
 
