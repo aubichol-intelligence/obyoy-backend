@@ -35,6 +35,7 @@ func (d *Dataset) FromModel(modelDataset *model.Dataset) error {
 	d.CreatedAt = modelDataset.CreatedAt
 	d.UpdatedAt = modelDataset.UpdatedAt
 	d.Set = modelDataset.Set
+	d.Name = modelDataset.Name
 	d.SourceLanguage = modelDataset.SourceLanguage
 	d.TotalLines = modelDataset.TotalLines
 	d.TranslatedLines = modelDataset.TranslatedLines
