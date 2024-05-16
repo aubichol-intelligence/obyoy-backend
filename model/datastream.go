@@ -7,12 +7,15 @@ import (
 
 // Translation defines user's translation
 type Datastream struct {
-	ID        string    `json:"id"`
-	Key       string    `json:"key"`
-	UserID    string    `json:"user_id"`
-	ExpiredAt time.Time `json:"expire_at"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json":"updated_at"`
+	ID              string    `json:"id"`
+	SourceSentence  string    `json:"source_sentence"`
+	LineNumber      int32     `json:"line_number"`
+	DatasetID       string    `json:"dataset_id"`
+	TimesTranslated int32     `json:"times_translated"`
+	TimesReviewed   int32     `json:"times_reviewed"`
+	ExpiredAt       time.Time `json:"expire_at"`
+	CreatedAt       time.Time `json:"created_at"`
+	UpdatedAt       time.Time `json:"updated_at"`
 }
 
 func (s *Datastream) ToByte() ([]byte, error) {
