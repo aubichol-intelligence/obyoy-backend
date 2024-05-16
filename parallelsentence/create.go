@@ -32,6 +32,13 @@ func (c *create) toModel(userparallelsentence *dto.Create) (
 	parallelsentence.CreatedAt = time.Now().UTC()
 	parallelsentence.UpdatedAt = parallelsentence.CreatedAt
 	parallelsentence.ID = userparallelsentence.ID
+	parallelsentence.SourceSentence = userparallelsentence.SourceSentence
+	parallelsentence.SourceLanguage = userparallelsentence.SourceLanguage
+	parallelsentence.DestinationSentence = userparallelsentence.DestinationSentence
+	parallelsentence.DestinationLanguage = userparallelsentence.DestinationLanguage
+	parallelsentence.TranslatorID = userparallelsentence.TranslatorID
+	parallelsentence.Reviewers = userparallelsentence.Reviewers
+	parallelsentence.ReviewedLines = userparallelsentence.ReviewedLines
 
 	return
 }
