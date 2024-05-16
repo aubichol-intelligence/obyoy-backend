@@ -12,12 +12,16 @@ import (
 
 // contest provides dto for contest request
 type Create struct {
-	ID         string `json:"datastream_id"`
-	ImageURL   string `json:"image_url"`
-	Standings  string `json:"standings"`
-	LandingURL string `json:"landing_url"`
-	Name       string `json:"name"`
-	IsDeleted  bool   `json:"is_deleted"`
+	ID              string `json:"datastream_id"`
+	SourceSentence  string `json:"source_sentence"`
+	LineNumber      int32  `json:"line_number"`
+	DatasetID       string `json:"dataset_id"`
+	TimesTranslated int32  `json:"times_translated"`
+	TimesReviewed   int32  `json:"times_reviewed"`
+	Standings       string `json:"standings"`
+	LandingURL      string `json:"landing_url"`
+	Name            string `json:"name"`
+	IsDeleted       bool   `json:"is_deleted"`
 }
 
 // Validate validates contest request data
