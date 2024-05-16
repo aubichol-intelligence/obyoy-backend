@@ -48,9 +48,7 @@ func (l *Login) FromReader(reader io.Reader) error {
 
 // Token stores token data
 type Token struct {
-	Token        string  `json:"token"`
-	ID           string  `json:"id"`
-	Latitude     float64 `json:"latitude"`
-	Longitude    float64 `json:"longitude"`
-	RestaurantID string  `json:"restaurant_id"`
+	Token       string `json:"token"`
+	ID          string `json:"id"`
+	AccountType string `json:"account_type"`
 }
