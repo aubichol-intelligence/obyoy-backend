@@ -60,6 +60,7 @@ func (d *Datastream) FromModel(modelDelivery *model.Datastream) error {
 func (d *Datastream) ModelDatastream() *model.Datastream {
 	Datastream := model.Datastream{}
 	Datastream.ID = d.ID.Hex()
+	Datastream.DatasetID = d.DatasetID.Hex()
 	Datastream.CreatedAt = d.CreatedAt
 	Datastream.UpdatedAt = d.UpdatedAt
 	Datastream.SourceSentence = d.SourceSentence
