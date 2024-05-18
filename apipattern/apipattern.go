@@ -46,25 +46,25 @@ const DatastreamUpdate string = "/api/v1/datastream/update"
 const DatastreamDelete string = "/api/v1/datastream/delete"
 
 // DatasetCreate holds the api string for creating a dataset
-const ParallelsentenceCreate string = "/api/v1/datastream/create"
+const ParallelsentenceCreate string = "/api/v1/parallelsentence/create"
 
 // DatasetRead holds the api string for reading datasets
-const ParallelsentenceRead string = "/api/v1/datastream/get/{id}"
+const ParallelsentenceRead string = "/api/v1/parallelsentence/get/{id}"
 
 // DatasetUpdate holds the api string for updating dataset
-const ParallelsentenceUpdate string = "/api/v1/datastream/update"
+const ParallelsentenceUpdate string = "/api/v1/parallelsentence/update"
 
 // DatasetDelete holds the api string for getting a dataset
-const ParallelsentenceDelete string = "/api/v1/datastream/delete"
+const ParallelsentenceDelete string = "/api/v1/parallelsentence/delete"
 
 // DatasetCreate holds the api string for creating a dataset
-const TranslationCreate string = "/api/v1/datastream/create"
+const TranslationCreate string = "/api/v1/translation/create"
 
 // DatasetRead holds the api string for reading datasets
-const TranslationRead string = "/api/v1/datastream/get/{id}"
+const TranslationRead string = "/api/v1/translation/get/{id}"
 
 // DatasetUpdate holds the api string for updating dataset
-const TranslationUpdate string = "/api/v1/datastream/update"
+const TranslationUpdate string = "/api/v1/translation/update"
 
 // DatasetDelete holds the api string for getting a dataset
-const TranslationDelete string = "/api/v1/datastream/delete"
+const TranslationDelete string = "/api/v1/translation/delete"
