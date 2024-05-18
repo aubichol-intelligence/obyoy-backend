@@ -10,14 +10,16 @@ type ReadReq struct {
 
 // ReadReq stores order read request data
 type ReadResp struct {
-	UserID    string
-	ContestID string
+	//	UserID    string
+	//	ContestID string
+	SourceSentence string
+	LineNumber     int32
+	DatasetID      string
 }
 
 // FromModel converts the model data to response data
 func (r *ReadResp) FromModel(delivery *model.Datastream) {
-	// r.Name = delivery.Name
-	// r.Phone = delivery.Phone
-	// r.Address = delivery.Address
-	// r.UserID = delivery.UserID
+	r.SourceSentence = delivery.SourceSentence
+	r.LineNumber = delivery.LineNumber
+	r.DatasetID = delivery.DatasetID
 }
