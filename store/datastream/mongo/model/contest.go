@@ -15,19 +15,12 @@ type Datastream struct {
 	SourceSentence  string             `bson:"source_sentence"`
 	LineNumber      int32              `bson:"line_number"`
 	DatasetID       primitive.ObjectID `bson:"dataset_id"`
+	IsTranslated    int32              `bson:"is_translated,omitempty"`
 	TimesTranslated int32              `bson:"times_translated,omitempty"`
 	TimesReviewed   int32              `bson:"times_reviewed,omitempty"`
 	CreatedAt       time.Time          `bson:"created_at,omitempty"`
 	UpdatedAt       time.Time          `bson:"updated_at,omitempty"`
 	IsDeleted       bool               `bson:"is_deleted,omitempty"`
-}
-
-type Credentials struct {
-	Name      string  `bson:"name,omitempty"`
-	Phone     string  `bson:"phone,omitempty"`
-	Address   string  `bson:"address,omitempty"`
-	Latitude  float64 `bson:"latitude,omitempty"`
-	Longitude float64 `bson:"longitude,omitempty"`
 }
 
 // FromModel converts model data to db data for deliveries
@@ -38,6 +31,7 @@ func (d *Datastream) FromModel(modelDelivery *model.Datastream) error {
 	d.LineNumber = modelDelivery.LineNumber
 	d.TimesTranslated = modelDelivery.TimesTranslated
 	d.TimesReviewed = modelDelivery.TimesReviewed
+	d.IsTranslated = modelDelivery.IsTranslated
 
 	var err error
 
@@ -68,6 +62,11 @@ func (d *Datastream) ModelDatastream() *model.Datastream {
 	Datastream.ID = d.ID.Hex()
 	Datastream.CreatedAt = d.CreatedAt
 	Datastream.UpdatedAt = d.UpdatedAt
+	Datastream.SourceSentence = d.SourceSentence
+	Datastream.LineNumber = d.LineNumber
+	Datastream.IsTranslated = d.IsTranslated
+	Datastream.TimesTranslated = d.TimesTranslated
+	Datastream.TimesReviewed = d.TimesReviewed
 
 	return &Datastream
 }

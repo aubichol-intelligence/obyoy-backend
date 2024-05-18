@@ -6,6 +6,7 @@ import "obyoy-backend/model"
 type Datastreams interface {
 	Save(*model.Datastream) (id string, err error)
 	FindByID(id string) (*model.Datastream, error)
+	FindNext() (*model.Datastream, error)
 	FindByDatastreamID(id string, skip int64, limit int64) ([]*model.Datastream, error)
 	CountByDatastreamID(id string) (int64, error)
 	FindByIDs(id ...string) ([]*model.Datastream, error)

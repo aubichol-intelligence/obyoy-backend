@@ -82,6 +82,30 @@ func (d *Authors) FindByID(id string) (*model.Datastream, error) {
 	return datastream.ModelDatastream(), nil
 }
 
+// FindByID finds a datastream by id
+func (d *Authors) FindNext() (*model.Datastream, error) {
+	//	objectID, err := primitive.ObjectIDFromHex(id)
+
+	filter := bson.M{"is_translated": 0}
+
+	result := d.c.FindOne(
+		context.Background(),
+		filter,
+		&options.FindOneOptions{},
+	)
+	if err := result.Err(); err != nil {
+		return nil, err
+	}
+
+	datastream := mongoModel.Datastream{}
+
+	if err := result.Decode(&datastream); err != nil {
+		return nil, fmt.Errorf("Could not decode mongo model to model : %w", err)
+	}
+
+	return datastream.ModelDatastream(), nil
+}
+
 // FindByDatastreamID finds a datastream by datastream id
 func (d *Authors) FindByDatastreamID(id string, skip int64, limit int64) ([]*model.Datastream, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
