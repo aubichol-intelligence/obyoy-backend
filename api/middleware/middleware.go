@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"obyoy-backend/api/routeutils"
@@ -19,6 +20,7 @@ type Auth struct {
 func (a *Auth) Middleware(h http.Handler) http.Handler {
 	f := func(w http.ResponseWriter, r *http.Request) {
 		token := r.Header.Get("Authorization")
+		fmt.Println("This is the token :", token)
 		session, err := a.userSessionVerifier.VerifySession(token)
 		if err != nil {
 			logrus.Error("Unable to verify user token, error :", err)
