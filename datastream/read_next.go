@@ -11,24 +11,24 @@ import (
 )
 
 // Reader provides an interface for reading datastreames
-type Reader interface {
-	Read(*dto.ReadReq) (*dto.ReadResp, error)
+type NextReader interface {
+	ReadNext(*dto.ReadReq) (*dto.ReadResp, error)
 }
 
 // datastreamReader implements Reader interface
-type datastreamReader struct {
+type datastreamNextReader struct {
 	datastreams storedatastream.Datastreams
 }
 
-func (read *datastreamReader) askStore(datastreamID string) (
+func (read *datastreamNextReader) askStore() (
 	datastream *model.Datastream,
 	err error,
 ) {
-	datastream, err = read.datastreams.FindByID(datastreamID)
+	datastream, err = read.datastreams.FindNext()
 	return
 }
 
-func (read *datastreamReader) giveError() (err error) {
+func (read *datastreamNextReader) giveError() (err error) {
 	err = &errors.Unknown{
 		errors.Base{
 			"Invalid request", false,
@@ -37,7 +37,7 @@ func (read *datastreamReader) giveError() (err error) {
 	return
 }
 
-func (read *datastreamReader) prepareResponse(
+func (read *datastreamNextReader) prepareResponse(
 	datastream *model.Datastream,
 ) (
 	resp dto.ReadResp,
@@ -46,9 +46,9 @@ func (read *datastreamReader) prepareResponse(
 	return
 }
 
-func (read *datastreamReader) Read(datastreamReq *dto.ReadReq) (*dto.ReadResp, error) {
+func (read *datastreamNextReader) ReadNext(datastreamReq *dto.ReadReq) (*dto.ReadResp, error) {
 	//TO-DO: some validation on the input data is required
-	datastream, err := read.askStore(datastreamReq.DatastreamID)
+	datastream, err := read.askStore()
 
 	if err != nil {
 		logrus.Error("Could not find datastream error : ", err)
@@ -62,13 +62,13 @@ func (read *datastreamReader) Read(datastreamReq *dto.ReadReq) (*dto.ReadResp, e
 }
 
 // NewReaderParams lists params for the NewReader
-type NewReaderParams struct {
+type NewReaderNextParams struct {
 	dig.In
 	Datastream storedatastream.Datastreams
 }
 
 // NewReader provides Reader
-func NewReader(params NewReaderParams) Reader {
+func NewNextReader(params NewReaderNextParams) Reader {
 	return &datastreamReader{
 		datastreams: params.Datastream,
 	}
