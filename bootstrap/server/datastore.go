@@ -11,4 +11,5 @@ func Datastream(c container.Container) {
 	c.Register(datastream.NewReader)
 	c.Register(datastream.NewUpdate)
 	c.Register(datastream.NewDelete)
+	c.Register(datastream.NewNextReader)
 }

@@ -23,6 +23,7 @@ func Route(c container.Container) {
 	c.RegisterGroup(datastream.ReadRoute, "route")
 	c.RegisterGroup(datastream.UpdateRoute, "route")
 	c.RegisterGroup(datastream.DeleteRoute, "route")
+	c.RegisterGroup(datastream.ReadNextRoute, "route")
 
 	c.RegisterGroup(translation.CreateRoute, "route")
 	c.RegisterGroup(translation.ReadRoute, "route")
