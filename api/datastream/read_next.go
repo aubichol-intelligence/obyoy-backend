@@ -15,7 +15,7 @@ import (
 )
 
 type readNextHandler struct {
-	reader datastream.Reader
+	reader datastream.NextReader
 }
 
 func (read *readNextHandler) decodeURL(
@@ -39,7 +39,7 @@ func (read *readNextHandler) askController(
 	resp *dto.ReadResp,
 	err error,
 ) {
-	resp, err = read.reader.Read(req)
+	resp, err = read.reader.ReadNext(req)
 	return
 }
 
