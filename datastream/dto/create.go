@@ -18,8 +18,7 @@ type Create struct {
 	DatasetID       string `json:"dataset_id"`
 	TimesTranslated int32  `json:"times_translated"`
 	TimesReviewed   int32  `json:"times_reviewed"`
-	Standings       string `json:"standings"`
-	LandingURL      string `json:"landing_url"`
+	IsTranslated    int32  `json:"is_tranlated"`
 	Name            string `json:"name"`
 	IsDeleted       bool   `json:"is_deleted"`
 }
