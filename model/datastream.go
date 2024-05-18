@@ -11,6 +11,7 @@ type Datastream struct {
 	SourceSentence  string    `json:"source_sentence"`
 	LineNumber      int32     `json:"line_number"`
 	DatasetID       string    `json:"dataset_id"`
+	IsTranslated    int32     `json:"is_translated"`
 	TimesTranslated int32     `json:"times_translated"`
 	TimesReviewed   int32     `json:"times_reviewed"`
 	ExpiredAt       time.Time `json:"expire_at"`
