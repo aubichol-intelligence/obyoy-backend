@@ -12,9 +12,9 @@ type ReadReq struct {
 type ReadResp struct {
 	//	UserID    string
 	//	ContestID string
-	SourceSentence string
-	LineNumber     int32
-	DatasetID      string
+	SourceSentence string `json:"source_sentence"`
+	LineNumber     int32  `json:"line_number"`
+	DatasetID      string `json:"dataset_id"`
 }
 
 // FromModel converts the model data to response data
