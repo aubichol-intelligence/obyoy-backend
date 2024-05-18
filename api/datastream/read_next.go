@@ -97,15 +97,15 @@ func (read *readNextHandler) ServeHTTP(
 // ReadRouteParams lists all the parameters for ReadRoute
 type ReadNextRouteParams struct {
 	dig.In
-	Reader     datastream.Reader
+	NextReader datastream.NextReader
 	Middleware *middleware.Auth
 }
 
 // ReadRoute provides a route to get a datastream item
-func ReadNextRoute(params ReadRouteParams) *routeutils.Route {
+func ReadNextRoute(params ReadNextRouteParams) *routeutils.Route {
 
-	handler := readHandler{
-		reader: params.Reader,
+	handler := readNextHandler{
+		reader: params.NextReader,
 	}
 
 	return &routeutils.Route{

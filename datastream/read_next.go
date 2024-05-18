@@ -68,8 +68,8 @@ type NewReaderNextParams struct {
 }
 
 // NewReader provides Reader
-func NewNextReader(params NewReaderNextParams) Reader {
-	return &datastreamReader{
+func NewNextReader(params NewReaderNextParams) NextReader {
+	return &datastreamNextReader{
 		datastreams: params.Datastream,
 	}
 }
