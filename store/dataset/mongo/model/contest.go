@@ -11,7 +11,7 @@ import (
 type Dataset struct {
 	ID              primitive.ObjectID `bson:"_id,omitempty"`
 	Name            string             `bson:"name,omitempty"`
-	Set             string             `bson:"set,omitempty"`
+	Set             []string           `bson:"set,omitempty"`
 	UploaderID      primitive.ObjectID `bson:"uploader_id"`
 	SourceLanguage  string             `bson:"source_language"`
 	TotalLines      int32              `bson:"total_lines"`
@@ -20,14 +20,6 @@ type Dataset struct {
 	CreatedAt       time.Time          `bson:"created_at,omitempty"`
 	UpdatedAt       time.Time          `bson:"updated_at,omitempty"`
 	IsDeleted       bool               `bson:"is_deleted,omitempty"`
-}
-
-type Credentials struct {
-	Name      string  `bson:"name,omitempty"`
-	Phone     string  `bson:"phone,omitempty"`
-	Address   string  `bson:"address,omitempty"`
-	Latitude  float64 `bson:"latitude,omitempty"`
-	Longitude float64 `bson:"longitude,omitempty"`
 }
 
 // FromModel converts model data to db data for deliveries
