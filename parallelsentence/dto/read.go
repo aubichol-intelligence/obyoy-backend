@@ -10,14 +10,16 @@ type ReadReq struct {
 
 // ReadReq stores order read request data
 type ReadResp struct {
-	UserID    string
-	ContestID string
+	SourceSentence      string   `json:"source_sentence"`
+	DestinationSentence string   `json:"destination_sentence"`
+	TranslatorID        string   `json:"translator_id"`
+	ReviewedLines       []string `json:"reviewed_lines"`
 }
 
 // FromModel converts the model data to response data
-func (r *ReadResp) FromModel(delivery *model.Parallelsentence) {
-	// r.Name = delivery.Name
-	// r.Phone = delivery.Phone
-	// r.Address = delivery.Address
-	// r.UserID = delivery.UserID
+func (r *ReadResp) FromModel(ps *model.Parallelsentence) {
+	r.SourceSentence = ps.SourceSentence
+	r.DestinationSentence = ps.DestinationSentence
+	r.TranslatorID = ps.TranslatorID
+	r.ReviewedLines = ps.ReviewedLines
 }
