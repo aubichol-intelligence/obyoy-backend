@@ -17,7 +17,7 @@ func (b *BaseResponse) String() string {
 type CreateResponse struct {
 	Message string `json:"message"`
 	OK      bool   `json:"ok"`
-	ID      string `json:"restaurant_id"`
+	ID      string `json:"parallelsentence_id"`
 }
 
 // String provides string repsentation
@@ -29,7 +29,7 @@ func (c *CreateResponse) String() string {
 type UpdateResponse struct {
 	Message    string `json:"message"`
 	OK         bool   `json:"ok"`
-	ID         string `json:"restaurant_id"`
+	ID         string `json:"parallelsentence_id"`
 	UpdateTime string `json:"update_time"`
 }
 
