@@ -21,16 +21,13 @@ type Register struct {
 	Gender    string    `json:"gender"`
 	BirthDate BirthDate `json:"birth_date"`
 	//	Email       string    `json:"email" validate:"required,email"`
-	Email        string  `json:"email"`
-	Password     string  `json:"password" validate:"required,min=6"`
-	Suspended    bool    `json:"suspended"`
-	IsDriver     bool    `json:"is_driver"`
-	PhoneNumber  string  `json:"phone_number"`
-	Address      string  `json:"address"`
-	AccountType  string  `json:"account_type" validate:"required,eq=driver|eq=admin|eq=restaurant"`
-	Latitude     float64 `json:"latitude"`
-	Longitude    float64 `json:"longitude"`
-	RestaurantID string  `json:"restaurant_id"`
+	Email       string `json:"email"`
+	Password    string `json:"password" validate:"required,min=6"`
+	Suspended   bool   `json:"suspended"`
+	IsDriver    bool   `json:"is_driver"`
+	PhoneNumber string `json:"phone_number"`
+	Address     string `json:"address"`
+	AccountType string `json:"account_type" validate:"required,eq=driver|eq=admin|eq=restaurant"`
 }
 
 // Validate validates registration data
