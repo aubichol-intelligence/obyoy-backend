@@ -20,10 +20,6 @@ type Create struct {
 	TranslatorID        string   `json:"translator_id"`
 	Reviewers           []string `json:"reviewers"`
 	ReviewedLines       []string `json:"reviewed_lines"`
-	ImageURL            string   `json:"image_url"`
-	Standings           string   `json:"standings"`
-	LandingURL          string   `json:"landing_url"`
-	Name                string   `json:"name"`
 	IsDeleted           bool     `json:"is_deleted"`
 }
 
