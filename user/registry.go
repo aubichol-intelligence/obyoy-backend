@@ -44,9 +44,6 @@ func (r *registry) toModel(register *dto.Register) (user *model.User) {
 	user.Address = register.Address
 	user.PhoneNumber = register.PhoneNumber
 	user.AccountType = register.AccountType
-	user.Latitude = register.Latitude
-	user.Longitude = register.Longitude
-	user.RestaurantID = register.RestaurantID
 	return
 }
 
