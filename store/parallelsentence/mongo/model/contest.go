@@ -24,14 +24,6 @@ type Parallelsentence struct {
 	IsDeleted           bool                 `bson:"is_deleted,omitempty"`
 }
 
-type Credentials struct {
-	Name      string  `bson:"name,omitempty"`
-	Phone     string  `bson:"phone,omitempty"`
-	Address   string  `bson:"address,omitempty"`
-	Latitude  float64 `bson:"latitude,omitempty"`
-	Longitude float64 `bson:"longitude,omitempty"`
-}
-
 // FromModel converts model data to db data for deliveries
 func (d *Parallelsentence) FromModel(modelDelivery *model.Parallelsentence) error {
 	d.CreatedAt = modelDelivery.CreatedAt
