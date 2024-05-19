@@ -9,7 +9,7 @@ import (
 type Dataset struct {
 	ID              string    `json:"id"`
 	Name            string    `json:"name"`
-	Set             string    `json:"set"`
+	Set             []string  `json:"set"`
 	TotalLines      int32     `json:"total_lines"`
 	SourceLanguage  string    `json:"source_language"`
 	UploaderID      string    `json:"uploader_id"`
