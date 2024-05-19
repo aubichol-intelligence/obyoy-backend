@@ -10,28 +10,27 @@ import (
 // User defines mongodb data type for User
 // Account type can be of driver, restaurant and admin
 type User struct {
-	ID           primitive.ObjectID `bson:"_id,omitempty"`
-	FirstName    string             `bson:"first_name,omitempty"`
-	LastName     string             `bson:"last_name,omitempty"`
-	Gender       string             `bson:"gender,omitempty"`
-	BirthDate    BirthDate          `bson:"birth_date,omitempty"`
-	Email        string             `bson:"email"`
-	Password     string             `bson:"password"`
-	Verified     bool               `bson:"verified,omitempty"`
-	Profile      UserDetails        `bson:"profile,omitempty"`
-	CreatedAt    time.Time          `bson:"created_at"`
-	UpdatedAt    time.Time          `bson:"updated_at"`
-	Real         bool               `bson:"real,omitempty"`
-	ProfilePic   string             `bson:"profile_pic,omitempty"`
-	Suspended    bool               `bson:"suspended,omitempty"`
-	IsDriver     bool               `bson:"is_driver,omitempty"`
-	UserType     string             `bson:"user_type,omitempty"`
-	PhoneNumber  string             `bson:"phone_number,omitempty"`
-	Address      string             `bson:"address,omitempty"`
-	AccountType  string             `bson:"account_type,omitempty"`
-	Latitude     float64            `bson:"latitude,omitempty"`
-	Longitude    float64            `bson:"longitude,omitempty"`
-	RestaurantID primitive.ObjectID `bson:"restaurant_id,omitempty"`
+	ID          primitive.ObjectID `bson:"_id,omitempty"`
+	FirstName   string             `bson:"first_name,omitempty"`
+	LastName    string             `bson:"last_name,omitempty"`
+	Gender      string             `bson:"gender,omitempty"`
+	BirthDate   BirthDate          `bson:"birth_date,omitempty"`
+	Email       string             `bson:"email"`
+	Password    string             `bson:"password"`
+	Verified    bool               `bson:"verified,omitempty"`
+	Profile     UserDetails        `bson:"profile,omitempty"`
+	CreatedAt   time.Time          `bson:"created_at"`
+	UpdatedAt   time.Time          `bson:"updated_at"`
+	Real        bool               `bson:"real,omitempty"`
+	ProfilePic  string             `bson:"profile_pic,omitempty"`
+	Suspended   bool               `bson:"suspended,omitempty"`
+	IsDriver    bool               `bson:"is_driver,omitempty"`
+	UserType    string             `bson:"user_type,omitempty"`
+	PhoneNumber string             `bson:"phone_number,omitempty"`
+	Address     string             `bson:"address,omitempty"`
+	AccountType string             `bson:"account_type,omitempty"`
+	Latitude    float64            `bson:"latitude,omitempty"`
+	Longitude   float64            `bson:"longitude,omitempty"`
 }
 
 // TO-DO: need to decide the details later
@@ -67,13 +66,6 @@ func (u *User) FromModel(modelUser *model.User) error {
 
 	var err error
 
-	if modelUser.RestaurantID != "" {
-		u.RestaurantID, err = primitive.ObjectIDFromHex(modelUser.RestaurantID)
-	}
-
-	if err != nil {
-		return err
-	}
 	if modelUser.ID == "" {
 		return nil
 	}
@@ -113,6 +105,5 @@ func (u *User) ModelUser() *model.User {
 	user.Longitude = u.Longitude
 	user.Latitude = u.Latitude
 	user.AccountType = u.AccountType
-	user.RestaurantID = u.RestaurantID.Hex()
 	return &user
 }
