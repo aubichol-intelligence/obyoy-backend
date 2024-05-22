@@ -2,7 +2,7 @@ package dataset
 
 import "obyoy-backend/model"
 
-// Datasets wraps delivery's functionality
+// Datasets wraps dataset's functionality
 type Datasets interface {
 	Save(*model.Dataset) (id string, err error)
 	FindByID(id string) (*model.Dataset, error)
