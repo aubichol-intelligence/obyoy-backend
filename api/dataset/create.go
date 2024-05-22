@@ -9,6 +9,8 @@ import (
 	"obyoy-backend/apipattern"
 	"obyoy-backend/dataset"
 	"obyoy-backend/dataset/dto"
+	"obyoy-backend/datastream"
+	datastreamdto "obyoy-backend/datastream/dto"
 
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
@@ -16,7 +18,8 @@ import (
 
 // createHandler holds handler for creating dataset items
 type createHandler struct {
-	create dataset.Creater
+	create       dataset.Creater
+	createstream datastream.Creater
 }
 
 func (ch *createHandler) decodeBody(
@@ -45,6 +48,16 @@ func (ch *createHandler) askController(
 	err error,
 ) {
 	data, err = ch.create.Create(dataset)
+
+	for ind, line := range dataset.Set {
+		var one_line datastreamdto.Create
+		one_line.DatasetID = data.ID
+		one_line.LineNumber = int32(ind + 1)
+		one_line.SourceSentence = line
+		one_line.Name = dataset.Name
+		ch.createstream.Create(&one_line)
+	}
+
 	return
 }
 
@@ -96,13 +109,14 @@ func (ch *createHandler) ServeHTTP(
 // CreateParams provide parameters for CreateRoute
 type CreateParams struct {
 	dig.In
-	Create     dataset.Creater
-	Middleware *middleware.Auth
+	Create           dataset.Creater
+	CreateDataStream datastream.Creater
+	Middleware       *middleware.Auth
 }
 
 // CreateRoute provides a route that lets to take datasets
 func CreateRoute(params CreateParams) *routeutils.Route {
-	handler := createHandler{params.Create}
+	handler := createHandler{params.Create, params.CreateDataStream}
 	return &routeutils.Route{
 		Method:  http.MethodPost,
 		Pattern: apipattern.DatasetCreate,
