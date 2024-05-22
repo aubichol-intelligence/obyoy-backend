@@ -17,7 +17,6 @@ type Translation struct {
 	UserID            primitive.ObjectID `bson:"user_id,omitempty"`
 	DriverID          primitive.ObjectID `bson:"driver_id,omitempty"`
 	OrderID           primitive.ObjectID `bson:"order_id,omitempty"`
-	RestaurantID      primitive.ObjectID `bson:"restaurant_id,omitempty"`
 	RestaurantName    string             `bson:"restaurant_name,omitempty"`
 	RestaurantAddress string             `bson:"restaurant_address,omitempty"`
 	RestaurantPhone   string             `bson:"restaurant_phone,omitempty"`
