@@ -15,12 +15,12 @@ import (
 	"go.uber.org/dig"
 )
 
-// Authors handles datastream related database queries
-type Authors struct {
+// Datastreams handles datastream related database queries
+type Datastreams struct {
 	c *mongo.Collection
 }
 
-func (d *Authors) convertData(modelDatastream *model.Datastream) (
+func (d *Datastreams) convertData(modelDatastream *model.Datastream) (
 	mongoDatastream mongoModel.Datastream,
 	err error,
 ) {
@@ -28,8 +28,8 @@ func (d *Authors) convertData(modelDatastream *model.Datastream) (
 	return
 }
 
-// Save saves Authors from model to database
-func (d *Authors) Save(modelDatastream *model.Datastream) (string, error) {
+// Save saves Datastreams from model to database
+func (d *Datastreams) Save(modelDatastream *model.Datastream) (string, error) {
 	mongoDatastream := mongoModel.Datastream{}
 	var err error
 	mongoDatastream, err = d.convertData(modelDatastream)
@@ -58,7 +58,7 @@ func (d *Authors) Save(modelDatastream *model.Datastream) (string, error) {
 }
 
 // FindByID finds a datastream by id
-func (d *Authors) FindByID(id string) (*model.Datastream, error) {
+func (d *Datastreams) FindByID(id string) (*model.Datastream, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid id %s : %w", id, err)
@@ -83,7 +83,7 @@ func (d *Authors) FindByID(id string) (*model.Datastream, error) {
 }
 
 // FindByID finds a datastream by id
-func (d *Authors) FindNext() (*model.Datastream, error) {
+func (d *Datastreams) FindNext() (*model.Datastream, error) {
 	//	objectID, err := primitive.ObjectIDFromHex(id)
 
 	filter := bson.M{"is_translated": 0}
@@ -107,7 +107,7 @@ func (d *Authors) FindNext() (*model.Datastream, error) {
 }
 
 // FindByDatastreamID finds a datastream by datastream id
-func (d *Authors) FindByDatastreamID(id string, skip int64, limit int64) ([]*model.Datastream, error) {
+func (d *Datastreams) FindByDatastreamID(id string, skip int64, limit int64) ([]*model.Datastream, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid id %s : %w", id, err)
@@ -126,11 +126,11 @@ func (d *Authors) FindByDatastreamID(id string, skip int64, limit int64) ([]*mod
 		return nil, err
 	}
 
-	return d.cursorToDeliveries(cursor)
+	return d.cursorToDatastreams(cursor)
 }
 
 // CountByDatastreamID returns Authors from datastream id
-func (d *Authors) CountByDatastreamID(id string) (int64, error) {
+func (d *Datastreams) CountByDatastreamID(id string) (int64, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 
 	if err != nil {
@@ -148,7 +148,7 @@ func (d *Authors) CountByDatastreamID(id string) (int64, error) {
 }
 
 // FindByIDs returns all the Authors from multiple datastream ids
-func (d *Authors) FindByIDs(ids ...string) ([]*model.Datastream, error) {
+func (d *Datastreams) FindByIDs(ids ...string) ([]*model.Datastream, error) {
 	objectIDs := []primitive.ObjectID{}
 	for _, id := range ids {
 		objectID, err := primitive.ObjectIDFromHex(id)
@@ -170,11 +170,11 @@ func (d *Authors) FindByIDs(ids ...string) ([]*model.Datastream, error) {
 		return nil, err
 	}
 
-	return d.cursorToDeliveries(cursor)
+	return d.cursorToDatastreams(cursor)
 }
 
 // Search search for Authors given the text, skip and limit
-func (d *Authors) Search(text string, skip, limit int64) ([]*model.Datastream, error) {
+func (d *Datastreams) Search(text string, skip, limit int64) ([]*model.Datastream, error) {
 	filter := bson.M{"$text": bson.M{"$search": text}}
 	cursor, err := d.c.Find(
 		context.Background(),
@@ -188,11 +188,11 @@ func (d *Authors) Search(text string, skip, limit int64) ([]*model.Datastream, e
 		return nil, err
 	}
 
-	return d.cursorToDeliveries(cursor)
+	return d.cursorToDatastreams(cursor)
 }
 
-// Search search for Authors given the text, skip and limit
-func (d *Authors) FindByUser(id string, skip, limit int64) ([]*model.Datastream, error) {
+// Search search for Datastreams given the text, skip and limit
+func (d *Datastreams) FindByUser(id string, skip, limit int64) ([]*model.Datastream, error) {
 	filter := bson.M{"_id": id}
 	cursor, err := d.c.Find(
 		context.Background(),
@@ -206,11 +206,11 @@ func (d *Authors) FindByUser(id string, skip, limit int64) ([]*model.Datastream,
 		return nil, err
 	}
 
-	return d.cursorToDeliveries(cursor)
+	return d.cursorToDatastreams(cursor)
 }
 
-// Search search for Authors given the text, skip and limit
-func (d *Authors) FindByDriver(id string) (*model.Datastream, error) {
+// Search search for Datastreams given the text, skip and limit
+func (d *Datastreams) FindByDriver(id string) (*model.Datastream, error) {
 	driverID, _ := primitive.ObjectIDFromHex(id)
 	filter := bson.M{"driver_id": driverID, "is_active": true, "state": "pending"}
 
@@ -233,7 +233,7 @@ func (d *Authors) FindByDriver(id string) (*model.Datastream, error) {
 }
 
 // cursorToDeliveries decodes Authors one by one from the search result
-func (d *Authors) cursorToDeliveries(cursor *mongo.Cursor) ([]*model.Datastream, error) {
+func (d *Datastreams) cursorToDatastreams(cursor *mongo.Cursor) ([]*model.Datastream, error) {
 	defer cursor.Close(context.Background())
 	modelDeliveries := []*model.Datastream{}
 
@@ -257,5 +257,5 @@ type DeliveriesParams struct {
 
 // Store provides store for Authors
 func Store(params DeliveriesParams) storedatastream.Datastreams {
-	return &Authors{params.Collection}
+	return &Datastreams{params.Collection}
 }
