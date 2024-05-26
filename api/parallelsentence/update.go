@@ -15,10 +15,10 @@ import (
 )
 
 type updateHandler struct {
-	reader parallelsentence.Reader
+	updater parallelsentence.Updater
 }
 
-func (read *updateHandler) decodeURL(
+func (update *updateHandler) decodeURL(
 	r *http.Request,
 ) (parallelsentenceID string) {
 	// Get user id from url
@@ -26,24 +26,24 @@ func (read *updateHandler) decodeURL(
 	return
 }
 
-func (read *updateHandler) decodeContext(
+func (update *updateHandler) decodeContext(
 	r *http.Request,
 ) (userID string) {
 	userID = r.Context().Value("userID").(string)
 	return
 }
 
-func (read *updateHandler) askController(
-	req *dto.ReadReq,
+func (update *updateHandler) askController(
+	req *dto.Update,
 ) (
-	resp *dto.ReadResp,
+	resp *dto.UpdateResponse,
 	err error,
 ) {
-	resp, err = read.reader.Read(req)
+	resp, err = update.updater.Update(req)
 	return
 }
 
-func (read *updateHandler) handleError(
+func (update *updateHandler) handleError(
 	w http.ResponseWriter,
 	err error,
 ) {
@@ -51,9 +51,9 @@ func (read *updateHandler) handleError(
 	routeutils.ServeError(w, err)
 }
 
-func (read *updateHandler) responseSuccess(
+func (update *updateHandler) responseSuccess(
 	w http.ResponseWriter,
-	resp *dto.ReadResp,
+	resp *dto.UpdateResponse,
 ) {
 	// Serve a response to the client
 	routeutils.ServeResponse(
@@ -63,49 +63,49 @@ func (read *updateHandler) responseSuccess(
 	)
 }
 
-func (read *updateHandler) handleRead(
+func (update *updateHandler) handleRead(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
 
-	req := dto.ReadReq{}
+	req := dto.Update{}
 	//	req.parallelsentenceID = read.decodeURL(r)
 
-	req.UserID = read.decodeContext(r)
+	req.UserID = update.decodeContext(r)
 
 	// Read request from database using request id and user id
-	resp, err := read.askController(&req)
+	resp, err := update.askController(&req)
 
 	if err != nil {
-		read.handleError(w, err)
+		update.handleError(w, err)
 		return
 	}
 
-	read.responseSuccess(w, resp)
+	update.responseSuccess(w, resp)
 }
 
 // ServeHTTP implements http.Handler
-func (read *updateHandler) ServeHTTP(
+func (update *updateHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
 	defer r.Body.Close()
 
-	read.handleRead(w, r)
+	update.handleRead(w, r)
 }
 
 // ReadRouteParams lists all the parameters for ReadRoute
 type UpdateRouteParams struct {
 	dig.In
-	Reader     parallelsentence.Reader
+	Updater    parallelsentence.Updater
 	Middleware *middleware.Auth
 }
 
 // ReadRoute provides a route to get a parallelsentence item
-func UpdateRoute(params ReadRouteParams) *routeutils.Route {
+func UpdateRoute(params UpdateRouteParams) *routeutils.Route {
 
 	handler := updateHandler{
-		reader: params.Reader,
+		updater: params.Updater,
 	}
 
 	return &routeutils.Route{
