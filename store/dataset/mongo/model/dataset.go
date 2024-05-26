@@ -62,6 +62,12 @@ func (d *Dataset) ModelDataset() *model.Dataset {
 	Dataset.ID = d.ID.Hex()
 	Dataset.CreatedAt = d.CreatedAt
 	Dataset.UpdatedAt = d.UpdatedAt
+	Dataset.Name = d.Name
+	Dataset.UploaderID = d.UploaderID.Hex()
+	Dataset.SourceLanguage = d.SourceLanguage
+	Dataset.TotalLines = d.TotalLines
+	Dataset.TranslatedLines = d.TranslatedLines
+	Dataset.ReviewedLines = d.ReviewedLines
 
 	return &Dataset
 }
