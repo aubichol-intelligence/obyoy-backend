@@ -1,12 +1,15 @@
 package parallelsentence
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 
 	"obyoy-backend/api/middleware"
 	"obyoy-backend/api/routeutils"
 	"obyoy-backend/apipattern"
+	"obyoy-backend/datastream"
+	datastreamDto "obyoy-backend/datastream/dto"
 	"obyoy-backend/parallelsentence"
 	"obyoy-backend/parallelsentence/dto"
 
@@ -17,6 +20,7 @@ import (
 // createHandler holds handler for creating parallelsentence items
 type createHandler struct {
 	create parallelsentence.Creater
+	update datastream.Updater
 }
 
 func (ch *createHandler) decodeBody(
@@ -45,6 +49,12 @@ func (ch *createHandler) askController(
 	err error,
 ) {
 	data, err = ch.create.Create(parallelsentence)
+	fmt.Println(err)
+	var datastream datastreamDto.Update
+	datastream.ID = parallelsentence.DatastreamID
+	datastream.IsTranslated = 1
+	dstrm, err := ch.update.Update(&datastream)
+	fmt.Println(dstrm) //TO-DO: this should go be front-end soon
 	return
 }
 
@@ -97,12 +107,13 @@ func (ch *createHandler) ServeHTTP(
 type CreateParams struct {
 	dig.In
 	Create     parallelsentence.Creater
+	Update     datastream.Updater
 	Middleware *middleware.Auth
 }
 
 // CreateRoute provides a route that lets to take parallelsentences
 func CreateRoute(params CreateParams) *routeutils.Route {
-	handler := createHandler{params.Create}
+	handler := createHandler{params.Create, params.Update}
 	return &routeutils.Route{
 		Method:  http.MethodPost,
 		Pattern: apipattern.ParallelsentenceCreate,
