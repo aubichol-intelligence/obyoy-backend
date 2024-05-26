@@ -11,4 +11,5 @@ func Dataset(c container.Container) {
 	c.Register(dataset.NewReader)
 	c.Register(dataset.NewUpdate)
 	c.Register(dataset.NewDelete)
+	c.Register(dataset.NewList)
 }
