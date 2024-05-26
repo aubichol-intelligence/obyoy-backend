@@ -1,6 +1,7 @@
 package dataset
 
 import (
+	"fmt"
 	"obyoy-backend/dataset/dto"
 	"obyoy-backend/errors"
 	"obyoy-backend/model"
@@ -24,7 +25,8 @@ func (list *datasetLister) askStore(state string, skip int64, limit int64) (
 	dataset []*model.Dataset,
 	err error,
 ) {
-	dataset, err = list.datasets.FindByDatasetID(state, skip, limit)
+	fmt.Println(state)
+	dataset, err = list.datasets.List(skip, limit)
 	return
 }
 
