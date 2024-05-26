@@ -11,5 +11,5 @@ type Datasets interface {
 	FindByIDs(id ...string) ([]*model.Dataset, error)
 	Search(q string, skip, limit int64) ([]*model.Dataset, error)
 	FindByUser(id string, skip, limit int64) ([]*model.Dataset, error)
-	FindByDriver(id string) (*model.Dataset, error)
+	List(skip, limit int64) ([]*model.Dataset, error)
 }
