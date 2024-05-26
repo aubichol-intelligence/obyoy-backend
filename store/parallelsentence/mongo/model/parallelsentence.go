@@ -18,6 +18,7 @@ type Parallelsentence struct {
 	SourceLanguage      string               `bson:"source_language"`
 	DestinationSentence string               `bson:"destination_sentence"`
 	DestinationLanguage string               `bson:"destination_language"`
+	TimesReviewed       int                  `bson:"times_reviewed"`
 	TranslatorID        primitive.ObjectID   `bson:"translator_id"`
 	Reviewers           []primitive.ObjectID `bson:"reviewers"`
 	ReviewedLines       []string             `bson:"reviewed_lines"`
@@ -34,6 +35,7 @@ func (d *Parallelsentence) FromModel(modelDelivery *model.Parallelsentence) erro
 	d.SourceLanguage = modelDelivery.SourceLanguage
 	d.DestinationSentence = modelDelivery.DestinationSentence
 	d.DestinationLanguage = modelDelivery.DestinationLanguage
+	d.TimesReviewed = modelDelivery.TimesReviewed
 
 	var err error
 
