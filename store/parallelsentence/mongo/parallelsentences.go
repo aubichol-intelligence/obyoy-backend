@@ -221,6 +221,20 @@ func (d *Authors) cursorToDeliveries(cursor *mongo.Cursor) ([]*model.Parallelsen
 	return modelDeliveries, nil
 }
 
+// Search search for restaurants given the text, skip and limit
+func (u *Authors) List(skip, limit int64) ([]*model.Parallelsentence, error) {
+	filter := bson.M{}
+	cursor, err := u.c.Find(context.Background(), filter, &options.FindOptions{
+		Skip:  &skip,
+		Limit: &limit,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return u.cursorToDeliveries(cursor)
+}
+
 // DeliveriesParams provides parameters for parallelsentence specific Collection
 type DeliveriesParams struct {
 	dig.In
