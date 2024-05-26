@@ -30,6 +30,9 @@ const DatasetUpdate string = "/api/v1/dataset/update"
 // DatasetDelete holds the api string for getting a dataset
 const DatasetDelete string = "/api/v1/dataset/delete"
 
+// DatasetList holds the api string for getting a dataset list
+const DatesetList string = "/api/v1/dataset/list/{skip}/{limit}"
+
 // DatasetCreate holds the api string for creating a datastream
 const DatastreamCreate string = "/api/v1/datastream/create"
 
