@@ -8,13 +8,13 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// Datastream holds db data type for deliveries
+// Datastream holds db data type for datastreams
 type Datastream struct {
 	ID              primitive.ObjectID `bson:"_id,omitempty"`
 	Name            string             `bson:"name,omitempty"`
 	SourceSentence  string             `bson:"source_sentence"`
-	LineNumber      int32              `bson:"line_number"`
-	DatasetID       primitive.ObjectID `bson:"dataset_id"`
+	LineNumber      int32              `bson:"line_number,omitempty"`
+	DatasetID       primitive.ObjectID `bson:"dataset_id,omitempty"`
 	IsTranslated    int32              `bson:"is_translated"`
 	TimesTranslated int32              `bson:"times_translated,omitempty"`
 	TimesReviewed   int32              `bson:"times_reviewed,omitempty"`
