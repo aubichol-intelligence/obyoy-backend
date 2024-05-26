@@ -84,7 +84,6 @@ func (d *Datastreams) FindByID(id string) (*model.Datastream, error) {
 
 // FindByID finds a datastream by id
 func (d *Datastreams) FindNext() (*model.Datastream, error) {
-	//	objectID, err := primitive.ObjectIDFromHex(id)
 
 	filter := bson.M{"is_translated": 0}
 
@@ -235,7 +234,7 @@ func (d *Datastreams) FindByDriver(id string) (*model.Datastream, error) {
 // cursorToDeliveries decodes Authors one by one from the search result
 func (d *Datastreams) cursorToDatastreams(cursor *mongo.Cursor) ([]*model.Datastream, error) {
 	defer cursor.Close(context.Background())
-	modelDeliveries := []*model.Datastream{}
+	modelDatastreams := []*model.Datastream{}
 
 	for cursor.Next(context.Background()) {
 		datastream := mongoModel.Datastream{}
@@ -243,19 +242,19 @@ func (d *Datastreams) cursorToDatastreams(cursor *mongo.Cursor) ([]*model.Datast
 			return nil, fmt.Errorf("Could not decode data from mongo %w", err)
 		}
 
-		modelDeliveries = append(modelDeliveries, datastream.ModelDatastream())
+		modelDatastreams = append(modelDatastreams, datastream.ModelDatastream())
 	}
 
-	return modelDeliveries, nil
+	return modelDatastreams, nil
 }
 
-// DeliveriesParams provides parameters for datastream specific Collection
-type DeliveriesParams struct {
+// DatastreamParams provides parameters for datastream specific Collection
+type DatastreamParams struct {
 	dig.In
 	Collection *mongo.Collection `name:"datastreams"`
 }
 
 // Store provides store for Authors
-func Store(params DeliveriesParams) storedatastream.Datastreams {
+func Store(params DatastreamParams) storedatastream.Datastreams {
 	return &Datastreams{params.Collection}
 }
