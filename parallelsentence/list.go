@@ -24,7 +24,7 @@ func (list *parallelsentenceLister) askStore(state string, skip int64, limit int
 	parallelsentence []*model.Parallelsentence,
 	err error,
 ) {
-	parallelsentence, err = list.parallelsentences.FindByParallelsentenceID(state, skip, limit)
+	parallelsentence, err = list.parallelsentences.List(skip, limit)
 	return
 }
 
