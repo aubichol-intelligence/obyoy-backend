@@ -33,41 +33,41 @@ const DatasetDelete string = "/api/v1/dataset/delete"
 // DatasetList holds the api string for getting a dataset list
 const DatesetList string = "/api/v1/dataset/list/{skip}/{limit}"
 
-// DatasetCreate holds the api string for creating a datastream
+// DatastreamCreate holds the api string for creating a datastream
 const DatastreamCreate string = "/api/v1/datastream/create"
 
-// DatasetRead holds the api string for reading datastreams
+// DatastreamRead holds the api string for reading datastreams
 const DatastreamRead string = "/api/v1/datastream/get"
 
-// DatasetRead holds the api string for reading datastreams
+// DatastreamRead holds the api string for reading datastreams
 const DatastreamReadNext string = "/api/v1/datastream/getnext"
 
-// DatasetUpdate holds the api string for updating datastream
+// DatastreamUpdate holds the api string for updating datastream
 const DatastreamUpdate string = "/api/v1/datastream/update"
 
-// DatasetDelete holds the api string for getting a datastream
+// DatastreamDelete holds the api string for getting a datastream
 const DatastreamDelete string = "/api/v1/datastream/delete"
 
-// DatasetCreate holds the api string for creating a parallelsentence
+// ParallelsentenceCreate holds the api string for creating a parallelsentence
 const ParallelsentenceCreate string = "/api/v1/parallelsentence/create"
 
-// DatasetRead holds the api string for reading parallelsentences
+// ParallelsentenceRead holds the api string for reading parallelsentences
 const ParallelsentenceRead string = "/api/v1/parallelsentence/get/{id}"
 
-// DatasetUpdate holds the api string for updating parallelsentence
+// ParallelsentenceUpdate holds the api string for updating parallelsentence
 const ParallelsentenceUpdate string = "/api/v1/parallelsentence/update"
 
-// DatasetDelete holds the api string for getting a parallelsentence
+// ParallelsentenceDelete holds the api string for getting a parallelsentence
 const ParallelsentenceDelete string = "/api/v1/parallelsentence/delete"
 
-// DatasetCreate holds the api string for creating a translation
+// TranslationCreate holds the api string for creating a translation
 const TranslationCreate string = "/api/v1/translation/create"
 
-// DatasetRead holds the api string for reading translations
+// TranslationRead holds the api string for reading translations
 const TranslationRead string = "/api/v1/translation/get/{id}"
 
-// DatasetUpdate holds the api string for updating translation
+// TranslationUpdate holds the api string for updating translation
 const TranslationUpdate string = "/api/v1/translation/update"
 
-// DatasetDelete holds the api string for getting a translation
+// TranslationDelete holds the api string for getting a translation
 const TranslationDelete string = "/api/v1/translation/delete"
