@@ -126,6 +126,11 @@ func (list *listHandler) handleRead(
 		return
 	}
 
+	skip, err := list.querySkip(r)
+	limit, err := list.queryLimit(r)
+
+	listDat.Skip = int64(skip)
+	listDat.Limit = int64(limit)
 	// Read request from database using request id and user id
 	resp, err := list.askController(listDat)
 
