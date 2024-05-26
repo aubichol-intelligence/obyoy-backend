@@ -17,6 +17,7 @@ func Route(c container.Container) {
 	c.RegisterGroup(dataset.ReadRoute, "route")
 	c.RegisterGroup(dataset.UpdateRoute, "route")
 	c.RegisterGroup(dataset.DeleteRoute, "route")
+	c.RegisterGroup(dataset.ListRoute, "route")
 	c.RegisterGroup(routeutils.NewOptionRoute, "route")
 
 	c.RegisterGroup(datastream.CreateRoute, "route")
