@@ -17,6 +17,7 @@ type Parallelsentence struct {
 	TranslatorID        string    `json:"translator_id"`
 	Reviewers           []string  `json:"reviewers"`
 	ReviewedLines       []string  `json:"reviewed_lines"`
+	TimesReviewed       int       `json:"times_reviewed"`
 	ExpiredAt           time.Time `json:"expire_at"`
 	CreatedAt           time.Time `json:"created_at"`
 	UpdatedAt           time.Time `json:"updated_at"`
