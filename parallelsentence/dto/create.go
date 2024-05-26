@@ -19,6 +19,7 @@ type Create struct {
 	SourceLanguage      string   `json:"source_language"`
 	DestinationSentence string   `json:"destination_sentence"`
 	DestinationLanguage string   `json:"destination_language"`
+	TimesReviewed       int      `json:"times_reviewed"`
 	TranslatorID        string   `json:"translator_id"`
 	Reviewers           []string `json:"reviewers"`
 	ReviewedLines       []string `json:"reviewed_lines"`
