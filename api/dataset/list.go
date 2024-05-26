@@ -118,13 +118,7 @@ func (list *listHandler) handleRead(
 	r *http.Request,
 ) {
 
-	listDat, err := list.decodeBody(r.Body)
-
-	if err != nil {
-		//message := "Unable to decode error: "
-		list.handleError(w, err)
-		return
-	}
+	var listDat dto.ListReq
 
 	skip, err := list.querySkip(r)
 	limit, err := list.queryLimit(r)
@@ -159,7 +153,7 @@ func ListRoute(
 ) *routeutils.Route {
 	handler := listHandler{lister}
 	return &routeutils.Route{
-		Method:  http.MethodPost,
+		Method:  http.MethodGet,
 		Pattern: apipattern.DatesetList,
 		Handler: middleware.Middleware(&handler),
 	}
