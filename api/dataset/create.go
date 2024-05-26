@@ -88,13 +88,14 @@ func (ch *createHandler) ServeHTTP(
 
 	datasetDat, err := ch.decodeBody(r.Body)
 
+	datasetDat.UploaderID = ch.decodeContext(r)
+
 	if err != nil {
 		message := "Unable to decode error: "
 		ch.handleError(w, err, message)
 		return
 	}
 
-	//	datasetDat.UserID = ch.decodeContext(r)
 	data, err := ch.askController(&datasetDat)
 
 	if err != nil {
