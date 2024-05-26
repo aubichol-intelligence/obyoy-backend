@@ -12,7 +12,7 @@ import (
 
 // contest provides dto for contest request
 type Create struct {
-	ID              string   `json:"contest_id"`
+	ID              string   `json:"dataset_id"`
 	Set             []string `json:"set"`
 	Name            string   `json:"name"`
 	TotalLines      int32    `json:"total_lines"`
