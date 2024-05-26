@@ -8,6 +8,8 @@ import (
 // Translation defines user's translation
 type Parallelsentence struct {
 	ID                  string    `json:"id"`
+	DatastreamID        string    `json:"datastream_id"`
+	DatasetID           string    `json:"dataset_id"`
 	SourceSentence      string    `json:"source_sentence"`
 	SourceLanguage      string    `json:"source_language"`
 	DestinationSentence string    `json:"destination_sentence"`
