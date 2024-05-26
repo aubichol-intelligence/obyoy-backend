@@ -8,10 +8,12 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// Parallelsentence holds db data type for deliveries
+// Parallelsentence holds db data type for parallelsentence
 type Parallelsentence struct {
 	ID                  primitive.ObjectID   `bson:"_id,omitempty"`
 	Name                string               `bson:"name,omitempty"`
+	DatasetID           primitive.ObjectID   `bson:"dataset_id"`
+	DatastreamID        primitive.ObjectID   `bson:"datastream_id"`
 	SourceSentence      string               `bson:"source_sentence"`
 	SourceLanguage      string               `bson:"source_language"`
 	DestinationSentence string               `bson:"destination_sentence"`
@@ -39,6 +41,22 @@ func (d *Parallelsentence) FromModel(modelDelivery *model.Parallelsentence) erro
 		d.ID, err = primitive.ObjectIDFromHex(modelDelivery.ID)
 	} else {
 		d.ID = primitive.NewObjectID()
+	}
+
+	if err != nil {
+		return err
+	}
+
+	if modelDelivery.DatasetID != "" {
+		d.DatasetID, err = primitive.ObjectIDFromHex(modelDelivery.DatasetID)
+	}
+
+	if err != nil {
+		return err
+	}
+
+	if modelDelivery.DatastreamID != "" {
+		d.DatastreamID, err = primitive.ObjectIDFromHex(modelDelivery.DatastreamID)
 	}
 
 	if err != nil {
