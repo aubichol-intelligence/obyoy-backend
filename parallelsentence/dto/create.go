@@ -12,8 +12,10 @@ import (
 
 // contest provides dto for contest request
 type Create struct {
-	ID                  string   `json:"contest_id"`
+	ID                  string   `json:"parallelsentence_id"`
 	SourceSentence      string   `json:"source_sentence"`
+	DatasetID           string   `json:"dataset_id"`
+	DatastreamID        string   `json:"datastream_id"`
 	SourceLanguage      string   `json:"source_language"`
 	DestinationSentence string   `json:"destination_sentence"`
 	DestinationLanguage string   `json:"destination_language"`
@@ -30,7 +32,7 @@ func (d *Create) Validate(validate *validator.Validate) error {
 			"%s:%w",
 			err.Error(),
 			&errors.Invalid{
-				errors.Base{"invalid data for contest", false},
+				errors.Base{"invalid data for parallelsentence", false},
 			},
 		)
 	}
