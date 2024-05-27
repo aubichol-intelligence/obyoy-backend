@@ -84,7 +84,7 @@ func (update *updateHandler) handleRead(
 	update.responseSuccess(w, resp)
 }
 
-// ServeHTTP implements http.Handler
+// ServeHTTP implements http.Handler for dataset update
 func (update *updateHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
@@ -94,15 +94,15 @@ func (update *updateHandler) ServeHTTP(
 	update.handleRead(w, r)
 }
 
-// ReadRouteParams lists all the parameters for ReadRoute
+// UpdateRouteParams lists all the parameters for UpdateRoute
 type UpdateRouteParams struct {
 	dig.In
 	Updater    dataset.Updater
 	Middleware *middleware.Auth
 }
 
-// ReadRoute provides a route to get a dataset item
-func ReadRoute(params UpdateRouteParams) *routeutils.Route {
+// UpdateRoute provides a route to get a dataset item
+func UpdateRoute(params UpdateRouteParams) *routeutils.Route {
 
 	handler := updateHandler{
 		updater: params.Updater,
