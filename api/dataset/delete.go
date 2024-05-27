@@ -14,7 +14,7 @@ import (
 	"go.uber.org/dig"
 )
 
-// deleteHandler holds dataset item update handler
+// deleteHandler holds dataset item delete handler
 type deleteHandler struct {
 	delete dataset.Deleter
 }
