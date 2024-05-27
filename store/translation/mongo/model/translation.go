@@ -10,27 +10,23 @@ import (
 
 // Translation holds db data type for deliveries
 type Translation struct {
-	ID                primitive.ObjectID `bson:"_id,omitempty"`
-	Name              string             `bson:"name,omitempty"`
-	Phone             string             `bson:"phone_number,omitempty"`
-	Address           string             `bson:"address,omitempty"`
-	UserID            primitive.ObjectID `bson:"user_id,omitempty"`
-	DriverID          primitive.ObjectID `bson:"driver_id,omitempty"`
-	OrderID           primitive.ObjectID `bson:"order_id,omitempty"`
-	RestaurantName    string             `bson:"restaurant_name,omitempty"`
-	RestaurantAddress string             `bson:"restaurant_address,omitempty"`
-	RestaurantPhone   string             `bson:"restaurant_phone,omitempty"`
-	CustomerDetails   Credentials        `bson:"customer_details,omitempty"`
-	RestaurantDetails Credentials        `bson:"restaurant_details,omitempty"`
-	Note              string             `bson:"note,omitempty,omitempty"`
-	Amount            float64            `bson:"amount,omitempty"`
-	IsActive          bool               `bson:"is_active,omitempty"`
-	Distance          string             `bson:"distance,omitempty"`
-	State             string             `bson:"state,omitempty"`
-	ItemCount         int                `bson:"item_count,omitempty"`
-	CreatedAt         time.Time          `bson:"created_at,omitempty"`
-	UpdatedAt         time.Time          `bson:"updated_at,omitempty"`
-	IsDeleted         bool               `bson:"is_deleted,omitempty"`
+	ID              primitive.ObjectID `bson:"_id,omitempty"`
+	Name            string             `bson:"name,omitempty"`
+	Phone           string             `bson:"phone_number,omitempty"`
+	Address         string             `bson:"address,omitempty"`
+	UserID          primitive.ObjectID `bson:"user_id,omitempty"`
+	DriverID        primitive.ObjectID `bson:"driver_id,omitempty"`
+	OrderID         primitive.ObjectID `bson:"order_id,omitempty"`
+	CustomerDetails Credentials        `bson:"customer_details,omitempty"`
+	Note            string             `bson:"note,omitempty,omitempty"`
+	Amount          float64            `bson:"amount,omitempty"`
+	IsActive        bool               `bson:"is_active,omitempty"`
+	Distance        string             `bson:"distance,omitempty"`
+	State           string             `bson:"state,omitempty"`
+	ItemCount       int                `bson:"item_count,omitempty"`
+	CreatedAt       time.Time          `bson:"created_at,omitempty"`
+	UpdatedAt       time.Time          `bson:"updated_at,omitempty"`
+	IsDeleted       bool               `bson:"is_deleted,omitempty"`
 }
 
 type Credentials struct {
