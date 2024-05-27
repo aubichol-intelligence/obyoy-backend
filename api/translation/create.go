@@ -66,7 +66,7 @@ func (ch *createHandler) responseSuccess(
 	)
 }
 
-// ServeHTTP implements http.Handler interface
+// ServeHTTP implements http.Handler interface for creating translation
 func (ch *createHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
@@ -93,14 +93,14 @@ func (ch *createHandler) ServeHTTP(
 	ch.responseSuccess(w, data)
 }
 
-// CreateParams provide parameters for CreateRoute
+// CreateParams provide parameters for CreateRoute for translation
 type CreateParams struct {
 	dig.In
 	Create     translation.Creater
 	Middleware *middleware.Auth
 }
 
-// CreateRoute provides a route that lets to take translations
+// CreateRoute provides a route that lets to create translations
 func CreateRoute(params CreateParams) *routeutils.Route {
 	handler := createHandler{params.Create}
 	return &routeutils.Route{
