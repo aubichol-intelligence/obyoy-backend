@@ -84,7 +84,7 @@ func (update *updateHandler) handleRead(
 	update.responseSuccess(w, resp)
 }
 
-// ServeHTTP implements http.Handler
+// ServeHTTP implements http.Handler for updating translation
 func (update *updateHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
@@ -94,7 +94,7 @@ func (update *updateHandler) ServeHTTP(
 	update.handleRead(w, r)
 }
 
-// ReadRouteParams lists all the parameters for ReadRoute
+// UpdateRouteParams lists all the parameters for UpdateRoute
 type UpdateRouteParams struct {
 	dig.In
 	Updater    translation.Updater
