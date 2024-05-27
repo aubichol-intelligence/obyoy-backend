@@ -27,6 +27,7 @@ type delete struct {
 func (d *delete) toModel(usertranslation *dto.Delete) (translation *model.Translation) {
 	translation = &model.Translation{}
 
+	translation.ID = usertranslation.TranslationID
 	translation.UpdatedAt = time.Now().UTC()
 	translation.IsDeleted = true
 	return
