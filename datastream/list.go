@@ -65,7 +65,7 @@ func (read *datastreamLister) List(datastreamReq *dto.ListReq, skip int64, limit
 	return resp, nil
 }
 
-// NewReaderParams lists params for the NewReader
+// NewListerParams lists params for the NewList
 type NewListerParams struct {
 	dig.In
 	Datastream storedatastream.Datastreams
