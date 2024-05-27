@@ -28,7 +28,7 @@ func (d *delete) toModel(userparallelsentence *dto.Delete) (parallelsentence *mo
 	parallelsentence = &model.Parallelsentence{}
 
 	parallelsentence.UpdatedAt = time.Now().UTC()
-	//	parallelsentence.IsDeleted = true
+	parallelsentence.IsDeleted = true
 	return
 }
 
@@ -53,16 +53,16 @@ func (d *delete) askStore(modelparallelsentence *model.Parallelsentence) (
 }
 
 func (d *delete) giveResponse(
-	modelNotice *model.Parallelsentence,
+	modelParallelsentence *model.Parallelsentence,
 	id string,
 ) *dto.DeleteResponse {
 	logrus.WithFields(logrus.Fields{}).Debug("User deleted parallelsentence successfully")
 
 	return &dto.DeleteResponse{
-		Message: "parallelsentence deleted",
-		OK:      true,
-		ID:      id,
-		//		DeleteTime: modelNotice.DeletedAt.String(),
+		Message:    "parallelsentence deleted",
+		OK:         true,
+		ID:         id,
+		DeleteTime: modelParallelsentence.UpdatedAt.String(),
 	}
 }
 
