@@ -1,6 +1,8 @@
 package dataset
 
 import (
+	"fmt"
+	"io"
 	"net/http"
 
 	"obyoy-backend/api/middleware"
@@ -16,6 +18,16 @@ import (
 
 type updateHandler struct {
 	updater dataset.Updater
+}
+
+func (ch *updateHandler) decodeBody(
+	body io.ReadCloser,
+) (
+	dataset dto.Update,
+	err error,
+) {
+	err = dataset.FromReader(body)
+	return
 }
 
 func (update *updateHandler) decodeURL(
@@ -68,8 +80,14 @@ func (update *updateHandler) handleRead(
 	r *http.Request,
 ) {
 
-	req := dto.Update{}
-	//	req.datasetID = read.decodeURL(r)
+	//	req := dto.Update{}
+
+	defer r.Body.Close()
+
+	req, err := update.decodeBody(r.Body)
+
+	fmt.Println(err)
+	//	req.ID = update.decodeURL(r)
 
 	//	req.UserID = update.decodeContext(r)
 
@@ -109,7 +127,7 @@ func UpdateRoute(params UpdateRouteParams) *routeutils.Route {
 	}
 
 	return &routeutils.Route{
-		Method:  http.MethodGet,
+		Method:  http.MethodPost,
 		Pattern: apipattern.DatasetUpdate,
 		Handler: params.Middleware.Middleware(&handler),
 	}
