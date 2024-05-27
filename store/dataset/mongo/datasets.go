@@ -225,7 +225,7 @@ func (d *Datasets) cursorToDatasets(cursor *mongo.Cursor) ([]*model.Dataset, err
 	return modelDeliveries, nil
 }
 
-// Search search for restaurants given the text, skip and limit
+// Search search for datasets given the text, skip and limit
 func (u *Datasets) List(skip, limit int64) ([]*model.Dataset, error) {
 	filter := bson.M{}
 	cursor, err := u.c.Find(context.Background(), filter, &options.FindOptions{
