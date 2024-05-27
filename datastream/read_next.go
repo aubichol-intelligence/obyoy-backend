@@ -10,7 +10,7 @@ import (
 	"go.uber.org/dig"
 )
 
-// Reader provides an interface for reading datastreames
+// Reader provides an interface for reading the next line from the datastreames
 type NextReader interface {
 	ReadNext(*dto.ReadReq) (*dto.ReadResp, error)
 }
@@ -61,13 +61,13 @@ func (read *datastreamNextReader) ReadNext(datastreamReq *dto.ReadReq) (*dto.Rea
 	return &resp, nil
 }
 
-// NewReaderParams lists params for the NewReader
+// NewReaderNextParams lists params for the NewReader
 type NewReaderNextParams struct {
 	dig.In
 	Datastream storedatastream.Datastreams
 }
 
-// NewReader provides Reader
+// NewNextReader provides NextReader
 func NewNextReader(params NewReaderNextParams) NextReader {
 	return &datastreamNextReader{
 		datastreams: params.Datastream,
