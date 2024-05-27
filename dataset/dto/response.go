@@ -15,9 +15,10 @@ func (b *BaseResponse) String() string {
 
 // CreateResponse provides create response
 type CreateResponse struct {
-	Message string `json:"message"`
-	OK      bool   `json:"ok"`
-	ID      string `json:"dataset_id"`
+	Message    string `json:"message"`
+	OK         bool   `json:"ok"`
+	ID         string `json:"dataset_id"`
+	CreateTime string `json:"create_time"`
 }
 
 // String provides string repsentation
