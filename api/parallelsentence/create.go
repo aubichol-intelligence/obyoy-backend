@@ -91,7 +91,7 @@ func (ch *createHandler) ServeHTTP(
 		return
 	}
 
-	//	parallelsentenceDat.UserID = ch.decodeContext(r)
+	parallelsentenceDat.TranslatorID = ch.decodeContext(r)
 	data, err := ch.askController(&parallelsentenceDat)
 
 	if err != nil {
