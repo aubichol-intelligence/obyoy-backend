@@ -17,7 +17,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// listHandler holds the handler that searches for restaurant
+// listHandler holds the handler that searches for dataset
 type listHandler struct {
 	searcher dataset.Lister
 }
