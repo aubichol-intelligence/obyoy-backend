@@ -1,7 +1,7 @@
 package dto
 
-//ReadReq stores order read request data
+// ReadReq stores order read request data
 type ListReq struct {
-	UserID string
-	Contest  string
+	UserID     string
+	datastream string
 }
