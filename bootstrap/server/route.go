@@ -41,5 +41,6 @@ func Route(c container.Container) {
 	c.RegisterGroup(parallelsentence.UpdateRoute, "route")
 	c.RegisterGroup(parallelsentence.DeleteRoute, "route")
 	c.RegisterGroup(parallelsentence.ReadRoute, "route")
+	c.RegisterGroup(parallelsentence.ListRoute, "route")
 
 }
