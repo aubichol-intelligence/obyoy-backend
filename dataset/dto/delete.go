@@ -16,6 +16,7 @@ type DeleteResponse struct {
 	OK          bool   `json:"ok"`
 	ID          string `json:"contest_id"`
 	RequestTime string `json:"request_time"`
+	DeleteTime  string `json:"delete_time"`
 }
 
 // String provides string repsentation
