@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// Translation holds db data type for deliveries
+// Translation holds db data type for translations
 type Translation struct {
 	ID                  primitive.ObjectID `bson:"_id,omitempty"`
 	DatasetID           primitive.ObjectID `bson:"dataset_id,omitempty"`
