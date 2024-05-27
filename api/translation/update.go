@@ -124,7 +124,7 @@ func UpdateRoute(params UpdateRouteParams) *routeutils.Route {
 	}
 
 	return &routeutils.Route{
-		Method:  http.MethodGet,
+		Method:  http.MethodPost,
 		Pattern: apipattern.TranslationUpdate,
 		Handler: params.Middleware.Middleware(&handler),
 	}
