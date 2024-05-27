@@ -68,12 +68,12 @@ func (read *userLister) ListSuspend(skip int64, limit int64) ([]dto.ReadResp, er
 // NewReaderParams lists params for the NewReader
 type NewListerParams struct {
 	dig.In
-	Restaurant storeuser.Users
+	User storeuser.Users
 }
 
 // NewReader provides Reader
 func NewListSuspender(params NewListerParams) ListSuspender {
 	return &userLister{
-		users: params.Restaurant,
+		users: params.User,
 	}
 }
