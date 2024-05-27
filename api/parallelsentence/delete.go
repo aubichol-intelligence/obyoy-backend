@@ -14,7 +14,7 @@ import (
 	"go.uber.org/dig"
 )
 
-// deleteHandler holds parallelsentence item update handler
+// deleteHandler holds parallelsentence item delete handler
 type deleteHandler struct {
 	delete parallelsentence.Deleter
 }
@@ -64,7 +64,7 @@ func (dh *deleteHandler) responseSuccess(
 	)
 }
 
-// ServeHTTP implements http.Handler interface
+// ServeHTTP implements http.Handler interface for deleting the parallel sentence
 func (dh *deleteHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
