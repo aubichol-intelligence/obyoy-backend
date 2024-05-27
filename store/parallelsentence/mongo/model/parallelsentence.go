@@ -39,7 +39,6 @@ func (d *Parallelsentence) FromModel(modelParallelsentence *model.Parallelsenten
 	d.TimesReviewed = modelParallelsentence.TimesReviewed
 	d.ReviewedLines = modelParallelsentence.ReviewedLines
 	d.IsDeleted = modelParallelsentence.IsDeleted
-	//	d.Reviewers = modelParallelsentence.Reviewers
 
 	var err error
 
