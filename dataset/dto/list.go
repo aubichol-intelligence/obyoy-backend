@@ -11,10 +11,9 @@ import (
 
 // ReadReq stores order read request data
 type ListReq struct {
-	UserID  string
-	Contest string
-	Skip    int64 `json:"skip"`
-	Limit   int64 `json:"limit"`
+	UserID string
+	Skip   int64 `json:"skip"`
+	Limit  int64 `json:"limit"`
 }
 
 // Validate validates user data
