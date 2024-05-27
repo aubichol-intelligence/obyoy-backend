@@ -33,7 +33,7 @@ func (r *ReadResp) FromModel(delivery *model.Translation) {
 	r.SourceLanguage = delivery.SourceLanguage
 	r.SourceSentence = delivery.SourceSentence
 	r.DestinationSentence = delivery.DestinationSentence
-	r.DestinationLanguage = delivery.DestinationSentence
+	r.DestinationLanguage = delivery.DestinationLanguage
 	r.LineNumber = delivery.LineNumber
 	r.Name = delivery.Name
 }
