@@ -12,7 +12,7 @@ import (
 
 // contest provides dto for contest request
 type Create struct {
-	ID                  string `json:"contest_id"`
+	ID                  string `json:"translation_id"`
 	SourceSentence      string `json:"source_sentence"`
 	SourceLanguage      string `json:"source_language"`
 	DestinationSentence string `json:"destination_sentence"`
