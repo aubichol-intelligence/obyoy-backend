@@ -84,7 +84,7 @@ func (read *readHandler) handleRead(
 	read.responseSuccess(w, resp)
 }
 
-// ServeHTTP implements http.Handler
+// ServeHTTP implements http.Handler for reading a parallel sentence
 func (read *readHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
