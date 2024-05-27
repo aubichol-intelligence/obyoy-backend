@@ -65,13 +65,13 @@ func (read *translationLister) List(translationReq *dto.ListReq, skip int64, lim
 	return resp, nil
 }
 
-// NewReaderParams lists params for the NewReader
+// NewListerParams lists params for the NewList
 type NewListerParams struct {
 	dig.In
 	Translation storetranslation.Translations
 }
 
-// NewReader provides Reader
+// NewList provides Lister
 func NewList(params NewReaderParams) Lister {
 	return &translationLister{
 		translations: params.Translation,
