@@ -32,7 +32,7 @@ func (ch *listHandler) decodeBody(
 	return
 }
 
-// querySkip skips number of users for a request
+// querySkip skips number of datasets for a request
 func (list *listHandler) querySkip(
 	r *http.Request,
 ) (skip int, err error) {
@@ -52,7 +52,7 @@ func (list *listHandler) querySkip(
 	return
 }
 
-// queryLimit limits number of users per query
+// queryLimit limits number of datasets per query
 func (list *listHandler) queryLimit(r *http.Request) (
 	limit int, err error,
 ) {
@@ -125,7 +125,8 @@ func (list *listHandler) handleRead(
 
 	listDat.Skip = int64(skip)
 	listDat.Limit = int64(limit)
-	// Read request from database using request id and user id
+
+	// Read request from database using skip and limit
 	resp, err := list.askController(listDat)
 
 	if err != nil {
@@ -146,7 +147,7 @@ func (list *listHandler) ServeHTTP(
 	list.handleRead(w, r)
 }
 
-// SearchRoute provides a route that searches for restaurants
+// ListRoute provides a route that gives lists for datasets
 func ListRoute(
 	lister dataset.Lister,
 	middleware *middleware.Auth,
