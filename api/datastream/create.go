@@ -66,7 +66,7 @@ func (ch *createHandler) responseSuccess(
 	)
 }
 
-// ServeHTTP implements http.Handler interface
+// ServeHTTP implements http.Handler interface for datastream create
 func (ch *createHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
@@ -100,7 +100,7 @@ type CreateParams struct {
 	Middleware *middleware.Auth
 }
 
-// CreateRoute provides a route that lets to take datastreams
+// CreateRoute provides a route that lets to create datastreams
 func CreateRoute(params CreateParams) *routeutils.Route {
 	handler := createHandler{params.Create}
 	return &routeutils.Route{
