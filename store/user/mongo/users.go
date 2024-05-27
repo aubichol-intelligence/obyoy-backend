@@ -190,7 +190,7 @@ func (u *users) ListSuspend(skip, limit int64) ([]*model.User, error) {
 	return u.cursorToUsers(cursor)
 }
 
-// Search search for restaurants given the text, skip and limit
+// Search search for users given the text, skip and limit
 func (u *users) List(skip, limit int64, user_type string) ([]*model.User, error) {
 	filter := bson.M{"account_type": user_type}
 	cursor, err := u.c.Find(context.Background(), filter, &options.FindOptions{
