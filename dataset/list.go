@@ -67,13 +67,13 @@ func (read *datasetLister) List(datasetReq *dto.ListReq, skip int64, limit int64
 	return resp, nil
 }
 
-// NewReaderParams lists params for the NewReader
+// NewListerParams lists params for the NewList
 type NewListerParams struct {
 	dig.In
 	Dataset storedataset.Datasets
 }
 
-// NewReader provides Reader
+// NewList provides Lister
 func NewList(params NewReaderParams) Lister {
 	return &datasetLister{
 		datasets: params.Dataset,
