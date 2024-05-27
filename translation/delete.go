@@ -28,7 +28,7 @@ func (d *delete) toModel(usertranslation *dto.Delete) (translation *model.Transl
 	translation = &model.Translation{}
 
 	translation.UpdatedAt = time.Now().UTC()
-	//	translation.IsDeleted = true
+	translation.IsDeleted = true
 	return
 }
 
