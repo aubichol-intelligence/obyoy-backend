@@ -17,7 +17,7 @@ type ListReq struct {
 	Limit   int64 `json:"limit"`
 }
 
-// Validate validates restaurant data
+// Validate validates user data
 func (d *ListReq) Validate(validate *validator.Validate) error {
 	if err := validate.Struct(d); err != nil {
 		return fmt.Errorf(
@@ -31,7 +31,7 @@ func (d *ListReq) Validate(validate *validator.Validate) error {
 	return nil
 }
 
-// FromReader reads restaurant from request body
+// FromReader reads user from request body
 func (d *ListReq) FromReader(reader io.Reader) error {
 	err := json.NewDecoder(reader).Decode(d)
 	if err != nil {
