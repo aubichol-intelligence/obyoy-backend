@@ -2,7 +2,7 @@ package dto
 
 import "fmt"
 
-// BaseResponse provides base response for restaurants
+// BaseResponse provides base response for datasets
 type BaseResponse struct {
 	Message string `json:"message"`
 	OK      bool   `json:"ok"`
