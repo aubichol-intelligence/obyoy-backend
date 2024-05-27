@@ -54,6 +54,7 @@ func (ch *createHandler) askController(
 		one_line.DatasetID = data.ID
 		one_line.LineNumber = int32(ind + 1)
 		one_line.SourceSentence = line
+		one_line.SourceLanguage = dataset.SourceLanguage
 		one_line.Name = dataset.Name
 		ch.createstream.Create(&one_line)
 	}

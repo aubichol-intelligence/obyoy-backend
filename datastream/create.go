@@ -33,6 +33,7 @@ func (c *create) toModel(userdatastream *dto.Create) (
 	datastream.UpdatedAt = datastream.CreatedAt
 	datastream.ID = userdatastream.ID
 	datastream.SourceSentence = userdatastream.SourceSentence
+	datastream.SourceLanguage = userdatastream.SourceLanguage
 	datastream.LineNumber = userdatastream.LineNumber
 	datastream.DatasetID = userdatastream.DatasetID
 	datastream.TimesTranslated = userdatastream.TimesTranslated

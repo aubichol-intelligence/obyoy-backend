@@ -12,7 +12,8 @@ import (
 type Datastream struct {
 	ID              primitive.ObjectID `bson:"_id,omitempty"`
 	Name            string             `bson:"name,omitempty"`
-	SourceSentence  string             `bson:"source_sentence"`
+	SourceSentence  string             `bson:"source_sentence,omitempty"`
+	SourceLanguage  string             `bson:"source_language,omitempty"`
 	LineNumber      int32              `bson:"line_number,omitempty"`
 	DatasetID       primitive.ObjectID `bson:"dataset_id,omitempty"`
 	IsTranslated    int32              `bson:"is_translated"`
@@ -28,6 +29,7 @@ func (d *Datastream) FromModel(modelDelivery *model.Datastream) error {
 	d.CreatedAt = modelDelivery.CreatedAt
 	d.UpdatedAt = modelDelivery.UpdatedAt
 	d.SourceSentence = modelDelivery.SourceSentence
+	d.SourceLanguage = modelDelivery.SourceLanguage
 	d.LineNumber = modelDelivery.LineNumber
 	d.TimesTranslated = modelDelivery.TimesTranslated
 	d.TimesReviewed = modelDelivery.TimesReviewed
@@ -64,6 +66,7 @@ func (d *Datastream) ModelDatastream() *model.Datastream {
 	Datastream.CreatedAt = d.CreatedAt
 	Datastream.UpdatedAt = d.UpdatedAt
 	Datastream.SourceSentence = d.SourceSentence
+	Datastream.SourceLanguage = d.SourceLanguage
 	Datastream.LineNumber = d.LineNumber
 	Datastream.IsTranslated = d.IsTranslated
 	Datastream.TimesTranslated = d.TimesTranslated

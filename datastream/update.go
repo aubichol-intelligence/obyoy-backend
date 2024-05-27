@@ -31,6 +31,7 @@ func (u *update) toModel(userdatastream *dto.Update) (datastream *model.Datastre
 	datastream.UpdatedAt = time.Now().UTC()
 	datastream.ID = userdatastream.ID
 	datastream.SourceSentence = userdatastream.SourceSentence
+	datastream.SourceLanguage = userdatastream.SourceLanguage
 	datastream.LineNumber = userdatastream.LineNumber
 	datastream.DatasetID = userdatastream.DatasetID
 	datastream.TimesTranslated = userdatastream.TimesTranslated

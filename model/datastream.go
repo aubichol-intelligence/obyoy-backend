@@ -9,6 +9,7 @@ import (
 type Datastream struct {
 	ID              string    `json:"id"`
 	SourceSentence  string    `json:"source_sentence"`
+	SourceLanguage  string    `json:"source_language"`
 	LineNumber      int32     `json:"line_number"`
 	DatasetID       string    `json:"dataset_id"`
 	IsTranslated    int32     `json:"is_translated"`

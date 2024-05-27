@@ -14,6 +14,7 @@ import (
 type Update struct {
 	ID              string `json:"datastream_id"`
 	SourceSentence  string `json:"source_sentence"`
+	SourceLanguage  string `json:"source_language"`
 	LineNumber      int32  `json:"line_number"`
 	DatasetID       string `json:"dataset_id"`
 	TimesTranslated int32  `json:"times_translated"`
