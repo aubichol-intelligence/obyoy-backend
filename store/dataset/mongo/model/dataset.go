@@ -12,11 +12,11 @@ type Dataset struct {
 	ID              primitive.ObjectID `bson:"_id,omitempty"`
 	Name            string             `bson:"name,omitempty"`
 	Set             []string           `bson:"set,omitempty"`
-	UploaderID      primitive.ObjectID `bson:"uploader_id"`
-	SourceLanguage  string             `bson:"source_language"`
-	TotalLines      int32              `bson:"total_lines"`
-	TranslatedLines int32              `bson:"translated_lines"`
-	ReviewedLines   int32              `bson:"reviewed_lines"`
+	UploaderID      primitive.ObjectID `bson:"uploader_id,omitempty"`
+	SourceLanguage  string             `bson:"source_language,omitempty"`
+	TotalLines      int32              `bson:"total_lines,omitempty"`
+	TranslatedLines int32              `bson:"translated_lines,omitempty"`
+	ReviewedLines   int32              `bson:"reviewed_lines,omitempty"`
 	CreatedAt       time.Time          `bson:"created_at,omitempty"`
 	UpdatedAt       time.Time          `bson:"updated_at,omitempty"`
 	IsDeleted       bool               `bson:"is_deleted,omitempty"`
