@@ -5,7 +5,7 @@ import (
 	"obyoy-backend/datastream"
 )
 
-// Order registers order related providers
+// Order registers datastream related providers
 func Datastream(c container.Container) {
 	c.Register(datastream.NewCreate)
 	c.Register(datastream.NewReader)
