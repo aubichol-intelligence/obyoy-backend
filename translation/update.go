@@ -30,6 +30,15 @@ func (u *update) toModel(usertranslation *dto.Update) (translation *model.Transl
 
 	translation.UpdatedAt = time.Now().UTC()
 	translation.ID = usertranslation.ID
+	translation.SourceSentence = usertranslation.SourceSentence
+	translation.SourceLanguage = usertranslation.SourceLanguage
+	translation.DestinationSentence = usertranslation.DestinationSentence
+	translation.DestinationLanguage = usertranslation.DestinationLanguage
+	translation.LineNumber = usertranslation.Line
+	translation.DatasetID = usertranslation.DatasetID
+	translation.DatastreamID = usertranslation.DatastreamID
+	translation.ReviewerID = usertranslation.ReviewerID
+	translation.Name = usertranslation.Name
 
 	return
 }
