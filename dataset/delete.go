@@ -27,6 +27,7 @@ type delete struct {
 func (d *delete) toModel(userdataset *dto.Delete) (dataset *model.Dataset) {
 	dataset = &model.Dataset{}
 
+	dataset.ID = userdataset.DatasetID
 	dataset.UpdatedAt = time.Now().UTC()
 	dataset.IsDeleted = true
 	return
