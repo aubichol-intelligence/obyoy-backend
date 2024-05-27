@@ -15,6 +15,8 @@ type Dataset struct {
 	UploaderID      primitive.ObjectID `bson:"uploader_id,omitempty"`
 	SourceLanguage  string             `bson:"source_language,omitempty"`
 	TotalLines      int32              `bson:"total_lines,omitempty"`
+	Description     string             `bson:"description,omitempty"`
+	Remarks         string             `bson:"remarks,omitempty"`
 	TranslatedLines int32              `bson:"translated_lines,omitempty"`
 	ReviewedLines   int32              `bson:"reviewed_lines,omitempty"`
 	CreatedAt       time.Time          `bson:"created_at,omitempty"`
@@ -32,6 +34,8 @@ func (d *Dataset) FromModel(modelDataset *model.Dataset) error {
 	d.TotalLines = modelDataset.TotalLines
 	d.TranslatedLines = modelDataset.TranslatedLines
 	d.ReviewedLines = modelDataset.ReviewedLines
+	d.Description = modelDataset.Description
+	d.Remarks = modelDataset.Remarks
 
 	var err error
 

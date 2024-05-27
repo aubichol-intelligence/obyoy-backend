@@ -17,6 +17,8 @@ type Update struct {
 	Name            string   `json:"name"`
 	TotalLines      int32    `json:"total_lines"`
 	SourceLanguage  string   `json:"source_language"`
+	Description     string   `json:"description"`
+	Remarks         string   `json:"remarks"`
 	UploaderID      string   `json:"uploader_id"`
 	TranslatedLines int32    `json:"translated_lines"`
 	ReviewedLines   int32    `json:"reviewed_lines"`

@@ -14,6 +14,8 @@ type ReadResp struct {
 	Name            string `json:"name"`
 	TotalLines      int    `json:"total_lines"`
 	SourceLanguage  string `json:"source_language"`
+	Description     string `json:"description"`
+	Remarks         string `json:"remarks"`
 	UploaderID      string `json:"uploader_id"`
 	TranslatedLines int    `json:"translated_lines"`
 	ReviewedLines   int    `json:"reviewed_lines"`
@@ -28,4 +30,6 @@ func (r *ReadResp) FromModel(dataset *model.Dataset) {
 	r.SourceLanguage = dataset.SourceLanguage
 	r.UploaderID = dataset.UploaderID
 	r.TranslatedLines = int(dataset.TranslatedLines)
+	r.Description = dataset.Description
+	r.Remarks = dataset.Remarks
 }

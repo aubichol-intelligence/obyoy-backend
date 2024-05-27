@@ -13,6 +13,8 @@ type Dataset struct {
 	TotalLines      int32     `json:"total_lines"`
 	SourceLanguage  string    `json:"source_language"`
 	UploaderID      string    `json:"uploader_id"`
+	Description     string    `json:"description"`
+	Remarks         string    `json:"remarks"`
 	TranslatedLines int32     `json:"translated_lines"`
 	ReviewedLines   int32     `json:"reviewed_lines"`
 	ExpiredAt       time.Time `json:"expire_at"`

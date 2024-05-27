@@ -16,6 +16,8 @@ type Create struct {
 	Set             []string `json:"set"`
 	Name            string   `json:"name"`
 	TotalLines      int32    `json:"total_lines"`
+	Description     string   `json:"description"`
+	Remarks         string   `json:"remarks"`
 	SourceLanguage  string   `json:"source_language"`
 	UploaderID      string   `json:"uploader_id"`
 	TranslatedLines int32    `json:"translated_lines"`

@@ -38,6 +38,8 @@ func (c *create) toModel(userdataset *dto.Create) (
 	dataset.UploaderID = userdataset.UploaderID
 	dataset.TotalLines = userdataset.TotalLines
 	dataset.TranslatedLines = userdataset.TranslatedLines
+	dataset.Description = userdataset.Description
+	dataset.Remarks = userdataset.Remarks
 
 	return
 }

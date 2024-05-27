@@ -36,6 +36,8 @@ func (u *update) toModel(userdataset *dto.Update) (dataset *model.Dataset) {
 	dataset.SourceLanguage = userdataset.SourceLanguage
 	dataset.TranslatedLines = userdataset.TranslatedLines
 	dataset.Set = userdataset.Set
+	dataset.Description = userdataset.Description
+	dataset.Remarks = userdataset.Remarks
 
 	return
 }
