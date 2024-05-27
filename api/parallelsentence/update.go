@@ -84,7 +84,7 @@ func (update *updateHandler) handleRead(
 	update.responseSuccess(w, resp)
 }
 
-// ServeHTTP implements http.Handler
+// ServeHTTP implements http.Handler for updating a parallel sentence
 func (update *updateHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
@@ -94,14 +94,14 @@ func (update *updateHandler) ServeHTTP(
 	update.handleRead(w, r)
 }
 
-// ReadRouteParams lists all the parameters for ReadRoute
+// UpdateRouteParams lists all the parameters for ReadRoute
 type UpdateRouteParams struct {
 	dig.In
 	Updater    parallelsentence.Updater
 	Middleware *middleware.Auth
 }
 
-// ReadRoute provides a route to get a parallelsentence item
+// UpdateRoute provides a route to get a parallelsentence item
 func UpdateRoute(params UpdateRouteParams) *routeutils.Route {
 
 	handler := updateHandler{
