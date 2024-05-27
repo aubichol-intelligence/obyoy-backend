@@ -10,14 +10,14 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Restaurant provides dto for restaurant request
+// user provides dto for user request
 type ListByType struct {
 	State string `json:"account_type"`
 	Skip  int64  `json:"skip"`
 	Limit int64  `json:"limit"`
 }
 
-// Validate validates restaurant data
+// Validate validates user data
 func (d *ListByType) Validate(validate *validator.Validate) error {
 	if err := validate.Struct(d); err != nil {
 		return fmt.Errorf(
@@ -31,7 +31,7 @@ func (d *ListByType) Validate(validate *validator.Validate) error {
 	return nil
 }
 
-// FromReader reads restaurant from request body
+// FromReader reads user from request body
 func (d *ListByType) FromReader(reader io.Reader) error {
 	err := json.NewDecoder(reader).Decode(d)
 	if err != nil {
