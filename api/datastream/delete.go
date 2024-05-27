@@ -14,7 +14,7 @@ import (
 	"go.uber.org/dig"
 )
 
-// deleteHandler holds datastream item update handler
+// deleteHandler holds datastream item delete handler
 type deleteHandler struct {
 	delete datastream.Deleter
 }
@@ -64,7 +64,7 @@ func (dh *deleteHandler) responseSuccess(
 	)
 }
 
-// ServeHTTP implements http.Handler interface
+// ServeHTTP implements http.Handler interface for deleting datastream
 func (dh *deleteHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
