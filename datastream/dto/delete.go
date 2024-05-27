@@ -14,7 +14,7 @@ import (
 type DeleteResponse struct {
 	Message     string `json:"message"`
 	OK          bool   `json:"ok"`
-	ID          string `json:"contest_id"`
+	ID          string `json:"datastream_id"`
 	RequestTime string `json:"request_time"`
 	DeleteTime  string `json:"delete_time"`
 }
@@ -24,13 +24,13 @@ func (dr *DeleteResponse) String() string {
 	return fmt.Sprintf("message:%s, ok:%v", dr.Message, dr.OK)
 }
 
-// Delete provides dto for contest update
+// Delete provides dto for datastream update
 type Delete struct {
-	UserID    string `json:"user_id"`
-	ContestID string `json:"contest_id"`
+	UserID       string `json:"user_id"`
+	datastreamID string `json:"datastream_id"`
 }
 
-// Validate validates contest delete data
+// Validate validates datastream delete data
 func (d *Delete) Validate(validate *validator.Validate) error {
 	if err := validate.Struct(d); err != nil {
 		return fmt.Errorf(
@@ -44,7 +44,7 @@ func (d *Delete) Validate(validate *validator.Validate) error {
 	return nil
 }
 
-// FromReader decodes contest delete data from request
+// FromReader decodes datastream delete data from request
 func (d *Delete) FromReader(reader io.Reader) error {
 	err := json.NewDecoder(reader).Decode(d)
 	if err != nil {
