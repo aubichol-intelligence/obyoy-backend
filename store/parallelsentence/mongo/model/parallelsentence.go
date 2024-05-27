@@ -1,6 +1,7 @@
 package model
 
 import (
+	"fmt"
 	"time"
 
 	"obyoy-backend/model"
@@ -28,19 +29,22 @@ type Parallelsentence struct {
 }
 
 // FromModel converts model data to db data for parallelsentences
-func (d *Parallelsentence) FromModel(modelDelivery *model.Parallelsentence) error {
-	d.CreatedAt = modelDelivery.CreatedAt
-	d.UpdatedAt = modelDelivery.UpdatedAt
-	d.SourceSentence = modelDelivery.SourceSentence
-	d.SourceLanguage = modelDelivery.SourceLanguage
-	d.DestinationSentence = modelDelivery.DestinationSentence
-	d.DestinationLanguage = modelDelivery.DestinationLanguage
-	d.TimesReviewed = modelDelivery.TimesReviewed
+func (d *Parallelsentence) FromModel(modelParallelsentence *model.Parallelsentence) error {
+	d.CreatedAt = modelParallelsentence.CreatedAt
+	d.UpdatedAt = modelParallelsentence.UpdatedAt
+	d.SourceSentence = modelParallelsentence.SourceSentence
+	d.SourceLanguage = modelParallelsentence.SourceLanguage
+	d.DestinationSentence = modelParallelsentence.DestinationSentence
+	d.DestinationLanguage = modelParallelsentence.DestinationLanguage
+	d.TimesReviewed = modelParallelsentence.TimesReviewed
+	d.ReviewedLines = modelParallelsentence.ReviewedLines
+	d.IsDeleted = modelParallelsentence.IsDeleted
+	//	d.Reviewers = modelParallelsentence.Reviewers
 
 	var err error
 
-	if modelDelivery.ID != "" {
-		d.ID, err = primitive.ObjectIDFromHex(modelDelivery.ID)
+	if modelParallelsentence.ID != "" {
+		d.ID, err = primitive.ObjectIDFromHex(modelParallelsentence.ID)
 	} else {
 		d.ID = primitive.NewObjectID()
 	}
@@ -49,26 +53,40 @@ func (d *Parallelsentence) FromModel(modelDelivery *model.Parallelsentence) erro
 		return err
 	}
 
-	if modelDelivery.DatasetID != "" {
-		d.DatasetID, err = primitive.ObjectIDFromHex(modelDelivery.DatasetID)
+	if modelParallelsentence.DatasetID != "" {
+		d.DatasetID, err = primitive.ObjectIDFromHex(modelParallelsentence.DatasetID)
 	}
 
 	if err != nil {
 		return err
 	}
 
-	if modelDelivery.DatastreamID != "" {
-		d.DatastreamID, err = primitive.ObjectIDFromHex(modelDelivery.DatastreamID)
+	if modelParallelsentence.DatastreamID != "" {
+		d.DatastreamID, err = primitive.ObjectIDFromHex(modelParallelsentence.DatastreamID)
 	}
 
 	if err != nil {
 		return err
+	}
+
+	if modelParallelsentence.TranslatorID != "" {
+		d.TranslatorID, err = primitive.ObjectIDFromHex(modelParallelsentence.TranslatorID)
+	}
+
+	if err != nil {
+		return err
+	}
+
+	for _, val := range modelParallelsentence.Reviewers {
+		id, err := primitive.ObjectIDFromHex(val)
+		fmt.Println(err)
+		d.Reviewers = append(d.Reviewers, id)
 	}
 
 	return nil
 }
 
-// ModelDelivery converts bson to model
+// ModelParallelsentence converts bson to model
 func (d *Parallelsentence) ModelParallelsentence() *model.Parallelsentence {
 	Parallelsentence := model.Parallelsentence{}
 	Parallelsentence.ID = d.ID.Hex()
