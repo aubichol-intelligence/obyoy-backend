@@ -84,10 +84,14 @@ func (d *Translation) FromModel(modelDelivery *model.Translation) error {
 	return nil
 }
 
-// ModelDelivery converts bson to model
+// ModelTranslation converts bson to model
 func (d *Translation) ModelTranslation() *model.Translation {
 	Translation := model.Translation{}
+
 	Translation.ID = d.ID.Hex()
+	Translation.DatasetID = d.DatasetID.Hex()
+	Translation.DatastreamID = d.DatasetID.Hex()
+	Translation.ReviewerID = d.ReviewerID.Hex()
 	Translation.CreatedAt = d.CreatedAt
 	Translation.UpdatedAt = d.UpdatedAt
 	Translation.SourceLanguage = d.SourceLanguage
