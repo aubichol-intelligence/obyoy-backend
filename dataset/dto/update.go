@@ -12,19 +12,15 @@ import (
 
 // Update provides dto for contest update
 type Update struct {
-	ID                string  `json:"contest_id"`
-	Name              string  `json:"name"`
-	Phone             string  `json:"phone_number"`
-	Address           string  `json:"address"`
-	UserID            string  `json:"user_id"`
-	Duration          int     `json:"duration"`
-	RestaurantAddress string  `json:"restaurant_address"`
-	RestaurantName    string  `json:"restaurant_name"`
-	RestaurantPhone   string  `json:"restaurant_phone"`
-	Note              string  `json:"note"`
-	Amount            float64 `json:"amount"`
-	ItemCount         int     `json:"item_count"`
-	State             string  `json:"state"`
+	ID              string   `json:"contest_id"`
+	Set             []string `json:"set"`
+	Name            string   `json:"name"`
+	TotalLines      int32    `json:"total_lines"`
+	SourceLanguage  string   `json:"source_language"`
+	UploaderID      string   `json:"uploader_id"`
+	TranslatedLines int32    `json:"translated_lines"`
+	ReviewedLines   int32    `json:"reviewed_lines"`
+	IsDeleted       bool     `json:"is_deleted"`
 }
 
 // Validate validates contest update data
