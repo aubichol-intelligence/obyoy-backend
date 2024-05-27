@@ -10,38 +10,36 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Update provides dto for contest update
+// Update provides dto for translation update
 type Update struct {
-	ID                string  `json:"contest_id"`
-	Name              string  `json:"name"`
-	Phone             string  `json:"phone_number"`
-	Address           string  `json:"address"`
-	UserID            string  `json:"user_id"`
-	Duration          int     `json:"duration"`
-	RestaurantAddress string  `json:"restaurant_address"`
-	RestaurantName    string  `json:"restaurant_name"`
-	RestaurantPhone   string  `json:"restaurant_phone"`
-	Note              string  `json:"note"`
-	Amount            float64 `json:"amount"`
-	ItemCount         int     `json:"item_count"`
-	State             string  `json:"state"`
+	ID                  string `json:"translation_id"`
+	SourceSentence      string `json:"source_sentence"`
+	SourceLanguage      string `json:"source_language"`
+	DestinationSentence string `json:"destination_sentence"`
+	DestinationLanguage string `json:"destination_language"`
+	Line                int    `json:"line_number"`
+	Name                string `json:"name"`
+	DatasetID           string `json:"dataset_id"`
+	DatastreamID        string `json:"datastream_id"`
+	TranslatorID        string `json:"translator_id"`
+	ReviewerID          string `json:"reviewer_id"`
 }
 
-// Validate validates contest update data
+// Validate validates translation update data
 func (u *Update) Validate(validate *validator.Validate) error {
 	if err := validate.Struct(u); err != nil {
 		return fmt.Errorf(
 			"%s:%w",
 			err.Error(),
 			&errors.Invalid{
-				errors.Base{"invalid contest update data", false},
+				errors.Base{"invalid translation update data", false},
 			},
 		)
 	}
 	return nil
 }
 
-// FromReader decodes contest update data from request
+// FromReader decodes translation update data from request
 func (u *Update) FromReader(reader io.Reader) error {
 	err := json.NewDecoder(reader).Decode(u)
 	if err != nil {
@@ -49,7 +47,7 @@ func (u *Update) FromReader(reader io.Reader) error {
 			"%s:%w",
 			err.Error(),
 			&errors.Invalid{
-				Base: errors.Base{"invalid contest update data", false},
+				Base: errors.Base{"invalid translation update data", false},
 			},
 		)
 	}
