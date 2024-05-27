@@ -31,6 +31,15 @@ func (u *update) toModel(userparallelsentence *dto.Update) (parallelsentence *mo
 	parallelsentence.UpdatedAt = time.Now().UTC()
 	parallelsentence.ID = userparallelsentence.ID
 	parallelsentence.TimesReviewed = userparallelsentence.TimesReviewed
+	parallelsentence.SourceSentence = userparallelsentence.SourceSentence
+	parallelsentence.SourceLanguage = userparallelsentence.SourceLanguage
+	parallelsentence.DestinationSentence = userparallelsentence.DestinationSentence
+	parallelsentence.DestinationLanguage = userparallelsentence.DestinationLanguage
+	parallelsentence.TranslatorID = userparallelsentence.TranslatorID
+	parallelsentence.Reviewers = userparallelsentence.Reviewers
+	parallelsentence.ReviewedLines = userparallelsentence.ReviewedLines
+	parallelsentence.DatastreamID = userparallelsentence.DatastreamID
+	parallelsentence.DatasetID = userparallelsentence.DatasetID
 
 	return
 }
