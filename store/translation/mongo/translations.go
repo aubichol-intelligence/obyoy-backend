@@ -15,12 +15,12 @@ import (
 	"go.uber.org/dig"
 )
 
-// Authors handles translation related database queries
-type Authors struct {
+// Translations handles translation related database queries
+type Translations struct {
 	c *mongo.Collection
 }
 
-func (d *Authors) convertData(modelTranslation *model.Translation) (
+func (d *Translations) convertData(modelTranslation *model.Translation) (
 	mongoTranslation mongoModel.Translation,
 	err error,
 ) {
@@ -28,8 +28,8 @@ func (d *Authors) convertData(modelTranslation *model.Translation) (
 	return
 }
 
-// Save saves Authors from model to database
-func (d *Authors) Save(modelTranslation *model.Translation) (string, error) {
+// Save saves Translations from model to database
+func (d *Translations) Save(modelTranslation *model.Translation) (string, error) {
 	mongoTranslation := mongoModel.Translation{}
 	var err error
 	mongoTranslation, err = d.convertData(modelTranslation)
@@ -58,7 +58,7 @@ func (d *Authors) Save(modelTranslation *model.Translation) (string, error) {
 }
 
 // FindByID finds a translation by id
-func (d *Authors) FindByID(id string) (*model.Translation, error) {
+func (d *Translations) FindByID(id string) (*model.Translation, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid id %s : %w", id, err)
@@ -83,7 +83,7 @@ func (d *Authors) FindByID(id string) (*model.Translation, error) {
 }
 
 // FindByTranslationID finds a translation by translation id
-func (d *Authors) FindByTranslationID(id string, skip int64, limit int64) ([]*model.Translation, error) {
+func (d *Translations) FindByTranslationID(id string, skip int64, limit int64) ([]*model.Translation, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid id %s : %w", id, err)
@@ -102,11 +102,11 @@ func (d *Authors) FindByTranslationID(id string, skip int64, limit int64) ([]*mo
 		return nil, err
 	}
 
-	return d.cursorToDeliveries(cursor)
+	return d.cursorToTranslations(cursor)
 }
 
-// CountByTranslationID returns Authors from translation id
-func (d *Authors) CountByTranslationID(id string) (int64, error) {
+// CountByTranslationID returns Translations from translation id
+func (d *Translations) CountByTranslationID(id string) (int64, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 
 	if err != nil {
@@ -123,8 +123,8 @@ func (d *Authors) CountByTranslationID(id string) (int64, error) {
 	return cnt, nil
 }
 
-// FindByIDs returns all the Authors from multiple translation ids
-func (d *Authors) FindByIDs(ids ...string) ([]*model.Translation, error) {
+// FindByIDs returns all the Translations from multiple translation ids
+func (d *Translations) FindByIDs(ids ...string) ([]*model.Translation, error) {
 	objectIDs := []primitive.ObjectID{}
 	for _, id := range ids {
 		objectID, err := primitive.ObjectIDFromHex(id)
@@ -146,11 +146,11 @@ func (d *Authors) FindByIDs(ids ...string) ([]*model.Translation, error) {
 		return nil, err
 	}
 
-	return d.cursorToDeliveries(cursor)
+	return d.cursorToTranslations(cursor)
 }
 
-// Search search for Authors given the text, skip and limit
-func (d *Authors) Search(text string, skip, limit int64) ([]*model.Translation, error) {
+// Search search for Translations given the text, skip and limit
+func (d *Translations) Search(text string, skip, limit int64) ([]*model.Translation, error) {
 	filter := bson.M{"$text": bson.M{"$search": text}}
 	cursor, err := d.c.Find(
 		context.Background(),
@@ -164,11 +164,11 @@ func (d *Authors) Search(text string, skip, limit int64) ([]*model.Translation, 
 		return nil, err
 	}
 
-	return d.cursorToDeliveries(cursor)
+	return d.cursorToTranslations(cursor)
 }
 
-// Search search for Authors given the text, skip and limit
-func (d *Authors) FindByUser(id string, skip, limit int64) ([]*model.Translation, error) {
+// Search search for Translations given the text, skip and limit
+func (d *Translations) FindByUser(id string, skip, limit int64) ([]*model.Translation, error) {
 	filter := bson.M{"_id": id}
 	cursor, err := d.c.Find(
 		context.Background(),
@@ -182,11 +182,11 @@ func (d *Authors) FindByUser(id string, skip, limit int64) ([]*model.Translation
 		return nil, err
 	}
 
-	return d.cursorToDeliveries(cursor)
+	return d.cursorToTranslations(cursor)
 }
 
-// Search search for Authors given the text, skip and limit
-func (d *Authors) FindByDriver(id string) (*model.Translation, error) {
+// Search search for Translations given the text, skip and limit
+func (d *Translations) FindByDriver(id string) (*model.Translation, error) {
 	driverID, _ := primitive.ObjectIDFromHex(id)
 	filter := bson.M{"driver_id": driverID, "is_active": true, "state": "pending"}
 
@@ -208,10 +208,10 @@ func (d *Authors) FindByDriver(id string) (*model.Translation, error) {
 	return translation.ModelTranslation(), nil
 }
 
-// cursorToDeliveries decodes Authors one by one from the search result
-func (d *Authors) cursorToDeliveries(cursor *mongo.Cursor) ([]*model.Translation, error) {
+// cursorToTranslations decodes Translations one by one from the search result
+func (d *Translations) cursorToTranslations(cursor *mongo.Cursor) ([]*model.Translation, error) {
 	defer cursor.Close(context.Background())
-	modelDeliveries := []*model.Translation{}
+	modelTranslations := []*model.Translation{}
 
 	for cursor.Next(context.Background()) {
 		translation := mongoModel.Translation{}
@@ -219,19 +219,19 @@ func (d *Authors) cursorToDeliveries(cursor *mongo.Cursor) ([]*model.Translation
 			return nil, fmt.Errorf("Could not decode data from mongo %w", err)
 		}
 
-		modelDeliveries = append(modelDeliveries, translation.ModelTranslation())
+		modelTranslations = append(modelTranslations, translation.ModelTranslation())
 	}
 
-	return modelDeliveries, nil
+	return modelTranslations, nil
 }
 
-// DeliveriesParams provides parameters for translation specific Collection
-type DeliveriesParams struct {
+// TranslationsParams provides parameters for translation specific Collection
+type TranslationsParams struct {
 	dig.In
 	Collection *mongo.Collection `name:"translations"`
 }
 
-// Store provides store for Authors
-func Store(params DeliveriesParams) storetranslation.Translations {
-	return &Authors{params.Collection}
+// Store provides store for Translations
+func Store(params TranslationsParams) storetranslation.Translations {
+	return &Translations{params.Collection}
 }
