@@ -13,7 +13,7 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Deleter provides an interface for updating datasets
+// Deleter provides an interface for deleting datasets
 type Deleter interface {
 	Delete(*dto.Delete) (*dto.DeleteResponse, error)
 }
@@ -59,10 +59,10 @@ func (d *delete) giveResponse(
 	logrus.WithFields(logrus.Fields{}).Debug("User deleted dataset successfully")
 
 	return &dto.DeleteResponse{
-		Message: "dataset deleted",
-		OK:      true,
-		ID:      id,
-		//		DeleteTime: modelNotice.DeletedAt.String(),
+		Message:    "dataset deleted",
+		OK:         true,
+		ID:         id,
+		DeleteTime: modelNotice.UpdatedAt.String(),
 	}
 }
 
