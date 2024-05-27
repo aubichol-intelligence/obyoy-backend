@@ -37,6 +37,7 @@ func (c *create) toModel(userdataset *dto.Create) (
 	dataset.ReviewedLines = userdataset.ReviewedLines
 	dataset.UploaderID = userdataset.UploaderID
 	dataset.TotalLines = userdataset.TotalLines
+	dataset.TranslatedLines = userdataset.TranslatedLines
 
 	return
 }
