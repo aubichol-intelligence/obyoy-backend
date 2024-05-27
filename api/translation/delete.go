@@ -14,7 +14,7 @@ import (
 	"go.uber.org/dig"
 )
 
-// deleteHandler holds translation item update handler
+// deleteHandler holds translation item delete handler
 type deleteHandler struct {
 	delete translation.Deleter
 }
@@ -64,7 +64,7 @@ func (dh *deleteHandler) responseSuccess(
 	)
 }
 
-// ServeHTTP implements http.Handler interface
+// ServeHTTP implements http.Handler interface for deleting translation
 func (dh *deleteHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
