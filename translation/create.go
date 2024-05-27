@@ -32,6 +32,15 @@ func (c *create) toModel(usertranslation *dto.Create) (
 	translation.CreatedAt = time.Now().UTC()
 	translation.UpdatedAt = translation.CreatedAt
 	translation.ID = usertranslation.ID
+	translation.SourceSentence = usertranslation.SourceSentence
+	translation.SourceLanguage = usertranslation.SourceLanguage
+	translation.DestinationSentence = usertranslation.DestinationSentence
+	translation.DestinationLanguage = usertranslation.DestinationLanguage
+	translation.LineNumber = usertranslation.Line
+	translation.DatasetID = usertranslation.DatasetID
+	translation.DatastreamID = usertranslation.DatastreamID
+	translation.ReviewerID = usertranslation.ReviewerID
+	translation.Name = usertranslation.Name
 
 	return
 }
