@@ -5,7 +5,7 @@ import (
 	"obyoy-backend/translation"
 )
 
-// Order registers order related providers
+// Order registers translation related providers
 func Translation(c container.Container) {
 	c.Register(translation.NewCreate)
 	c.Register(translation.NewReader)
