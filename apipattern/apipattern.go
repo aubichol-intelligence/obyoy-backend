@@ -60,6 +60,9 @@ const ParallelsentenceUpdate string = "/api/v1/parallelsentence/update"
 // ParallelsentenceDelete holds the api string for getting a parallelsentence
 const ParallelsentenceDelete string = "/api/v1/parallelsentence/delete"
 
+// ParallelsentenceList holds the api string for getting a dataset list
+const ParallelsentenceList string = "/api/v1/parallelsentence/list/{skip}/{limit}"
+
 // TranslationCreate holds the api string for creating a translation
 const TranslationCreate string = "/api/v1/translation/create"
 
