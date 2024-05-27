@@ -69,10 +69,10 @@ func (c *create) giveResponse(modeldataset *model.Dataset, id string) (
 	logrus.WithFields(logrus.Fields{}).Debug("User created dataset successfully")
 
 	return &dto.CreateResponse{
-		Message: "dataset created",
-		OK:      true,
-		//		datasetTime: modeldataset.CreatedAt.String(),
-		ID: id,
+		Message:    "dataset created",
+		OK:         true,
+		CreateTime: modeldataset.CreatedAt.String(),
+		ID:         id,
 	}, nil
 }
 
