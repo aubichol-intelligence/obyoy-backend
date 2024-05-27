@@ -13,7 +13,7 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Deleter provides an interface for updating datastreams
+// Deleter provides an interface for deleting datastreams
 type Deleter interface {
 	Delete(*dto.Delete) (*dto.DeleteResponse, error)
 }
@@ -53,16 +53,16 @@ func (d *delete) askStore(modeldatastream *model.Datastream) (
 }
 
 func (d *delete) giveResponse(
-	modelNotice *model.Datastream,
+	modelDatastream *model.Datastream,
 	id string,
 ) *dto.DeleteResponse {
 	logrus.WithFields(logrus.Fields{}).Debug("User deleted datastream successfully")
 
 	return &dto.DeleteResponse{
-		Message: "datastream deleted",
-		OK:      true,
-		ID:      id,
-		//		DeleteTime: modelNotice.DeletedAt.String(),
+		Message:    "datastream deleted",
+		OK:         true,
+		ID:         id,
+		DeleteTime: modelDatastream.UpdatedAt.String(),
 	}
 }
 
