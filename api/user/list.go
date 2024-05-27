@@ -149,7 +149,7 @@ func (list *listHandler) ServeHTTP(
 	list.handleRead(w, r)
 }
 
-// SearchRoute provides a route that searches for restaurants
+// SearchRoute provides a route that searches for users
 func ListRoute(
 	searcher user.Lister,
 	middleware *middleware.Auth,
