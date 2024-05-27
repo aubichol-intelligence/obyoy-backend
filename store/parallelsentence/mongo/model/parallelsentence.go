@@ -27,7 +27,7 @@ type Parallelsentence struct {
 	IsDeleted           bool                 `bson:"is_deleted,omitempty"`
 }
 
-// FromModel converts model data to db data for deliveries
+// FromModel converts model data to db data for parallelsentences
 func (d *Parallelsentence) FromModel(modelDelivery *model.Parallelsentence) error {
 	d.CreatedAt = modelDelivery.CreatedAt
 	d.UpdatedAt = modelDelivery.UpdatedAt
@@ -74,6 +74,11 @@ func (d *Parallelsentence) ModelParallelsentence() *model.Parallelsentence {
 	Parallelsentence.ID = d.ID.Hex()
 	Parallelsentence.CreatedAt = d.CreatedAt
 	Parallelsentence.UpdatedAt = d.UpdatedAt
+	Parallelsentence.SourceSentence = d.SourceSentence
+	Parallelsentence.SourceLanguage = d.SourceLanguage
+	Parallelsentence.DestinationSentence = d.DestinationSentence
+	Parallelsentence.DestinationLanguage = d.DestinationLanguage
+	Parallelsentence.TimesReviewed = d.TimesReviewed
 
 	return &Parallelsentence
 }
