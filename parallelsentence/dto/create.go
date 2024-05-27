@@ -10,7 +10,7 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// contest provides dto for contest request
+// contest provides dto for parallelsentence request
 type Create struct {
 	ID                  string   `json:"parallelsentence_id"`
 	SourceSentence      string   `json:"source_sentence"`
