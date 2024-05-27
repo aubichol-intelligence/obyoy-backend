@@ -8,7 +8,7 @@ import (
 )
 
 // User defines mongodb data type for User
-// Account type can be of driver, restaurant and admin
+// Account type can be of driver, user and admin
 type User struct {
 	ID          primitive.ObjectID `bson:"_id,omitempty"`
 	FirstName   string             `bson:"first_name,omitempty"`
@@ -29,8 +29,6 @@ type User struct {
 	PhoneNumber string             `bson:"phone_number,omitempty"`
 	Address     string             `bson:"address,omitempty"`
 	AccountType string             `bson:"account_type,omitempty"`
-	Latitude    float64            `bson:"latitude,omitempty"`
-	Longitude   float64            `bson:"longitude,omitempty"`
 }
 
 // TO-DO: need to decide the details later
@@ -61,8 +59,6 @@ func (u *User) FromModel(modelUser *model.User) error {
 	u.PhoneNumber = modelUser.PhoneNumber
 	u.Address = modelUser.Address
 	u.AccountType = modelUser.AccountType
-	u.Latitude = modelUser.Latitude
-	u.Longitude = modelUser.Longitude
 
 	var err error
 
@@ -102,8 +98,6 @@ func (u *User) ModelUser() *model.User {
 	user.Address = u.Address
 	user.UserType = u.UserType
 	user.ProfilePic = u.ProfilePic
-	user.Longitude = u.Longitude
-	user.Latitude = u.Latitude
 	user.AccountType = u.AccountType
 	return &user
 }
