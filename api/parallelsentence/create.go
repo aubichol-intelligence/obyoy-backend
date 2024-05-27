@@ -76,7 +76,7 @@ func (ch *createHandler) responseSuccess(
 	)
 }
 
-// ServeHTTP implements http.Handler interface
+// ServeHTTP implements http.Handler interface for parallel sentence create
 func (ch *createHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
@@ -111,7 +111,7 @@ type CreateParams struct {
 	Middleware *middleware.Auth
 }
 
-// CreateRoute provides a route that lets to take parallelsentences
+// CreateRoute provides a route that lets to create parallelsentences
 func CreateRoute(params CreateParams) *routeutils.Route {
 	handler := createHandler{params.Create, params.Update}
 	return &routeutils.Route{
