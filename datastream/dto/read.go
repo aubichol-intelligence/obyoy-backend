@@ -11,7 +11,7 @@ type ReadReq struct {
 // ReadReq stores order read request data
 type ReadResp struct {
 	//	UserID    string
-	//	ContestID string
+	//	datastreamID string
 	SourceSentence string `json:"source_sentence"`
 	LineNumber     int32  `json:"line_number"`
 	DatasetID      string `json:"dataset_id"`
