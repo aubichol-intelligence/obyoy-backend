@@ -65,14 +65,14 @@ func (read *parallelsentenceLister) List(parallelsentenceReq *dto.ListReq, skip 
 	return resp, nil
 }
 
-// NewReaderParams lists params for the NewReader
+// NewListerParams lists params for the NewReader
 type NewListerParams struct {
 	dig.In
 	Parallelsentence storeparallelsentence.Parallelsentences
 }
 
-// NewReader provides Reader
-func NewList(params NewReaderParams) Lister {
+// NewList provides Reader
+func NewList(params NewListerParams) Lister {
 	return &parallelsentenceLister{
 		parallelsentences: params.Parallelsentence,
 	}
