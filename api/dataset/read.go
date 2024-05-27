@@ -84,7 +84,7 @@ func (read *readHandler) handleRead(
 	read.responseSuccess(w, resp)
 }
 
-// ServeHTTP implements http.Handler
+// ServeHTTP implements http.Handler for dataset read
 func (read *readHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
@@ -102,7 +102,7 @@ type ReadRouteParams struct {
 }
 
 // ReadRoute provides a route to get a dataset item
-func UpdateRoute(params ReadRouteParams) *routeutils.Route {
+func ReadRoute(params ReadRouteParams) *routeutils.Route {
 
 	handler := readHandler{
 		reader: params.Reader,
