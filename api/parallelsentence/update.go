@@ -1,6 +1,8 @@
 package parallelsentence
 
 import (
+	"fmt"
+	"io"
 	"net/http"
 
 	"obyoy-backend/api/middleware"
@@ -16,6 +18,16 @@ import (
 
 type updateHandler struct {
 	updater parallelsentence.Updater
+}
+
+func (ch *updateHandler) decodeBody(
+	body io.ReadCloser,
+) (
+	dataset dto.Update,
+	err error,
+) {
+	err = dataset.FromReader(body)
+	return
 }
 
 func (update *updateHandler) decodeURL(
@@ -69,7 +81,10 @@ func (update *updateHandler) handleRead(
 ) {
 
 	req := dto.Update{}
-	//	req.parallelsentenceID = read.decodeURL(r)
+	var err error
+	req, err = update.decodeBody(r.Body)
+
+	fmt.Println(err)
 
 	//	req.UserID = update.decodeContext(r)
 
