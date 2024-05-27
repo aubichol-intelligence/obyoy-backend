@@ -36,6 +36,7 @@ func (d *Dataset) FromModel(modelDataset *model.Dataset) error {
 	d.ReviewedLines = modelDataset.ReviewedLines
 	d.Description = modelDataset.Description
 	d.Remarks = modelDataset.Remarks
+	d.IsDeleted = modelDataset.IsDeleted
 
 	var err error
 
