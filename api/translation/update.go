@@ -1,6 +1,8 @@
 package translation
 
 import (
+	"fmt"
+	"io"
 	"net/http"
 
 	"obyoy-backend/api/middleware"
@@ -16,6 +18,16 @@ import (
 
 type updateHandler struct {
 	updater translation.Updater
+}
+
+func (ch *updateHandler) decodeBody(
+	body io.ReadCloser,
+) (
+	translation dto.Update,
+	err error,
+) {
+	err = translation.FromReader(body)
+	return
 }
 
 func (update *updateHandler) decodeURL(
@@ -68,7 +80,10 @@ func (update *updateHandler) handleRead(
 	r *http.Request,
 ) {
 
-	req := dto.Update{}
+	req, err := update.decodeBody(r.Body)
+
+	fmt.Println(err)
+	//req := dto.Update{}
 	//	req.translationID = read.decodeURL(r)
 
 	//	req.UserID = update.decodeContext(r)
