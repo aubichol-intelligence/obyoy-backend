@@ -84,7 +84,7 @@ func (read *readNextHandler) handleRead(
 	read.responseSuccess(w, resp)
 }
 
-// ServeHTTP implements http.Handler
+// ServeHTTP implements http.Handler for reading the next line from the datastream
 func (read *readNextHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
@@ -101,7 +101,7 @@ type ReadNextRouteParams struct {
 	Middleware *middleware.Auth
 }
 
-// ReadRoute provides a route to get a datastream item
+// ReadRoute provides a route to get the next datastream item
 func ReadNextRoute(params ReadNextRouteParams) *routeutils.Route {
 
 	handler := readNextHandler{
