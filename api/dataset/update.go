@@ -71,7 +71,7 @@ func (update *updateHandler) handleRead(
 	req := dto.Update{}
 	//	req.datasetID = read.decodeURL(r)
 
-	req.UserID = update.decodeContext(r)
+	//	req.UserID = update.decodeContext(r)
 
 	// Read request from database using request id and user id
 	resp, err := update.askController(&req)
