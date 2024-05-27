@@ -15,12 +15,12 @@ import (
 	"go.uber.org/dig"
 )
 
-// Authors handles parallelsentence related database queries
-type Authors struct {
+// Parallelsentences handles parallelsentence related database queries
+type Parallelsentences struct {
 	c *mongo.Collection
 }
 
-func (d *Authors) convertData(modelParallelsentence *model.Parallelsentence) (
+func (d *Parallelsentences) convertData(modelParallelsentence *model.Parallelsentence) (
 	mongoParallelsentence mongoModel.Parallelsentence,
 	err error,
 ) {
@@ -28,8 +28,8 @@ func (d *Authors) convertData(modelParallelsentence *model.Parallelsentence) (
 	return
 }
 
-// Save saves Authors from model to database
-func (d *Authors) Save(modelParallelsentence *model.Parallelsentence) (string, error) {
+// Save saves Parallelsentences from model to database
+func (d *Parallelsentences) Save(modelParallelsentence *model.Parallelsentence) (string, error) {
 	mongoParallelsentence := mongoModel.Parallelsentence{}
 	var err error
 	mongoParallelsentence, err = d.convertData(modelParallelsentence)
@@ -54,7 +54,7 @@ func (d *Authors) Save(modelParallelsentence *model.Parallelsentence) (string, e
 }
 
 // FindByID finds a parallelsentence by id
-func (d *Authors) FindByID(id string) (*model.Parallelsentence, error) {
+func (d *Parallelsentences) FindByID(id string) (*model.Parallelsentence, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid id %s : %w", id, err)
@@ -79,7 +79,7 @@ func (d *Authors) FindByID(id string) (*model.Parallelsentence, error) {
 }
 
 // FindByParallelsentenceID finds a parallelsentence by parallelsentence id
-func (d *Authors) FindByParallelsentenceID(id string, skip int64, limit int64) ([]*model.Parallelsentence, error) {
+func (d *Parallelsentences) FindByParallelsentenceID(id string, skip int64, limit int64) ([]*model.Parallelsentence, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid id %s : %w", id, err)
@@ -98,11 +98,11 @@ func (d *Authors) FindByParallelsentenceID(id string, skip int64, limit int64) (
 		return nil, err
 	}
 
-	return d.cursorToDeliveries(cursor)
+	return d.cursorToParallelsentences(cursor)
 }
 
-// CountByParallelsentenceID returns Authors from parallelsentence id
-func (d *Authors) CountByParallelsentenceID(id string) (int64, error) {
+// CountByParallelsentenceID returns Parallelsentences from parallelsentence id
+func (d *Parallelsentences) CountByParallelsentenceID(id string) (int64, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 
 	if err != nil {
@@ -119,8 +119,8 @@ func (d *Authors) CountByParallelsentenceID(id string) (int64, error) {
 	return cnt, nil
 }
 
-// FindByIDs returns all the Authors from multiple parallelsentence ids
-func (d *Authors) FindByIDs(ids ...string) ([]*model.Parallelsentence, error) {
+// FindByIDs returns all the Parallelsentences from multiple parallelsentence ids
+func (d *Parallelsentences) FindByIDs(ids ...string) ([]*model.Parallelsentence, error) {
 	objectIDs := []primitive.ObjectID{}
 	for _, id := range ids {
 		objectID, err := primitive.ObjectIDFromHex(id)
@@ -142,11 +142,11 @@ func (d *Authors) FindByIDs(ids ...string) ([]*model.Parallelsentence, error) {
 		return nil, err
 	}
 
-	return d.cursorToDeliveries(cursor)
+	return d.cursorToParallelsentences(cursor)
 }
 
-// Search search for Authors given the text, skip and limit
-func (d *Authors) Search(text string, skip, limit int64) ([]*model.Parallelsentence, error) {
+// Search search for Parallelsentences given the text, skip and limit
+func (d *Parallelsentences) Search(text string, skip, limit int64) ([]*model.Parallelsentence, error) {
 	filter := bson.M{"$text": bson.M{"$search": text}}
 	cursor, err := d.c.Find(
 		context.Background(),
@@ -160,11 +160,11 @@ func (d *Authors) Search(text string, skip, limit int64) ([]*model.Parallelsente
 		return nil, err
 	}
 
-	return d.cursorToDeliveries(cursor)
+	return d.cursorToParallelsentences(cursor)
 }
 
-// Search search for Authors given the text, skip and limit
-func (d *Authors) FindByUser(id string, skip, limit int64) ([]*model.Parallelsentence, error) {
+// Search search for Parallelsentences given the text, skip and limit
+func (d *Parallelsentences) FindByUser(id string, skip, limit int64) ([]*model.Parallelsentence, error) {
 	filter := bson.M{"_id": id}
 	cursor, err := d.c.Find(
 		context.Background(),
@@ -178,11 +178,11 @@ func (d *Authors) FindByUser(id string, skip, limit int64) ([]*model.Parallelsen
 		return nil, err
 	}
 
-	return d.cursorToDeliveries(cursor)
+	return d.cursorToParallelsentences(cursor)
 }
 
-// Search search for Authors given the text, skip and limit
-func (d *Authors) FindByDriver(id string) (*model.Parallelsentence, error) {
+// Search search for Parallelsentences given the text, skip and limit
+func (d *Parallelsentences) FindByDriver(id string) (*model.Parallelsentence, error) {
 	driverID, _ := primitive.ObjectIDFromHex(id)
 	filter := bson.M{"driver_id": driverID, "is_active": true, "state": "pending"}
 
@@ -204,10 +204,10 @@ func (d *Authors) FindByDriver(id string) (*model.Parallelsentence, error) {
 	return parallelsentence.ModelParallelsentence(), nil
 }
 
-// cursorToDeliveries decodes Authors one by one from the search result
-func (d *Authors) cursorToDeliveries(cursor *mongo.Cursor) ([]*model.Parallelsentence, error) {
+// cursorToParallelsentences decodes Parallelsentences one by one from the search result
+func (d *Parallelsentences) cursorToParallelsentences(cursor *mongo.Cursor) ([]*model.Parallelsentence, error) {
 	defer cursor.Close(context.Background())
-	modelDeliveries := []*model.Parallelsentence{}
+	modelParallelsentences := []*model.Parallelsentence{}
 
 	for cursor.Next(context.Background()) {
 		parallelsentence := mongoModel.Parallelsentence{}
@@ -215,14 +215,14 @@ func (d *Authors) cursorToDeliveries(cursor *mongo.Cursor) ([]*model.Parallelsen
 			return nil, fmt.Errorf("Could not decode data from mongo %w", err)
 		}
 
-		modelDeliveries = append(modelDeliveries, parallelsentence.ModelParallelsentence())
+		modelParallelsentences = append(modelParallelsentences, parallelsentence.ModelParallelsentence())
 	}
 
-	return modelDeliveries, nil
+	return modelParallelsentences, nil
 }
 
 // Search search for parallelsentences given the text, skip and limit
-func (u *Authors) List(skip, limit int64) ([]*model.Parallelsentence, error) {
+func (u *Parallelsentences) List(skip, limit int64) ([]*model.Parallelsentence, error) {
 	filter := bson.M{}
 	cursor, err := u.c.Find(context.Background(), filter, &options.FindOptions{
 		Skip:  &skip,
@@ -232,16 +232,16 @@ func (u *Authors) List(skip, limit int64) ([]*model.Parallelsentence, error) {
 		return nil, err
 	}
 
-	return u.cursorToDeliveries(cursor)
+	return u.cursorToParallelsentences(cursor)
 }
 
-// DeliveriesParams provides parameters for parallelsentence specific Collection
-type DeliveriesParams struct {
+// ParallelsentencesParams provides parameters for parallelsentence specific Collection
+type ParallelsentencesParams struct {
 	dig.In
 	Collection *mongo.Collection `name:"parallelsentences"`
 }
 
-// Store provides store for Authors
-func Store(params DeliveriesParams) storeparallelsentence.Parallelsentences {
-	return &Authors{params.Collection}
+// Store provides store for Parallelsentences
+func Store(params ParallelsentencesParams) storeparallelsentence.Parallelsentences {
+	return &Parallelsentences{params.Collection}
 }
