@@ -69,7 +69,7 @@ func (read *readHandler) handleRead(
 ) {
 
 	req := dto.ReadReq{}
-	//	req.translationID = read.decodeURL(r)
+	req.TranslationID = read.decodeURL(r)
 
 	req.UserID = read.decodeContext(r)
 
