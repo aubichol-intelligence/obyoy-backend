@@ -84,7 +84,7 @@ func (update *updateHandler) handleRead(
 	update.responseSuccess(w, resp)
 }
 
-// ServeHTTP implements http.Handler
+// ServeHTTP implements http.Handler for datastream update
 func (update *updateHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
@@ -101,7 +101,7 @@ type UpdateRouteParams struct {
 	Middleware *middleware.Auth
 }
 
-// ReadRoute provides a route to get a datastream item
+// ReadRoute provides a route to update a datastream item
 func UpdateRoute(params UpdateRouteParams) *routeutils.Route {
 
 	handler := updateHandler{
