@@ -27,7 +27,7 @@ func (dr *DeleteResponse) String() string {
 // Delete provides dto for dataset update
 type Delete struct {
 	UserID    string `json:"user_id"`
-	datasetID string `json:"dataset_id"`
+	DatasetID string `json:"dataset_id"`
 }
 
 // Validate validates dataset delete data
