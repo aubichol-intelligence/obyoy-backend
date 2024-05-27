@@ -10,7 +10,7 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// DeleteResponse provides create response
+// DeleteResponse provides delete response
 type DeleteResponse struct {
 	Message     string `json:"message"`
 	OK          bool   `json:"ok"`
@@ -25,25 +25,25 @@ func (dr *DeleteResponse) String() string {
 
 // Delete provides dto for contest update
 type Delete struct {
-	UserID    string `json:"user_id"`
-	ContestID string `json:"contest_id"`
+	UserID        string `json:"user_id"`
+	TranslationID string `json:"translation_id"`
 }
 
-// Validate validates contest delete data
+// Validate validates translation delete data
 func (d *Delete) Validate(validate *validator.Validate) error {
 	if err := validate.Struct(d); err != nil {
 		return fmt.Errorf(
 			"%s:%w",
 			err.Error(),
 			&errors.Invalid{
-				errors.Base{"invalid comment update data", false},
+				errors.Base{"invalid translation delete data", false},
 			},
 		)
 	}
 	return nil
 }
 
-// FromReader decodes contest delete data from request
+// FromReader decodes translation delete data from request
 func (d *Delete) FromReader(reader io.Reader) error {
 	err := json.NewDecoder(reader).Decode(d)
 	if err != nil {
