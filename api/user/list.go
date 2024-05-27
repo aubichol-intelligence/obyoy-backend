@@ -3,7 +3,7 @@ package user
 import (
 	"fmt"
 	"io"
-	"net/http"	
+	"net/http"
 	"strconv"
 
 	"obyoy-backend/api/middleware"
@@ -17,7 +17,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// searchHandler holds the handler that searches for restaurant
+// searchHandler holds the handler that searches for user
 type listHandler struct {
 	searcher user.Lister
 }
@@ -25,10 +25,10 @@ type listHandler struct {
 func (ch *listHandler) decodeBody(
 	body io.ReadCloser,
 ) (
-	restaurant dto.ListByType,
+	user dto.ListByType,
 	err error,
 ) {
-	err = restaurant.FromReader(body)
+	err = user.FromReader(body)
 	return
 }
 
