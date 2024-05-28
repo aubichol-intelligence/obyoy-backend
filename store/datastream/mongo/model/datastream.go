@@ -36,6 +36,8 @@ func (d *Datastream) FromModel(modelDatastream *model.Datastream) error {
 	d.TimesReviewed = modelDatastream.TimesReviewed
 	d.IsTranslated = modelDatastream.IsTranslated
 	d.IsDeleted = modelDatastream.IsDeleted
+	d.Name = modelDatastream.Name
+
 	var err error
 
 	if modelDatastream.ID != "" {
@@ -76,6 +78,7 @@ func (d *Datastream) ModelDatastream() *model.Datastream {
 	Datastream.UploaderID = d.UploaderID.Hex()
 	Datastream.CreatedAt = d.CreatedAt
 	Datastream.UpdatedAt = d.UpdatedAt
+	Datastream.Name = d.Name
 	Datastream.SourceSentence = d.SourceSentence
 	Datastream.SourceLanguage = d.SourceLanguage
 	Datastream.LineNumber = d.LineNumber
