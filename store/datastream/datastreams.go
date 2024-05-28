@@ -2,7 +2,7 @@ package datastream
 
 import "obyoy-backend/model"
 
-// Datastreams wraps delivery's functionality
+// Datastreams wraps dataset's functionality
 type Datastreams interface {
 	Save(*model.Datastream) (id string, err error)
 	FindByID(id string) (*model.Datastream, error)
