@@ -9,7 +9,7 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// ReadReq stores order read request data
+// ReadReq stores parallelsentence read request data
 type ListReq struct {
 	UserID string
 	Skip   int64 `json:"skip"`
