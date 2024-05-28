@@ -24,16 +24,16 @@ type ReadResp struct {
 }
 
 // FromModel converts the translation model data to response data
-func (r *ReadResp) FromModel(delivery *model.Translation) {
-	r.ID = delivery.ID
-	r.DatasetID = delivery.DatasetID
-	r.DatastreamID = delivery.DatastreamID
-	r.TranslatorID = delivery.TranslatorID
-	r.ReviewerID = delivery.ReviewerID
-	r.SourceLanguage = delivery.SourceLanguage
-	r.SourceSentence = delivery.SourceSentence
-	r.DestinationSentence = delivery.DestinationSentence
-	r.DestinationLanguage = delivery.DestinationLanguage
-	r.LineNumber = delivery.LineNumber
-	r.Name = delivery.Name
+func (r *ReadResp) FromModel(translation *model.Translation) {
+	r.ID = translation.ID
+	r.DatasetID = translation.DatasetID
+	r.DatastreamID = translation.DatastreamID
+	r.TranslatorID = translation.TranslatorID
+	r.ReviewerID = translation.ReviewerID
+	r.SourceLanguage = translation.SourceLanguage
+	r.SourceSentence = translation.SourceSentence
+	r.DestinationSentence = translation.DestinationSentence
+	r.DestinationLanguage = translation.DestinationLanguage
+	r.LineNumber = translation.LineNumber
+	r.Name = translation.Name
 }
