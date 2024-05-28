@@ -40,7 +40,6 @@ func (r *registry) toModel(register *dto.Register) (user *model.User) {
 	user.CreatedAt = time.Now().UTC()
 	user.UpdatedAt = user.CreatedAt
 	user.Suspended = register.Suspended
-	user.IsDriver = register.IsDriver
 	user.Address = register.Address
 	user.PhoneNumber = register.PhoneNumber
 	user.AccountType = register.AccountType
