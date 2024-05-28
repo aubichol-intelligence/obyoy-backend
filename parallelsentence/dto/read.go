@@ -2,13 +2,13 @@ package dto
 
 import "obyoy-backend/model"
 
-// ReadReq stores order read request data
+// ReadReq stores parallelsentence read request data
 type ReadReq struct {
 	UserID             string
 	ParallelsentenceID string
 }
 
-// ReadReq stores order read request data
+// ReadReq stores parallelsentence read request data
 type ReadResp struct {
 	SourceSentence      string   `json:"source_sentence"`
 	DestinationSentence string   `json:"destination_sentence"`
