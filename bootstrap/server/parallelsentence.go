@@ -12,4 +12,5 @@ func Parallelsentence(c container.Container) {
 	c.Register(parallelsentence.NewUpdate)
 	c.Register(parallelsentence.NewDelete)
 	c.Register(parallelsentence.NewList)
+	c.Register(parallelsentence.NewNextReader)
 }
