@@ -10,7 +10,7 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// contest provides dto for contest request
+// translation provides dto for translation request
 type Create struct {
 	ID                  string `json:"translation_id"`
 	SourceSentence      string `json:"source_sentence"`
@@ -26,26 +26,26 @@ type Create struct {
 	IsDeleted           bool   `json:"is_deleted"`
 }
 
-// Validate validates contest request data
+// Validate validates translation request data
 func (d *Create) Validate(validate *validator.Validate) error {
 	if err := validate.Struct(d); err != nil {
 		return fmt.Errorf(
 			"%s:%w",
 			err.Error(),
 			&errors.Invalid{
-				errors.Base{"invalid data for contest", false},
+				errors.Base{"invalid data for translation", false},
 			},
 		)
 	}
 	return nil
 }
 
-// FromReader reads contest request from request body
+// FromReader reads translation request from request body
 func (d *Create) FromReader(reader io.Reader) error {
 	err := json.NewDecoder(reader).Decode(d)
 	if err != nil {
 		return fmt.Errorf("%s:%w", err.Error(), &errors.Invalid{
-			Base: errors.Base{"invalid contest data", false},
+			Base: errors.Base{"invalid translation data", false},
 		})
 	}
 
