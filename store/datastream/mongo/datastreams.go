@@ -231,7 +231,7 @@ func (d *Datastreams) FindByDriver(id string) (*model.Datastream, error) {
 	return datastream.ModelDatastream(), nil
 }
 
-// cursorToDeliveries decodes Authors one by one from the search result
+// cursorToDatastreams decodes Authors one by one from the search result
 func (d *Datastreams) cursorToDatastreams(cursor *mongo.Cursor) ([]*model.Datastream, error) {
 	defer cursor.Close(context.Background())
 	modelDatastreams := []*model.Datastream{}
