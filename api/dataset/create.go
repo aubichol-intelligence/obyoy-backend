@@ -89,13 +89,13 @@ func (ch *createHandler) ServeHTTP(
 
 	datasetDat, err := ch.decodeBody(r.Body)
 
-	datasetDat.UploaderID = ch.decodeContext(r)
-
 	if err != nil {
 		message := "Unable to decode error: "
 		ch.handleError(w, err, message)
 		return
 	}
+
+	datasetDat.UploaderID = ch.decodeContext(r)
 
 	data, err := ch.askController(&datasetDat)
 
@@ -116,7 +116,7 @@ type CreateParams struct {
 	Middleware       *middleware.Auth
 }
 
-// CreateRoute provides a route that lets to take datasets
+// CreateRoute provides a route that lets to create datasets
 func CreateRoute(params CreateParams) *routeutils.Route {
 	handler := createHandler{params.Create, params.CreateDataStream}
 	return &routeutils.Route{
