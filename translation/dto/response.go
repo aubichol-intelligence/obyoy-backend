@@ -13,7 +13,7 @@ func (b *BaseResponse) String() string {
 	return fmt.Sprintf("message:%s, ok:%v", b.Message, b.OK)
 }
 
-// CreateResponse provides create response
+// CreateResponse provides translation create response
 type CreateResponse struct {
 	Message string `json:"message"`
 	OK      bool   `json:"ok"`
@@ -25,7 +25,7 @@ func (c *CreateResponse) String() string {
 	return fmt.Sprintf("message:%s, ok:%v", c.Message, c.OK)
 }
 
-// UpdateResponse provides create response
+// UpdateResponse provides create translation update response
 type UpdateResponse struct {
 	Message    string `json:"message"`
 	OK         bool   `json:"ok"`
