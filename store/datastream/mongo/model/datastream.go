@@ -24,7 +24,7 @@ type Datastream struct {
 	IsDeleted       bool               `bson:"is_deleted,omitempty"`
 }
 
-// FromModel converts model data to db data for deliveries
+// FromModel converts model data to db data for datastreams
 func (d *Datastream) FromModel(modelDelivery *model.Datastream) error {
 	d.CreatedAt = modelDelivery.CreatedAt
 	d.UpdatedAt = modelDelivery.UpdatedAt
