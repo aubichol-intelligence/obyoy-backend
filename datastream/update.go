@@ -34,6 +34,7 @@ func (u *update) toModel(userdatastream *dto.Update) (datastream *model.Datastre
 	datastream.SourceLanguage = userdatastream.SourceLanguage
 	datastream.LineNumber = userdatastream.LineNumber
 	datastream.DatasetID = userdatastream.DatasetID
+	datastream.UploaderID = userdatastream.UploaderID
 	datastream.TimesTranslated = userdatastream.TimesTranslated
 	datastream.TimesReviewed = userdatastream.TimesReviewed
 	datastream.IsTranslated = userdatastream.IsTranslated
@@ -66,7 +67,7 @@ func (u *update) giveResponse(
 	id string,
 ) *dto.UpdateResponse {
 	logrus.WithFields(logrus.Fields{
-		//		"id": modeldatastream.UserID,
+		"id": modeldatastream.ID,
 	}).Debug("User updated datastream successfully")
 
 	return &dto.UpdateResponse{
