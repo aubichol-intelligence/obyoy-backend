@@ -13,16 +13,16 @@ import (
 type Parallelsentence struct {
 	ID                  primitive.ObjectID   `bson:"_id,omitempty"`
 	Name                string               `bson:"name,omitempty"`
-	DatasetID           primitive.ObjectID   `bson:"dataset_id"`
-	DatastreamID        primitive.ObjectID   `bson:"datastream_id"`
-	SourceSentence      string               `bson:"source_sentence"`
-	SourceLanguage      string               `bson:"source_language"`
-	DestinationSentence string               `bson:"destination_sentence"`
-	DestinationLanguage string               `bson:"destination_language"`
-	TimesReviewed       int                  `bson:"times_reviewed"`
-	TranslatorID        primitive.ObjectID   `bson:"translator_id"`
-	Reviewers           []primitive.ObjectID `bson:"reviewers"`
-	ReviewedLines       []string             `bson:"reviewed_lines"`
+	DatasetID           primitive.ObjectID   `bson:"dataset_id,omitempty"`
+	DatastreamID        primitive.ObjectID   `bson:"datastream_id,omitempty"`
+	SourceSentence      string               `bson:"source_sentence,omitempty"`
+	SourceLanguage      string               `bson:"source_language,omitempty"`
+	DestinationSentence string               `bson:"destination_sentence,omitempty"`
+	DestinationLanguage string               `bson:"destination_language,omitempty"`
+	TimesReviewed       int                  `bson:"times_reviewed,omitempty"`
+	TranslatorID        primitive.ObjectID   `bson:"translator_id,omitempty"`
+	Reviewers           []primitive.ObjectID `bson:"reviewers,omitempty"`
+	ReviewedLines       []string             `bson:"reviewed_lines,omitempty"`
 	CreatedAt           time.Time            `bson:"created_at,omitempty"`
 	UpdatedAt           time.Time            `bson:"updated_at,omitempty"`
 	IsDeleted           bool                 `bson:"is_deleted,omitempty"`
