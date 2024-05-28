@@ -10,9 +10,9 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// Update provides dto for contest update
+// Update provides dto for parallelsentence update
 type Update struct {
-	ID                  string   `json:"contest_id"`
+	ID                  string   `json:"parallelsentence_id"`
 	SourceSentence      string   `json:"source_sentence"`
 	DatasetID           string   `json:"dataset_id"`
 	DatastreamID        string   `json:"datastream_id"`
@@ -26,21 +26,21 @@ type Update struct {
 	IsDeleted           bool     `json:"is_deleted"`
 }
 
-// Validate validates contest update data
+// Validate validates parallelsentence update data
 func (u *Update) Validate(validate *validator.Validate) error {
 	if err := validate.Struct(u); err != nil {
 		return fmt.Errorf(
 			"%s:%w",
 			err.Error(),
 			&errors.Invalid{
-				errors.Base{"invalid contest update data", false},
+				errors.Base{"invalid parallelsentence update data", false},
 			},
 		)
 	}
 	return nil
 }
 
-// FromReader decodes contest update data from request
+// FromReader decodes parallelsentence update data from request
 func (u *Update) FromReader(reader io.Reader) error {
 	err := json.NewDecoder(reader).Decode(u)
 	if err != nil {
@@ -48,7 +48,7 @@ func (u *Update) FromReader(reader io.Reader) error {
 			"%s:%w",
 			err.Error(),
 			&errors.Invalid{
-				Base: errors.Base{"invalid contest update data", false},
+				Base: errors.Base{"invalid parallelsentence update data", false},
 			},
 		)
 	}
