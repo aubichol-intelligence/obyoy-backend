@@ -32,6 +32,7 @@ func (c *create) toModel(userdatastream *dto.Create) (
 	datastream.CreatedAt = time.Now().UTC()
 	datastream.UpdatedAt = datastream.CreatedAt
 	datastream.ID = userdatastream.ID
+	datastream.Name = userdatastream.Name
 	datastream.UploaderID = userdatastream.UploaderID
 	datastream.SourceSentence = userdatastream.SourceSentence
 	datastream.SourceLanguage = userdatastream.SourceLanguage
