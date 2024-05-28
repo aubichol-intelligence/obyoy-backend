@@ -128,7 +128,7 @@ func (d *Datastreams) FindByDatastreamID(id string, skip int64, limit int64) ([]
 	return d.cursorToDatastreams(cursor)
 }
 
-// CountByDatastreamID returns Authors from datastream id
+// CountByDatastreamID returns Datastreams from datastream id
 func (d *Datastreams) CountByDatastreamID(id string) (int64, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 
@@ -146,7 +146,7 @@ func (d *Datastreams) CountByDatastreamID(id string) (int64, error) {
 	return cnt, nil
 }
 
-// FindByIDs returns all the Authors from multiple datastream ids
+// FindByIDs returns all the Datastreams from multiple datastream ids
 func (d *Datastreams) FindByIDs(ids ...string) ([]*model.Datastream, error) {
 	objectIDs := []primitive.ObjectID{}
 	for _, id := range ids {
@@ -172,7 +172,7 @@ func (d *Datastreams) FindByIDs(ids ...string) ([]*model.Datastream, error) {
 	return d.cursorToDatastreams(cursor)
 }
 
-// Search search for Authors given the text, skip and limit
+// Search search for Datastreams given the text, skip and limit
 func (d *Datastreams) Search(text string, skip, limit int64) ([]*model.Datastream, error) {
 	filter := bson.M{"$text": bson.M{"$search": text}}
 	cursor, err := d.c.Find(
@@ -231,7 +231,7 @@ func (d *Datastreams) FindByDriver(id string) (*model.Datastream, error) {
 	return datastream.ModelDatastream(), nil
 }
 
-// cursorToDatastreams decodes Authors one by one from the search result
+// cursorToDatastreams decodes Datastreams one by one from the search result
 func (d *Datastreams) cursorToDatastreams(cursor *mongo.Cursor) ([]*model.Datastream, error) {
 	defer cursor.Close(context.Background())
 	modelDatastreams := []*model.Datastream{}
@@ -254,7 +254,7 @@ type DatastreamParams struct {
 	Collection *mongo.Collection `name:"datastreams"`
 }
 
-// Store provides store for Authors
+// Store provides store for Datastreams
 func Store(params DatastreamParams) storedatastream.Datastreams {
 	return &Datastreams{params.Collection}
 }
