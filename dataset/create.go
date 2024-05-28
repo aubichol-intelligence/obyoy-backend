@@ -97,6 +97,7 @@ func (c *create) Create(create *dto.Create) (
 	*dto.CreateResponse, error,
 ) {
 	err := c.validateData(create)
+
 	if err != nil {
 		return nil, err
 	}
