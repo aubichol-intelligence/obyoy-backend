@@ -27,7 +27,7 @@ func (dr *DeleteResponse) String() string {
 // Delete provides dto for datastream update
 type Delete struct {
 	UserID       string `json:"user_id"`
-	datastreamID string `json:"datastream_id"`
+	DatastreamID string `json:"datastream_id"`
 }
 
 // Validate validates datastream delete data
