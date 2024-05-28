@@ -81,7 +81,7 @@ func (ch *createHandler) ServeHTTP(
 		return
 	}
 
-	//	datastreamDat.UserID = ch.decodeContext(r)
+	datastreamDat.UploaderID = ch.decodeContext(r)
 	data, err := ch.askController(&datastreamDat)
 
 	if err != nil {
