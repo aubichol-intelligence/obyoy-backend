@@ -5,7 +5,7 @@ import (
 	"obyoy-backend/parallelsentence"
 )
 
-// Order registers parallel sentence related providers
+// Parallelsentence registers parallel sentence related providers
 func Parallelsentence(c container.Container) {
 	c.Register(parallelsentence.NewCreate)
 	c.Register(parallelsentence.NewReader)
