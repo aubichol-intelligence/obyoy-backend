@@ -37,7 +37,7 @@ const DatesetList string = "/api/v1/dataset/list/{skip}/{limit}"
 const DatastreamCreate string = "/api/v1/datastream/create"
 
 // DatastreamRead holds the api string for reading datastreams
-const DatastreamRead string = "/api/v1/datastream/get"
+const DatastreamRead string = "/api/v1/datastream/get/{id}"
 
 // DatastreamRead holds the api string for reading datastreams
 const DatastreamReadNext string = "/api/v1/datastream/getnext"
