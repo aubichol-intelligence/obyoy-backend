@@ -35,7 +35,7 @@ func (d *Datastream) FromModel(modelDatastream *model.Datastream) error {
 	d.TimesTranslated = modelDatastream.TimesTranslated
 	d.TimesReviewed = modelDatastream.TimesReviewed
 	d.IsTranslated = modelDatastream.IsTranslated
-
+	d.IsDeleted = modelDatastream.IsDeleted
 	var err error
 
 	if modelDatastream.ID != "" {
@@ -70,6 +70,7 @@ func (d *Datastream) FromModel(modelDatastream *model.Datastream) error {
 // ModelDatastream converts bson to model
 func (d *Datastream) ModelDatastream() *model.Datastream {
 	Datastream := model.Datastream{}
+
 	Datastream.ID = d.ID.Hex()
 	Datastream.DatasetID = d.DatasetID.Hex()
 	Datastream.UploaderID = d.UploaderID.Hex()
