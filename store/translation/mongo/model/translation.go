@@ -13,14 +13,14 @@ type Translation struct {
 	ID                  primitive.ObjectID `bson:"_id,omitempty"`
 	DatasetID           primitive.ObjectID `bson:"dataset_id,omitempty"`
 	DatastreamID        primitive.ObjectID `bson:"datastream_id,omitempty"`
-	TranslatorID        primitive.ObjectID `bson:"translator_id"`
-	ReviewerID          primitive.ObjectID `bson:"reviewer_id"`
+	TranslatorID        primitive.ObjectID `bson:"translator_id,omitempty"`
+	ReviewerID          primitive.ObjectID `bson:"reviewer_id,omitempty"`
 	CreatedAt           time.Time          `bson:"created_at,omitempty"`
 	UpdatedAt           time.Time          `bson:"updated_at,omitempty"`
 	SourceSentence      string             `bson:"source_sentence,omitempty"`
 	SourceLanguage      string             `bson:"source_language,omitempty"`
-	DestinationSentence string             `bson:"destination_sentence"`
-	DestinationLanguage string             `bson:"destination_language"`
+	DestinationSentence string             `bson:"destination_sentence,omitempty"`
+	DestinationLanguage string             `bson:"destination_language,omitempty"`
 	Name                string             `bson:"name,omitempty"`
 	LineNumber          int                `bson:"line_number,omitempty"`
 	IsDeleted           bool               `bson:"is_deleted,omitempty"`
