@@ -75,23 +75,20 @@ func (update *updateHandler) responseSuccess(
 	)
 }
 
-func (update *updateHandler) handleRead(
+func (update *updateHandler) handleUpdate(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
-
-	//	req := dto.Update{}
 
 	defer r.Body.Close()
 
 	req, err := update.decodeBody(r.Body)
 
 	fmt.Println(err)
-	//	req.ID = update.decodeURL(r)
 
 	//	req.UserID = update.decodeContext(r)
 
-	// Read request from database using request id and user id
+	// Read request from database using dataset id and user id
 	resp, err := update.askController(&req)
 
 	if err != nil {
@@ -109,7 +106,7 @@ func (update *updateHandler) ServeHTTP(
 ) {
 	defer r.Body.Close()
 
-	update.handleRead(w, r)
+	update.handleUpdate(w, r)
 }
 
 // UpdateRouteParams lists all the parameters for UpdateRoute
