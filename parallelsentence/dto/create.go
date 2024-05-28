@@ -10,7 +10,7 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// contest provides dto for parallelsentence request
+// parallelsentence provides dto for parallelsentence request
 type Create struct {
 	ID                  string   `json:"parallelsentence_id"`
 	SourceSentence      string   `json:"source_sentence"`
@@ -26,7 +26,7 @@ type Create struct {
 	IsDeleted           bool     `json:"is_deleted"`
 }
 
-// Validate validates contest request data
+// Validate validates parallelsentence request data
 func (d *Create) Validate(validate *validator.Validate) error {
 	if err := validate.Struct(d); err != nil {
 		return fmt.Errorf(
@@ -40,12 +40,12 @@ func (d *Create) Validate(validate *validator.Validate) error {
 	return nil
 }
 
-// FromReader reads contest request from request body
+// FromReader reads parallelsentence request from request body
 func (d *Create) FromReader(reader io.Reader) error {
 	err := json.NewDecoder(reader).Decode(d)
 	if err != nil {
 		return fmt.Errorf("%s:%w", err.Error(), &errors.Invalid{
-			Base: errors.Base{"invalid contest data", false},
+			Base: errors.Base{"invalid parallelsentence data", false},
 		})
 	}
 
