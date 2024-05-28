@@ -9,21 +9,12 @@ import (
 	"obyoy-backend/datastream"
 	"obyoy-backend/datastream/dto"
 
-	"github.com/go-chi/chi"
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 )
 
 type readNextHandler struct {
 	reader datastream.NextReader
-}
-
-func (read *readNextHandler) decodeURL(
-	r *http.Request,
-) (datastreamID string) {
-	// Get user id from url
-	datastreamID = chi.URLParam(r, "id")
-	return
 }
 
 func (read *readNextHandler) decodeContext(
@@ -69,7 +60,6 @@ func (read *readNextHandler) handleRead(
 ) {
 
 	req := dto.ReadReq{}
-	//	req.datastreamID = read.decodeURL(r)
 
 	req.UserID = read.decodeContext(r)
 
