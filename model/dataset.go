@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// Translation defines user's translation
+// Translation defines user's dataset
 type Dataset struct {
 	ID              string    `json:"id"`
 	Name            string    `json:"name"`
@@ -17,7 +17,6 @@ type Dataset struct {
 	Remarks         string    `json:"remarks"`
 	TranslatedLines int32     `json:"translated_lines"`
 	ReviewedLines   int32     `json:"reviewed_lines"`
-	ExpiredAt       time.Time `json:"expire_at"`
 	CreatedAt       time.Time `json:"created_at"`
 	UpdatedAt       time.Time `json:"updated_at"`
 	IsDeleted       bool      `json:"is_deleted"`
