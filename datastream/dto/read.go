@@ -15,6 +15,7 @@ type ReadResp struct {
 	SourceLanguage string `json:"source_language"`
 	LineNumber     int32  `json:"line_number"`
 	DatasetID      string `json:"dataset_id"`
+	Name           string `json:"name"`
 }
 
 // FromModel converts the model data to response data
@@ -24,4 +25,5 @@ func (r *ReadResp) FromModel(datastream *model.Datastream) {
 	r.LineNumber = datastream.LineNumber
 	r.DatasetID = datastream.DatasetID
 	r.DatastreamID = datastream.ID
+	r.Name = datastream.Name
 }
