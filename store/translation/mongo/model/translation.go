@@ -27,20 +27,20 @@ type Translation struct {
 }
 
 // FromModel converts model data to db data for translations
-func (d *Translation) FromModel(modelDelivery *model.Translation) error {
-	d.CreatedAt = modelDelivery.CreatedAt
-	d.UpdatedAt = modelDelivery.UpdatedAt
-	d.SourceLanguage = modelDelivery.SourceLanguage
-	d.SourceSentence = modelDelivery.SourceSentence
-	d.DestinationSentence = modelDelivery.DestinationSentence
-	d.DestinationLanguage = modelDelivery.DestinationLanguage
-	d.Name = modelDelivery.Name
-	d.LineNumber = modelDelivery.LineNumber
+func (d *Translation) FromModel(modelTranslation *model.Translation) error {
+	d.CreatedAt = modelTranslation.CreatedAt
+	d.UpdatedAt = modelTranslation.UpdatedAt
+	d.SourceLanguage = modelTranslation.SourceLanguage
+	d.SourceSentence = modelTranslation.SourceSentence
+	d.DestinationSentence = modelTranslation.DestinationSentence
+	d.DestinationLanguage = modelTranslation.DestinationLanguage
+	d.Name = modelTranslation.Name
+	d.LineNumber = modelTranslation.LineNumber
 
 	var err error
 
-	if modelDelivery.ID != "" {
-		d.ID, err = primitive.ObjectIDFromHex(modelDelivery.ID)
+	if modelTranslation.ID != "" {
+		d.ID, err = primitive.ObjectIDFromHex(modelTranslation.ID)
 	} else {
 		d.ID = primitive.NewObjectID()
 	}
@@ -49,32 +49,32 @@ func (d *Translation) FromModel(modelDelivery *model.Translation) error {
 		return err
 	}
 
-	if modelDelivery.DatasetID != "" {
-		d.DatasetID, err = primitive.ObjectIDFromHex(modelDelivery.DatasetID)
+	if modelTranslation.DatasetID != "" {
+		d.DatasetID, err = primitive.ObjectIDFromHex(modelTranslation.DatasetID)
 	}
 
 	if err != nil {
 		return err
 	}
 
-	if modelDelivery.DatastreamID != "" {
-		d.DatastreamID, err = primitive.ObjectIDFromHex(modelDelivery.DatastreamID)
+	if modelTranslation.DatastreamID != "" {
+		d.DatastreamID, err = primitive.ObjectIDFromHex(modelTranslation.DatastreamID)
 	}
 
 	if err != nil {
 		return err
 	}
 
-	if modelDelivery.TranslatorID != "" {
-		d.TranslatorID, err = primitive.ObjectIDFromHex(modelDelivery.TranslatorID)
+	if modelTranslation.TranslatorID != "" {
+		d.TranslatorID, err = primitive.ObjectIDFromHex(modelTranslation.TranslatorID)
 	}
 
 	if err != nil {
 		return err
 	}
 
-	if modelDelivery.ReviewerID != "" {
-		d.ReviewerID, err = primitive.ObjectIDFromHex(modelDelivery.ReviewerID)
+	if modelTranslation.ReviewerID != "" {
+		d.ReviewerID, err = primitive.ObjectIDFromHex(modelTranslation.ReviewerID)
 	}
 
 	if err != nil {
