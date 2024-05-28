@@ -235,6 +235,29 @@ func (u *Parallelsentences) List(skip, limit int64) ([]*model.Parallelsentence, 
 	return u.cursorToParallelsentences(cursor)
 }
 
+// FindByID finds a datastream by id
+func (d *Parallelsentences) FindNext() (*model.Parallelsentence, error) {
+
+	filter := bson.M{"is_translated": 0}
+
+	result := d.c.FindOne(
+		context.Background(),
+		filter,
+		&options.FindOneOptions{},
+	)
+	if err := result.Err(); err != nil {
+		return nil, err
+	}
+
+	datastream := mongoModel.Parallelsentence{}
+
+	if err := result.Decode(&datastream); err != nil {
+		return nil, fmt.Errorf("could not decode mongo model to model : %w", err)
+	}
+
+	return datastream.ModelParallelsentence(), nil
+}
+
 // ParallelsentencesParams provides parameters for parallelsentence specific Collection
 type ParallelsentencesParams struct {
 	dig.In
