@@ -36,6 +36,7 @@ func (d *Translation) FromModel(modelTranslation *model.Translation) error {
 	d.DestinationLanguage = modelTranslation.DestinationLanguage
 	d.Name = modelTranslation.Name
 	d.LineNumber = modelTranslation.LineNumber
+	d.IsDeleted = modelTranslation.IsDeleted
 
 	var err error
 
