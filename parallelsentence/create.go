@@ -75,8 +75,7 @@ func (c *create) giveResponse(modelparallelsentence *model.Parallelsentence, id 
 	return &dto.CreateResponse{
 		Message: "parallelsentence created",
 		OK:      true,
-		//		parallelsentenceTime: modelparallelsentence.CreatedAt.String(),
-		ID: id,
+		ID:      id,
 	}, nil
 }
 
