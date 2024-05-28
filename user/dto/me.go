@@ -19,7 +19,6 @@ type Me struct {
 	Email      string      `json:"email"`
 	Profile    UserDetails `json:"profile"`
 	ProfilePic string      `json:"profile_pic"`
-	IsDriver   bool        `json:"is_driver"`
 	Suspended  bool        `json:"suspended"`
 }
 
@@ -33,7 +32,6 @@ func (m *Me) FromModel(user *model.User) {
 	m.Email = user.Email
 	m.Profile.Day = user.Profile.Day
 	m.ProfilePic = user.ProfilePic
-	m.IsDriver = user.IsDriver
 	m.Suspended = user.Suspended
 }
 
