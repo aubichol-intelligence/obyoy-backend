@@ -13,6 +13,7 @@ import (
 // datastream provides dto for datastream request
 type Create struct {
 	ID              string `json:"datastream_id"`
+	UploaderID      string `json:"uploader_id"`
 	SourceSentence  string `json:"source_sentence"`
 	SourceLanguage  string `json:"source_language"`
 	LineNumber      int32  `json:"line_number"`
