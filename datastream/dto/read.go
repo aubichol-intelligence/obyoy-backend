@@ -2,13 +2,13 @@ package dto
 
 import "obyoy-backend/model"
 
-// ReadReq stores order read request data
+// ReadReq stores datastream read request data
 type ReadReq struct {
 	UserID       string
 	DatastreamID string
 }
 
-// ReadReq stores order read request data
+// ReadReq stores datastream read request data
 type ReadResp struct {
 	DatastreamID   string `json:"datastream_id"`
 	SourceSentence string `json:"source_sentence"`
@@ -18,10 +18,10 @@ type ReadResp struct {
 }
 
 // FromModel converts the model data to response data
-func (r *ReadResp) FromModel(delivery *model.Datastream) {
-	r.SourceSentence = delivery.SourceSentence
-	r.SourceLanguage = delivery.SourceLanguage
-	r.LineNumber = delivery.LineNumber
-	r.DatasetID = delivery.DatasetID
-	r.DatastreamID = delivery.ID
+func (r *ReadResp) FromModel(datastream *model.Datastream) {
+	r.SourceSentence = datastream.SourceSentence
+	r.SourceLanguage = datastream.SourceLanguage
+	r.LineNumber = datastream.LineNumber
+	r.DatasetID = datastream.DatasetID
+	r.DatastreamID = datastream.ID
 }
