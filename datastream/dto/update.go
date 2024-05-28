@@ -20,7 +20,7 @@ type Update struct {
 	DatasetID       string `json:"dataset_id"`
 	TimesTranslated int32  `json:"times_translated"`
 	TimesReviewed   int32  `json:"times_reviewed"`
-	IsTranslated    int32  `json:"is_tranlated"`
+	IsTranslated    int32  `json:"is_translated"`
 	Name            string `json:"name"`
 	IsDeleted       bool   `json:"is_deleted"`
 }
