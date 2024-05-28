@@ -41,6 +41,7 @@ func (c *create) toModel(userdatastream *dto.Create) (
 	datastream.TimesTranslated = userdatastream.TimesTranslated
 	datastream.TimesReviewed = userdatastream.TimesReviewed
 	datastream.IsTranslated = userdatastream.IsTranslated
+	datastream.IsDeleted = false
 
 	return
 }
