@@ -27,8 +27,10 @@ type delete struct {
 func (d *delete) toModel(userparallelsentence *dto.Delete) (parallelsentence *model.Parallelsentence) {
 	parallelsentence = &model.Parallelsentence{}
 
+	parallelsentence.ID = userparallelsentence.ParallelsentenceID
 	parallelsentence.UpdatedAt = time.Now().UTC()
 	parallelsentence.IsDeleted = true
+
 	return
 }
 
