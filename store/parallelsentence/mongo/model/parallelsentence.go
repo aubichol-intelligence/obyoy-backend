@@ -19,7 +19,7 @@ type Parallelsentence struct {
 	SourceLanguage      string               `bson:"source_language,omitempty"`
 	DestinationSentence string               `bson:"destination_sentence,omitempty"`
 	DestinationLanguage string               `bson:"destination_language,omitempty"`
-	TimesReviewed       int                  `bson:"times_reviewed,omitempty"`
+	TimesReviewed       int                  `bson:"times_reviewed"`
 	TranslatorID        primitive.ObjectID   `bson:"translator_id,omitempty"`
 	Reviewers           []primitive.ObjectID `bson:"reviewers,omitempty"`
 	ReviewedLines       []string             `bson:"reviewed_lines,omitempty"`
