@@ -208,10 +208,10 @@ func (d *Datasets) FindByDriver(id string) (*model.Dataset, error) {
 	return dataset.ModelDataset(), nil
 }
 
-// cursorToDeliveries decodes Authors one by one from the search result
+// cursorToDatasets decodes Authors one by one from the search result
 func (d *Datasets) cursorToDatasets(cursor *mongo.Cursor) ([]*model.Dataset, error) {
 	defer cursor.Close(context.Background())
-	modelDeliveries := []*model.Dataset{}
+	modelDatasets := []*model.Dataset{}
 
 	for cursor.Next(context.Background()) {
 		dataset := mongoModel.Dataset{}
@@ -219,10 +219,10 @@ func (d *Datasets) cursorToDatasets(cursor *mongo.Cursor) ([]*model.Dataset, err
 			return nil, fmt.Errorf("Could not decode data from mongo %w", err)
 		}
 
-		modelDeliveries = append(modelDeliveries, dataset.ModelDataset())
+		modelDatasets = append(modelDatasets, dataset.ModelDataset())
 	}
 
-	return modelDeliveries, nil
+	return modelDatasets, nil
 }
 
 // Search search for datasets given the text, skip and limit
@@ -239,7 +239,7 @@ func (u *Datasets) List(skip, limit int64) ([]*model.Dataset, error) {
 	return u.cursorToDatasets(cursor)
 }
 
-// DeliveriesParams provides parameters for dataset specific Collection
+// DatasetsParams provides parameters for dataset specific Collection
 type DatasetsParams struct {
 	dig.In
 	Collection *mongo.Collection `name:"datasets"`
