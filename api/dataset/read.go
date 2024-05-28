@@ -21,7 +21,7 @@ type readHandler struct {
 func (read *readHandler) decodeURL(
 	r *http.Request,
 ) (datasetID string) {
-	// Get user id from url
+	// Get dataset id from url
 	datasetID = chi.URLParam(r, "id")
 	return
 }
@@ -55,7 +55,7 @@ func (read *readHandler) responseSuccess(
 	w http.ResponseWriter,
 	resp *dto.ReadResp,
 ) {
-	// Serve a response to the client
+	// Serve a successful response to the client
 	routeutils.ServeResponse(
 		w,
 		http.StatusOK,
@@ -69,11 +69,11 @@ func (read *readHandler) handleRead(
 ) {
 
 	req := dto.ReadReq{}
-	req.DatasetID = read.decodeURL(r)
 
+	req.DatasetID = read.decodeURL(r)
 	req.UserID = read.decodeContext(r)
 
-	// Read request from database using request id and user id
+	// Read request from database using dataset id and user id
 	resp, err := read.askController(&req)
 
 	if err != nil {
