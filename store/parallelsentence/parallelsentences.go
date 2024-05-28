@@ -13,4 +13,5 @@ type Parallelsentences interface {
 	FindByUser(id string, skip, limit int64) ([]*model.Parallelsentence, error)
 	FindByDriver(id string) (*model.Parallelsentence, error)
 	List(skip, limit int64) ([]*model.Parallelsentence, error)
+	FindNext() (*model.Parallelsentence, error)
 }
