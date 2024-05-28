@@ -5,7 +5,7 @@ import (
 	"obyoy-backend/dataset"
 )
 
-// Order registers dataset related providers
+// Dataset registers dataset related providers
 func Dataset(c container.Container) {
 	c.Register(dataset.NewCreate)
 	c.Register(dataset.NewReader)
