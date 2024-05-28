@@ -11,12 +11,13 @@ import (
 // Datastream holds db data type for datastreams
 type Datastream struct {
 	ID              primitive.ObjectID `bson:"_id,omitempty"`
+	UploaderID      primitive.ObjectID `bson:"uploader_id,omitempty"`
 	Name            string             `bson:"name,omitempty"`
 	SourceSentence  string             `bson:"source_sentence,omitempty"`
 	SourceLanguage  string             `bson:"source_language,omitempty"`
 	LineNumber      int32              `bson:"line_number,omitempty"`
 	DatasetID       primitive.ObjectID `bson:"dataset_id,omitempty"`
-	IsTranslated    int32              `bson:"is_translated"`
+	IsTranslated    int32              `bson:"is_translated,omitempty"`
 	TimesTranslated int32              `bson:"times_translated,omitempty"`
 	TimesReviewed   int32              `bson:"times_reviewed,omitempty"`
 	CreatedAt       time.Time          `bson:"created_at,omitempty"`
@@ -55,6 +56,14 @@ func (d *Datastream) FromModel(modelDatastream *model.Datastream) error {
 		return err
 	}
 
+	if modelDatastream.UploaderID != "" {
+		d.UploaderID, err = primitive.ObjectIDFromHex(modelDatastream.UploaderID)
+	}
+
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -63,6 +72,7 @@ func (d *Datastream) ModelDatastream() *model.Datastream {
 	Datastream := model.Datastream{}
 	Datastream.ID = d.ID.Hex()
 	Datastream.DatasetID = d.DatasetID.Hex()
+	Datastream.UploaderID = d.UploaderID.Hex()
 	Datastream.CreatedAt = d.CreatedAt
 	Datastream.UpdatedAt = d.UpdatedAt
 	Datastream.SourceSentence = d.SourceSentence
