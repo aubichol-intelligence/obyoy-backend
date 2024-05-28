@@ -12,10 +12,10 @@ import (
 
 // DeleteResponse provides delete response
 type DeleteResponse struct {
-	Message     string `json:"message"`
-	OK          bool   `json:"ok"`
-	ID          string `json:"translation_id"`
-	RequestTime string `json:"request_time"`
+	Message   string `json:"message"`
+	OK        bool   `json:"ok"`
+	ID        string `json:"translation_id"`
+	DeletedAt string `json:"deleted_at"`
 }
 
 // String provides string repsentation
