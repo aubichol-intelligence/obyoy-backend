@@ -14,7 +14,7 @@ import (
 type DeleteResponse struct {
 	Message     string `json:"message"`
 	OK          bool   `json:"ok"`
-	ID          string `json:"contest_id"`
+	ID          string `json:"translation_id"`
 	RequestTime string `json:"request_time"`
 }
 
@@ -23,7 +23,7 @@ func (dr *DeleteResponse) String() string {
 	return fmt.Sprintf("message:%s, ok:%v", dr.Message, dr.OK)
 }
 
-// Delete provides dto for contest update
+// Delete provides dto for translation update
 type Delete struct {
 	UserID        string `json:"user_id"`
 	TranslationID string `json:"translation_id"`
@@ -51,7 +51,7 @@ func (d *Delete) FromReader(reader io.Reader) error {
 			"%s:%w",
 			err.Error(),
 			&errors.Invalid{
-				Base: errors.Base{"invalid comment update data", false},
+				Base: errors.Base{"invalid translation update data", false},
 			},
 		)
 	}
