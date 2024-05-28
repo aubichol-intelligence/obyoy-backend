@@ -26,7 +26,7 @@ type Translation struct {
 	IsDeleted           bool               `bson:"is_deleted,omitempty"`
 }
 
-// FromModel converts model data to db data for deliveries
+// FromModel converts model data to db data for translations
 func (d *Translation) FromModel(modelDelivery *model.Translation) error {
 	d.CreatedAt = modelDelivery.CreatedAt
 	d.UpdatedAt = modelDelivery.UpdatedAt
