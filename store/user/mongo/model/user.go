@@ -54,7 +54,6 @@ func (u *User) FromModel(modelUser *model.User) error {
 	u.Profile.Month = modelUser.BirthDate.Month
 	u.Profile.Year = modelUser.BirthDate.Year
 	u.Suspended = modelUser.Suspended
-	u.IsDriver = modelUser.IsDriver
 	u.ProfilePic = modelUser.ProfilePic
 	u.PhoneNumber = modelUser.PhoneNumber
 	u.Address = modelUser.Address
@@ -93,7 +92,6 @@ func (u *User) ModelUser() *model.User {
 	user.Profile.Month = u.BirthDate.Month
 	user.Profile.Year = u.BirthDate.Year
 	user.Suspended = u.Suspended
-	user.IsDriver = u.IsDriver
 	user.PhoneNumber = u.PhoneNumber
 	user.Address = u.Address
 	user.UserType = u.UserType
