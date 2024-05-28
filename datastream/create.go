@@ -32,6 +32,7 @@ func (c *create) toModel(userdatastream *dto.Create) (
 	datastream.CreatedAt = time.Now().UTC()
 	datastream.UpdatedAt = datastream.CreatedAt
 	datastream.ID = userdatastream.ID
+	datastream.UploaderID = userdatastream.UploaderID
 	datastream.SourceSentence = userdatastream.SourceSentence
 	datastream.SourceLanguage = userdatastream.SourceLanguage
 	datastream.LineNumber = userdatastream.LineNumber
@@ -65,7 +66,7 @@ func (c *create) askStore(model *model.Datastream) (
 	return
 }
 
-func (c *create) giveResponse(modeldatastream *model.Datastream, id string) (
+func (c *create) giveResponse(id string) (
 	*dto.CreateResponse, error,
 ) {
 	logrus.WithFields(logrus.Fields{}).Debug("User created datastream successfully")
@@ -73,8 +74,7 @@ func (c *create) giveResponse(modeldatastream *model.Datastream, id string) (
 	return &dto.CreateResponse{
 		Message: "datastream created",
 		OK:      true,
-		//		datastreamTime: modeldatastream.CreatedAt.String(),
-		ID: id,
+		ID:      id,
 	}, nil
 }
 
@@ -103,7 +103,7 @@ func (c *create) Create(create *dto.Create) (
 	modeldatastream := c.convertData(create)
 	id, err := c.askStore(modeldatastream)
 	if err == nil {
-		return c.giveResponse(modeldatastream, id)
+		return c.giveResponse(id)
 	}
 
 	err = c.giveError()
