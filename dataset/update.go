@@ -67,7 +67,7 @@ func (u *update) giveResponse(
 	id string,
 ) *dto.UpdateResponse {
 	logrus.WithFields(logrus.Fields{
-		//		"id": modeldataset.UserID,
+		"id": modeldataset.ID,
 	}).Debug("User updated dataset successfully")
 
 	return &dto.UpdateResponse{
