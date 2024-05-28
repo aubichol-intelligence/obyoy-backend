@@ -60,10 +60,10 @@ func (d *delete) giveResponse(
 	logrus.WithFields(logrus.Fields{}).Debug("User deleted translation successfully")
 
 	return &dto.DeleteResponse{
-		Message: "translation deleted",
-		OK:      true,
-		ID:      id,
-		//		DeleteTime: modelNotice.DeletedAt.String(),
+		Message:   "translation deleted",
+		OK:        true,
+		ID:        id,
+		DeletedAt: modelNotice.UpdatedAt.String(),
 	}
 }
 
