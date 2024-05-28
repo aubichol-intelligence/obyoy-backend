@@ -2,7 +2,7 @@ package translation
 
 import "obyoy-backend/model"
 
-// Translations wraps delivery's functionality
+// Translations wraps translation's functionality
 type Translations interface {
 	Save(*model.Translation) (id string, err error)
 	FindByID(id string) (*model.Translation, error)
