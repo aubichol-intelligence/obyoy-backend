@@ -1,6 +1,8 @@
 package datastream
 
 import (
+	"fmt"
+	"io"
 	"net/http"
 
 	"obyoy-backend/api/middleware"
@@ -16,6 +18,16 @@ import (
 
 type updateHandler struct {
 	updater datastream.Updater
+}
+
+func (ch *updateHandler) decodeBody(
+	body io.ReadCloser,
+) (
+	dataset dto.Update,
+	err error,
+) {
+	err = dataset.FromReader(body)
+	return
 }
 
 func (update *updateHandler) decodeURL(
@@ -69,11 +81,14 @@ func (update *updateHandler) handleRead(
 ) {
 
 	req := dto.Update{}
-	//	req.datastreamID = read.decodeURL(r)
+
+	req, err := update.decodeBody(r.Body)
+
+	fmt.Println(err)
 
 	//	req.UserID = update.decodeContext(r)
 
-	// Read request from database using request id and user id
+	// Update request from database using datastream id and user id
 	resp, err := update.askController(&req)
 
 	if err != nil {
