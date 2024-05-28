@@ -25,20 +25,20 @@ type Datastream struct {
 }
 
 // FromModel converts model data to db data for datastreams
-func (d *Datastream) FromModel(modelDelivery *model.Datastream) error {
-	d.CreatedAt = modelDelivery.CreatedAt
-	d.UpdatedAt = modelDelivery.UpdatedAt
-	d.SourceSentence = modelDelivery.SourceSentence
-	d.SourceLanguage = modelDelivery.SourceLanguage
-	d.LineNumber = modelDelivery.LineNumber
-	d.TimesTranslated = modelDelivery.TimesTranslated
-	d.TimesReviewed = modelDelivery.TimesReviewed
-	d.IsTranslated = modelDelivery.IsTranslated
+func (d *Datastream) FromModel(modelDatastream *model.Datastream) error {
+	d.CreatedAt = modelDatastream.CreatedAt
+	d.UpdatedAt = modelDatastream.UpdatedAt
+	d.SourceSentence = modelDatastream.SourceSentence
+	d.SourceLanguage = modelDatastream.SourceLanguage
+	d.LineNumber = modelDatastream.LineNumber
+	d.TimesTranslated = modelDatastream.TimesTranslated
+	d.TimesReviewed = modelDatastream.TimesReviewed
+	d.IsTranslated = modelDatastream.IsTranslated
 
 	var err error
 
-	if modelDelivery.ID != "" {
-		d.ID, err = primitive.ObjectIDFromHex(modelDelivery.ID)
+	if modelDatastream.ID != "" {
+		d.ID, err = primitive.ObjectIDFromHex(modelDatastream.ID)
 	} else {
 		d.ID = primitive.NewObjectID()
 	}
@@ -47,8 +47,8 @@ func (d *Datastream) FromModel(modelDelivery *model.Datastream) error {
 		return err
 	}
 
-	if modelDelivery.DatasetID != "" {
-		d.DatasetID, err = primitive.ObjectIDFromHex(modelDelivery.DatasetID)
+	if modelDatastream.DatasetID != "" {
+		d.DatasetID, err = primitive.ObjectIDFromHex(modelDatastream.DatasetID)
 	}
 
 	if err != nil {
@@ -58,7 +58,7 @@ func (d *Datastream) FromModel(modelDelivery *model.Datastream) error {
 	return nil
 }
 
-// ModelDelivery converts bson to model
+// ModelDatastream converts bson to model
 func (d *Datastream) ModelDatastream() *model.Datastream {
 	Datastream := model.Datastream{}
 	Datastream.ID = d.ID.Hex()
