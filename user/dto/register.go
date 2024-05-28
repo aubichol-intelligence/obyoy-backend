@@ -24,10 +24,9 @@ type Register struct {
 	Email       string `json:"email"`
 	Password    string `json:"password" validate:"required,min=6"`
 	Suspended   bool   `json:"suspended"`
-	IsDriver    bool   `json:"is_driver"`
 	PhoneNumber string `json:"phone_number"`
 	Address     string `json:"address"`
-	AccountType string `json:"account_type" validate:"required,eq=driver|eq=admin|eq=restaurant"`
+	AccountType string `json:"account_type" validate:"required,eq=driver|eq=admin|eq=translator"`
 }
 
 // Validate validates registration data
