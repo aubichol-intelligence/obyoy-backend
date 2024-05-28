@@ -21,7 +21,7 @@ type readHandler struct {
 func (read *readHandler) decodeURL(
 	r *http.Request,
 ) (datastreamID string) {
-	// Get user id from url
+	// Get datastream id from url
 	datastreamID = chi.URLParam(r, "id")
 	return
 }
@@ -69,8 +69,8 @@ func (read *readHandler) handleRead(
 ) {
 
 	req := dto.ReadReq{}
-	//	req.datastreamID = read.decodeURL(r)
 
+	req.DatastreamID = read.decodeURL(r)
 	req.UserID = read.decodeContext(r)
 
 	// Read request from database using request id and user id
