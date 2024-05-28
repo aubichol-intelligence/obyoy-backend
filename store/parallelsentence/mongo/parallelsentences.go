@@ -238,7 +238,7 @@ func (u *Parallelsentences) List(skip, limit int64) ([]*model.Parallelsentence, 
 // FindByID finds a datastream by id
 func (d *Parallelsentences) FindNext() (*model.Parallelsentence, error) {
 
-	filter := bson.M{"is_translated": 0}
+	filter := bson.M{"times_reviewed": 0}
 
 	result := d.c.FindOne(
 		context.Background(),
