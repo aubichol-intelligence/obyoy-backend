@@ -27,8 +27,10 @@ type delete struct {
 func (d *delete) toModel(userdatastream *dto.Delete) (datastream *model.Datastream) {
 	datastream = &model.Datastream{}
 
+	datastream.ID = userdatastream.DatastreamID
 	datastream.UpdatedAt = time.Now().UTC()
-	//	datastream.IsDeleted = true
+	datastream.IsDeleted = true
+
 	return
 }
 
