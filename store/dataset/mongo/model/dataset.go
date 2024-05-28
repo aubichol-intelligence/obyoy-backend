@@ -7,7 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// Dataset holds db data type for deliveries
+// Dataset holds db data type for datasets
 type Dataset struct {
 	ID              primitive.ObjectID `bson:"_id,omitempty"`
 	Name            string             `bson:"name,omitempty"`
@@ -24,7 +24,7 @@ type Dataset struct {
 	IsDeleted       bool               `bson:"is_deleted,omitempty"`
 }
 
-// FromModel converts model data to db data for deliveries
+// FromModel converts model data to db data for datasets
 func (d *Dataset) FromModel(modelDataset *model.Dataset) error {
 	d.CreatedAt = modelDataset.CreatedAt
 	d.UpdatedAt = modelDataset.UpdatedAt
