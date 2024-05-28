@@ -13,6 +13,7 @@ import (
 // Update provides dto for datastream update
 type Update struct {
 	ID              string `json:"datastream_id"`
+	UploaderID      string `json:"uploader_id"`
 	SourceSentence  string `json:"source_sentence"`
 	SourceLanguage  string `json:"source_language"`
 	LineNumber      int32  `json:"line_number"`
