@@ -17,7 +17,7 @@ type Datastream struct {
 	SourceLanguage  string             `bson:"source_language,omitempty"`
 	LineNumber      int32              `bson:"line_number,omitempty"`
 	DatasetID       primitive.ObjectID `bson:"dataset_id,omitempty"`
-	IsTranslated    int32              `bson:"is_translated,omitempty"`
+	IsTranslated    int32              `bson:"is_translated"`
 	TimesTranslated int32              `bson:"times_translated,omitempty"`
 	TimesReviewed   int32              `bson:"times_reviewed,omitempty"`
 	CreatedAt       time.Time          `bson:"created_at,omitempty"`
