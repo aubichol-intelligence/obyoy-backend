@@ -2,7 +2,7 @@ package parallelsentence
 
 import "obyoy-backend/model"
 
-// Parallelsentences wraps delivery's functionality
+// Parallelsentences wraps parallelsentence's functionality
 type Parallelsentences interface {
 	Save(*model.Parallelsentence) (id string, err error)
 	FindByID(id string) (*model.Parallelsentence, error)
