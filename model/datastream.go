@@ -8,6 +8,7 @@ import (
 // Translation defines user's translation
 type Datastream struct {
 	ID              string    `json:"id"`
+	Name            string    `json:"name"`
 	UploaderID      string    `json:"uploader_id"`
 	SourceSentence  string    `json:"source_sentence"`
 	SourceLanguage  string    `json:"source_language"`
