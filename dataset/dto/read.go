@@ -11,6 +11,7 @@ type ReadReq struct {
 // ReadReq stores dataset read request data
 type ReadResp struct {
 	DatasetID       string `json:"dataset_id"`
+	UpdateDate      string `json:"update_date"`
 	Name            string `json:"name"`
 	TotalLines      int    `json:"total_lines"`
 	SourceLanguage  string `json:"source_language"`
@@ -32,4 +33,5 @@ func (r *ReadResp) FromModel(dataset *model.Dataset) {
 	r.TranslatedLines = int(dataset.TranslatedLines)
 	r.Description = dataset.Description
 	r.Remarks = dataset.Remarks
+	r.UpdateDate = dataset.UpdatedAt.String()
 }
