@@ -69,7 +69,7 @@ func (u *update) giveResponse(
 	id string,
 ) *dto.UpdateResponse {
 	logrus.WithFields(logrus.Fields{
-		//		"id": modelparallelsentence.UserID,
+		"id": modelparallelsentence.ID,
 	}).Debug("User updated parallelsentence successfully")
 
 	return &dto.UpdateResponse{
