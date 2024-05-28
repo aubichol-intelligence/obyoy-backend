@@ -33,7 +33,7 @@ func (ch *updateHandler) decodeBody(
 func (update *updateHandler) decodeURL(
 	r *http.Request,
 ) (datastreamID string) {
-	// Get user id from url
+	// Get datastream id from url
 	datastreamID = chi.URLParam(r, "id")
 	return
 }
@@ -125,7 +125,7 @@ func UpdateRoute(params UpdateRouteParams) *routeutils.Route {
 
 	return &routeutils.Route{
 		Method:  http.MethodGet,
-		Pattern: apipattern.DatastreamRead,
+		Pattern: apipattern.DatastreamUpdate,
 		Handler: params.Middleware.Middleware(&handler),
 	}
 }
