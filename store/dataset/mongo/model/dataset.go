@@ -64,6 +64,7 @@ func (d *Dataset) FromModel(modelDataset *model.Dataset) error {
 // ModelDataset converts dataset bson to model
 func (d *Dataset) ModelDataset() *model.Dataset {
 	Dataset := model.Dataset{}
+
 	Dataset.ID = d.ID.Hex()
 	Dataset.CreatedAt = d.CreatedAt
 	Dataset.UpdatedAt = d.UpdatedAt
@@ -73,6 +74,8 @@ func (d *Dataset) ModelDataset() *model.Dataset {
 	Dataset.TotalLines = d.TotalLines
 	Dataset.TranslatedLines = d.TranslatedLines
 	Dataset.ReviewedLines = d.ReviewedLines
+	Dataset.Description = d.Description
+	Dataset.Remarks = d.Remarks
 
 	return &Dataset
 }
