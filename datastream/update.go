@@ -39,6 +39,7 @@ func (u *update) toModel(userdatastream *dto.Update) (datastream *model.Datastre
 	datastream.TimesReviewed = userdatastream.TimesReviewed
 	datastream.IsTranslated = userdatastream.IsTranslated
 	datastream.Name = userdatastream.Name
+	datastream.IsDeleted = false
 
 	return
 }
