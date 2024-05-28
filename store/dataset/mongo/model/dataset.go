@@ -61,7 +61,7 @@ func (d *Dataset) FromModel(modelDataset *model.Dataset) error {
 	return nil
 }
 
-// ModelDataset converts bson to model
+// ModelDataset converts dataset bson to model
 func (d *Dataset) ModelDataset() *model.Dataset {
 	Dataset := model.Dataset{}
 	Dataset.ID = d.ID.Hex()
