@@ -2,13 +2,13 @@ package dto
 
 import "obyoy-backend/model"
 
-// ReadReq stores order read request data
+// ReadReq stores dataset read request data
 type ReadReq struct {
 	UserID    string
 	DatasetID string
 }
 
-// ReadReq stores order read request data
+// ReadReq stores dataset read request data
 type ReadResp struct {
 	DatasetID       string `json:"dataset_id"`
 	Name            string `json:"name"`
