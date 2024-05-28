@@ -23,7 +23,7 @@ type ReadResp struct {
 	Name                string `json:"name"`
 }
 
-// FromModel converts the model data to response data
+// FromModel converts the translation model data to response data
 func (r *ReadResp) FromModel(delivery *model.Translation) {
 	r.ID = delivery.ID
 	r.DatasetID = delivery.DatasetID
