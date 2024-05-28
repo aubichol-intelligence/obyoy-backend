@@ -15,7 +15,7 @@ import (
 	"go.uber.org/dig"
 )
 
-// Authors handles dataset related database queries
+// Datasets handles dataset related database queries
 type Datasets struct {
 	c *mongo.Collection
 }
@@ -28,7 +28,7 @@ func (d *Datasets) convertData(modelDataset *model.Dataset) (
 	return
 }
 
-// Save saves Authors from model to database
+// Save saves Datasets from model to database
 func (d *Datasets) Save(modelDataset *model.Dataset) (string, error) {
 	mongoDataset := mongoModel.Dataset{}
 	var err error
@@ -105,7 +105,7 @@ func (d *Datasets) FindByDatasetID(id string, skip int64, limit int64) ([]*model
 	return d.cursorToDatasets(cursor)
 }
 
-// CountByDatasetID returns Authors from dataset id
+// CountByDatasetID returns Datasets from dataset id
 func (d *Datasets) CountByDatasetID(id string) (int64, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 
@@ -123,7 +123,7 @@ func (d *Datasets) CountByDatasetID(id string) (int64, error) {
 	return cnt, nil
 }
 
-// FindByIDs returns all the Authors from multiple dataset ids
+// FindByIDs returns all the Datasets from multiple dataset ids
 func (d *Datasets) FindByIDs(ids ...string) ([]*model.Dataset, error) {
 	objectIDs := []primitive.ObjectID{}
 	for _, id := range ids {
@@ -149,7 +149,7 @@ func (d *Datasets) FindByIDs(ids ...string) ([]*model.Dataset, error) {
 	return d.cursorToDatasets(cursor)
 }
 
-// Search search for Authors given the text, skip and limit
+// Search search for Datasets given the text, skip and limit
 func (d *Datasets) Search(text string, skip, limit int64) ([]*model.Dataset, error) {
 	filter := bson.M{"$text": bson.M{"$search": text}}
 	cursor, err := d.c.Find(
@@ -167,7 +167,7 @@ func (d *Datasets) Search(text string, skip, limit int64) ([]*model.Dataset, err
 	return d.cursorToDatasets(cursor)
 }
 
-// Search search for Authors given the text, skip and limit
+// Search search for Datasets given the text, skip and limit
 func (d *Datasets) FindByUser(id string, skip, limit int64) ([]*model.Dataset, error) {
 	filter := bson.M{"_id": id}
 	cursor, err := d.c.Find(
@@ -185,7 +185,7 @@ func (d *Datasets) FindByUser(id string, skip, limit int64) ([]*model.Dataset, e
 	return d.cursorToDatasets(cursor)
 }
 
-// Search search for Authors given the text, skip and limit
+// Search search for Datasets given the text, skip and limit
 func (d *Datasets) FindByDriver(id string) (*model.Dataset, error) {
 	driverID, _ := primitive.ObjectIDFromHex(id)
 	filter := bson.M{"driver_id": driverID, "is_active": true, "state": "pending"}
@@ -208,7 +208,7 @@ func (d *Datasets) FindByDriver(id string) (*model.Dataset, error) {
 	return dataset.ModelDataset(), nil
 }
 
-// cursorToDatasets decodes Authors one by one from the search result
+// cursorToDatasets decodes Datasets one by one from the search result
 func (d *Datasets) cursorToDatasets(cursor *mongo.Cursor) ([]*model.Dataset, error) {
 	defer cursor.Close(context.Background())
 	modelDatasets := []*model.Dataset{}
@@ -245,7 +245,7 @@ type DatasetsParams struct {
 	Collection *mongo.Collection `name:"datasets"`
 }
 
-// Store provides store for Authors
+// Store provides store for Datasets
 func Store(params DatasetsParams) storedataset.Datasets {
 	return &Datasets{params.Collection}
 }
