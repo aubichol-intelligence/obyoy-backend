@@ -50,12 +50,14 @@ func (ch *createHandler) askController(
 ) {
 	data, err = ch.create.Create(parallelsentence)
 	fmt.Println(err)
+
 	var datastream datastreamDto.Update
 	datastream.ID = parallelsentence.DatastreamID
 	datastream.IsTranslated = 1
 	datastream.LineNumber = int32(parallelsentence.LineNumber)
 	dstrm, err := ch.update.Update(&datastream)
 	fmt.Println(dstrm) //TO-DO: this should go be front-end soon
+
 	return
 }
 
