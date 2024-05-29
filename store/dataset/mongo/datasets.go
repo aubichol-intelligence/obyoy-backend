@@ -239,6 +239,20 @@ func (u *Datasets) List(skip, limit int64) ([]*model.Dataset, error) {
 	return u.cursorToDatasets(cursor)
 }
 
+// Count returns comments from status id
+func (d *Datasets) Count() (int64, error) {
+	//objectID, err := primitive.ObjectIDFromHex(id)
+
+	filter := bson.M{}
+	cnt, err := d.c.CountDocuments(context.Background(), filter, &options.CountOptions{})
+
+	if err != nil {
+		return -1, err
+	}
+
+	return cnt, nil
+}
+
 // DatasetsParams provides parameters for dataset specific Collection
 type DatasetsParams struct {
 	dig.In
