@@ -43,6 +43,7 @@ func (d *Parallelsentence) FromModel(modelParallelsentence *model.Parallelsenten
 	d.ReviewedLines = modelParallelsentence.ReviewedLines
 	d.IsDeleted = modelParallelsentence.IsDeleted
 	d.Name = modelParallelsentence.DatasetName
+	d.LineNumber = modelParallelsentence.LineNumber
 
 	var err error
 
