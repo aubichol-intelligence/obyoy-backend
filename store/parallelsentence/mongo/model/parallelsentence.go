@@ -42,6 +42,7 @@ func (d *Parallelsentence) FromModel(modelParallelsentence *model.Parallelsenten
 	d.TimesReviewed = modelParallelsentence.TimesReviewed
 	d.ReviewedLines = modelParallelsentence.ReviewedLines
 	d.IsDeleted = modelParallelsentence.IsDeleted
+	d.Name = modelParallelsentence.DatasetName
 
 	var err error
 
@@ -103,6 +104,7 @@ func (d *Parallelsentence) ModelParallelsentence() *model.Parallelsentence {
 	Parallelsentence.DatasetID = d.DatasetID.Hex()
 	Parallelsentence.DatastreamID = d.DatastreamID.Hex()
 	Parallelsentence.TranslatorID = d.TranslatorID.Hex()
+	Parallelsentence.DatasetName = d.Name
 
 	return &Parallelsentence
 }
