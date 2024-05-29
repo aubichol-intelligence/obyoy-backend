@@ -43,6 +43,7 @@ func (c *create) toModel(userparallelsentence *dto.Create) (
 	parallelsentence.DatasetID = userparallelsentence.DatasetID
 	parallelsentence.TimesReviewed = userparallelsentence.TimesReviewed
 	parallelsentence.LineNumber = userparallelsentence.LineNumber
+	parallelsentence.DatasetName = userparallelsentence.Name
 
 	return
 }
