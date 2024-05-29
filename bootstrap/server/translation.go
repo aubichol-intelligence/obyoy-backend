@@ -11,4 +11,5 @@ func Translation(c container.Container) {
 	c.Register(translation.NewReader)
 	c.Register(translation.NewUpdate)
 	c.Register(translation.NewDelete)
+	c.Register(translation.NewCountByStatusReader)
 }
