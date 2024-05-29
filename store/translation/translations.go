@@ -12,4 +12,5 @@ type Translations interface {
 	Search(q string, skip, limit int64) ([]*model.Translation, error)
 	FindByUser(id string, skip, limit int64) ([]*model.Translation, error)
 	FindByDriver(id string) (*model.Translation, error)
+	Count() (int64, error)
 }
