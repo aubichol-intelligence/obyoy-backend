@@ -22,6 +22,7 @@ type Datastream struct {
 	TimesReviewed   int32              `bson:"times_reviewed,omitempty"`
 	CreatedAt       time.Time          `bson:"created_at,omitempty"`
 	UpdatedAt       time.Time          `bson:"updated_at,omitempty"`
+	DeletedAt       time.Time          `bson:"deleted_at,omitempty"`
 	IsDeleted       bool               `bson:"is_deleted,omitempty"`
 }
 
@@ -29,6 +30,7 @@ type Datastream struct {
 func (d *Datastream) FromModel(modelDatastream *model.Datastream) error {
 	d.CreatedAt = modelDatastream.CreatedAt
 	d.UpdatedAt = modelDatastream.UpdatedAt
+	d.DeletedAt = modelDatastream.DeletedAt
 	d.SourceSentence = modelDatastream.SourceSentence
 	d.SourceLanguage = modelDatastream.SourceLanguage
 	d.LineNumber = modelDatastream.LineNumber
