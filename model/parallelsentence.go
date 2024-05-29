@@ -10,6 +10,8 @@ type Parallelsentence struct {
 	ID                  string    `json:"id"`
 	DatastreamID        string    `json:"datastream_id"`
 	DatasetID           string    `json:"dataset_id"`
+	DatasetName         string    `json:"name"`
+	LineNumber          int       `json:"line_number"`
 	SourceSentence      string    `json:"source_sentence"`
 	SourceLanguage      string    `json:"source_language"`
 	DestinationSentence string    `json:"destination_sentence"`

@@ -53,6 +53,7 @@ func (ch *createHandler) askController(
 	var datastream datastreamDto.Update
 	datastream.ID = parallelsentence.DatastreamID
 	datastream.IsTranslated = 1
+	datastream.LineNumber = int32(parallelsentence.LineNumber)
 	dstrm, err := ch.update.Update(&datastream)
 	fmt.Println(dstrm) //TO-DO: this should go be front-end soon
 	return

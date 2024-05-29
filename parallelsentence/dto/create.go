@@ -15,6 +15,7 @@ type Create struct {
 	ID                  string   `json:"parallelsentence_id"`
 	SourceSentence      string   `json:"source_sentence"`
 	DatasetID           string   `json:"dataset_id"`
+	LineNumber          int      `json:"line_number"`
 	DatastreamID        string   `json:"datastream_id"`
 	SourceLanguage      string   `json:"source_language"`
 	DestinationSentence string   `json:"destination_sentence"`

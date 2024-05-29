@@ -14,6 +14,7 @@ type Parallelsentence struct {
 	ID                  primitive.ObjectID   `bson:"_id,omitempty"`
 	Name                string               `bson:"name,omitempty"`
 	DatasetID           primitive.ObjectID   `bson:"dataset_id,omitempty"`
+	LineNumber          int                  `bson:"line_number"`
 	DatastreamID        primitive.ObjectID   `bson:"datastream_id,omitempty"`
 	SourceSentence      string               `bson:"source_sentence,omitempty"`
 	SourceLanguage      string               `bson:"source_language,omitempty"`
@@ -96,6 +97,7 @@ func (d *Parallelsentence) ModelParallelsentence() *model.Parallelsentence {
 	Parallelsentence.DestinationSentence = d.DestinationSentence
 	Parallelsentence.DestinationLanguage = d.DestinationLanguage
 	Parallelsentence.TimesReviewed = d.TimesReviewed
+	Parallelsentence.LineNumber = d.LineNumber
 
 	return &Parallelsentence
 }
