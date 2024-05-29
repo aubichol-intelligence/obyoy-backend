@@ -231,6 +231,20 @@ func (d *Datastreams) FindByDriver(id string) (*model.Datastream, error) {
 	return datastream.ModelDatastream(), nil
 }
 
+// Count returns comments from status id
+func (d *Datastreams) Count() (int64, error) {
+	//objectID, err := primitive.ObjectIDFromHex(id)
+
+	filter := bson.M{}
+	cnt, err := d.c.CountDocuments(context.Background(), filter, &options.CountOptions{})
+
+	if err != nil {
+		return -1, err
+	}
+
+	return cnt, nil
+}
+
 // cursorToDatastreams decodes Datastreams one by one from the search result
 func (d *Datastreams) cursorToDatastreams(cursor *mongo.Cursor) ([]*model.Datastream, error) {
 	defer cursor.Close(context.Background())
