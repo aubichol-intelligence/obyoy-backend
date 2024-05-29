@@ -13,4 +13,5 @@ type Datastreams interface {
 	Search(q string, skip, limit int64) ([]*model.Datastream, error)
 	FindByUser(id string, skip, limit int64) ([]*model.Datastream, error)
 	FindByDriver(id string) (*model.Datastream, error)
+	Count() (int64, error)
 }
