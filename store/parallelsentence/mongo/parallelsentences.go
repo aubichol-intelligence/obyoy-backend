@@ -258,6 +258,20 @@ func (d *Parallelsentences) FindNext() (*model.Parallelsentence, error) {
 	return datastream.ModelParallelsentence(), nil
 }
 
+// CountByStatusID returns comments from status id
+func (d *Parallelsentences) Count() (int64, error) {
+	//objectID, err := primitive.ObjectIDFromHex(id)
+
+	filter := bson.M{}
+	cnt, err := d.c.CountDocuments(context.Background(), filter, &options.CountOptions{})
+
+	if err != nil {
+		return -1, err
+	}
+
+	return cnt, nil
+}
+
 // ParallelsentencesParams provides parameters for parallelsentence specific Collection
 type ParallelsentencesParams struct {
 	dig.In
