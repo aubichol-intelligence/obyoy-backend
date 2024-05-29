@@ -19,17 +19,20 @@ func Route(c container.Container) {
 	c.RegisterGroup(dataset.DeleteRoute, "route")
 	c.RegisterGroup(dataset.ListRoute, "route")
 	c.RegisterGroup(routeutils.NewOptionRoute, "route")
+	c.RegisterGroup(dataset.CountRoute, "route")
 
 	c.RegisterGroup(datastream.CreateRoute, "route")
 	c.RegisterGroup(datastream.ReadRoute, "route")
 	c.RegisterGroup(datastream.UpdateRoute, "route")
 	c.RegisterGroup(datastream.DeleteRoute, "route")
 	c.RegisterGroup(datastream.ReadNextRoute, "route")
+	c.RegisterGroup(datastream.CountRoute, "route")
 
 	c.RegisterGroup(translation.CreateRoute, "route")
 	c.RegisterGroup(translation.ReadRoute, "route")
 	c.RegisterGroup(translation.UpdateRoute, "route")
 	c.RegisterGroup(translation.DeleteRoute, "route")
+	c.RegisterGroup(translation.CountRoute, "route")
 
 	c.RegisterGroup(user.RegistrationRoute, "route")
 	c.RegisterGroup(user.LoginRoute, "route")
@@ -43,5 +46,6 @@ func Route(c container.Container) {
 	c.RegisterGroup(parallelsentence.ReadRoute, "route")
 	c.RegisterGroup(parallelsentence.ListRoute, "route")
 	c.RegisterGroup(parallelsentence.ReadNextRoute, "route")
+	c.RegisterGroup(parallelsentence.CountRoute, "route")
 
 }
