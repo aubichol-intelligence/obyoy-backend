@@ -21,6 +21,7 @@ type Dataset struct {
 	ReviewedLines   int32              `bson:"reviewed_lines,omitempty"`
 	CreatedAt       time.Time          `bson:"created_at,omitempty"`
 	UpdatedAt       time.Time          `bson:"updated_at,omitempty"`
+	DeletedAt       time.Time          `bson:"deleted_at,omitempty"`
 	IsDeleted       bool               `bson:"is_deleted,omitempty"`
 }
 
@@ -28,6 +29,7 @@ type Dataset struct {
 func (d *Dataset) FromModel(modelDataset *model.Dataset) error {
 	d.CreatedAt = modelDataset.CreatedAt
 	d.UpdatedAt = modelDataset.UpdatedAt
+	d.DeletedAt = modelDataset.DeletedAt
 	d.Set = modelDataset.Set
 	d.Name = modelDataset.Name
 	d.SourceLanguage = modelDataset.SourceLanguage
