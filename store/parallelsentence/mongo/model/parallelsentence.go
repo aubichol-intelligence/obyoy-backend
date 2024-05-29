@@ -26,6 +26,7 @@ type Parallelsentence struct {
 	ReviewedLines       []string             `bson:"reviewed_lines,omitempty"`
 	CreatedAt           time.Time            `bson:"created_at,omitempty"`
 	UpdatedAt           time.Time            `bson:"updated_at,omitempty"`
+	DeletedAt           time.Time            `bson:"deleted_at,omitempty"`
 	IsDeleted           bool                 `bson:"is_deleted,omitempty"`
 }
 
@@ -33,6 +34,7 @@ type Parallelsentence struct {
 func (d *Parallelsentence) FromModel(modelParallelsentence *model.Parallelsentence) error {
 	d.CreatedAt = modelParallelsentence.CreatedAt
 	d.UpdatedAt = modelParallelsentence.UpdatedAt
+	d.DeletedAt = modelParallelsentence.DeletedAt
 	d.SourceSentence = modelParallelsentence.SourceSentence
 	d.SourceLanguage = modelParallelsentence.SourceLanguage
 	d.DestinationSentence = modelParallelsentence.DestinationSentence
