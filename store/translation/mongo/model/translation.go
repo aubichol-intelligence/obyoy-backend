@@ -17,6 +17,7 @@ type Translation struct {
 	ReviewerID          primitive.ObjectID `bson:"reviewer_id,omitempty"`
 	CreatedAt           time.Time          `bson:"created_at,omitempty"`
 	UpdatedAt           time.Time          `bson:"updated_at,omitempty"`
+	DeletedAt           time.Time          `bson:"deleted_at,omitempty"`
 	SourceSentence      string             `bson:"source_sentence,omitempty"`
 	SourceLanguage      string             `bson:"source_language,omitempty"`
 	DestinationSentence string             `bson:"destination_sentence,omitempty"`
@@ -30,6 +31,8 @@ type Translation struct {
 func (d *Translation) FromModel(modelTranslation *model.Translation) error {
 	d.CreatedAt = modelTranslation.CreatedAt
 	d.UpdatedAt = modelTranslation.UpdatedAt
+	d.DeletedAt = modelTranslation.DeletedAt
+
 	d.SourceLanguage = modelTranslation.SourceLanguage
 	d.SourceSentence = modelTranslation.SourceSentence
 	d.DestinationSentence = modelTranslation.DestinationSentence
