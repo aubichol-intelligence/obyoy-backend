@@ -100,6 +100,9 @@ func (d *Parallelsentence) ModelParallelsentence() *model.Parallelsentence {
 	Parallelsentence.DestinationLanguage = d.DestinationLanguage
 	Parallelsentence.TimesReviewed = d.TimesReviewed
 	Parallelsentence.LineNumber = d.LineNumber
+	Parallelsentence.DatasetID = d.DatasetID.Hex()
+	Parallelsentence.DatastreamID = d.DatastreamID.Hex()
+	Parallelsentence.TranslatorID = d.TranslatorID.Hex()
 
 	return &Parallelsentence
 }
