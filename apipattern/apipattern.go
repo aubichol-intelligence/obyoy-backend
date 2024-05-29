@@ -27,6 +27,9 @@ const DatasetRead string = "/api/v1/dataset/get/{id}"
 // DatasetUpdate holds the api string for updating dataset
 const DatasetUpdate string = "/api/v1/dataset/update"
 
+// DatasetUpdate holds the api string for updating dataset
+const DatasetCount string = "/api/v1/dataset/count"
+
 // DatasetDelete holds the api string for getting a dataset
 const DatasetDelete string = "/api/v1/dataset/delete"
 
@@ -48,6 +51,9 @@ const DatastreamUpdate string = "/api/v1/datastream/update"
 // DatastreamDelete holds the api string for getting a datastream
 const DatastreamDelete string = "/api/v1/datastream/delete"
 
+// DatasetUpdate holds the api string for updating dataset
+const DatastreamCount string = "/api/v1/datastream/count"
+
 // ParallelsentenceCreate holds the api string for creating a parallelsentence
 const ParallelsentenceCreate string = "/api/v1/parallelsentence/create"
 
@@ -66,6 +72,9 @@ const ParallelsentenceReadNext string = "/api/v1/parallelsentence/getnext"
 // ParallelsentenceList holds the api string for getting a dataset list
 const ParallelsentenceList string = "/api/v1/parallelsentence/list/{skip}/{limit}"
 
+// DatasetUpdate holds the api string for updating dataset
+const ParallelsentenceCount string = "/api/v1/parallelsentence/count"
+
 // TranslationCreate holds the api string for creating a translation
 const TranslationCreate string = "/api/v1/translation/create"
 
@@ -77,3 +86,6 @@ const TranslationUpdate string = "/api/v1/translation/update"
 
 // TranslationDelete holds the api string for getting a translation
 const TranslationDelete string = "/api/v1/translation/delete"
+
+// DatasetUpdate holds the api string for updating dataset
+const TranslationCount string = "/api/v1/translation/count"
