@@ -20,6 +20,7 @@ type Update struct {
 	DestinationSentence string   `json:"destination_sentence"`
 	DestinationLanguage string   `json:"destination_language"`
 	TimesReviewed       int      `json:"times_reviewed"`
+	LineNumber          int      `json:"line_number"`
 	TranslatorID        string   `json:"translator_id"`
 	Reviewers           []string `json:"reviewers"`
 	ReviewedLines       []string `json:"reviewed_lines"`
