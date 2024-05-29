@@ -12,4 +12,5 @@ type Datasets interface {
 	Search(q string, skip, limit int64) ([]*model.Dataset, error)
 	FindByUser(id string, skip, limit int64) ([]*model.Dataset, error)
 	List(skip, limit int64) ([]*model.Dataset, error)
+	Count() (int64, error)
 }
