@@ -40,6 +40,7 @@ func (u *update) toModel(userparallelsentence *dto.Update) (parallelsentence *mo
 	parallelsentence.ReviewedLines = userparallelsentence.ReviewedLines
 	parallelsentence.DatastreamID = userparallelsentence.DatastreamID
 	parallelsentence.DatasetID = userparallelsentence.DatasetID
+	parallelsentence.LineNumber = userparallelsentence.LineNumber
 
 	return
 }
