@@ -258,7 +258,7 @@ func (d *Parallelsentences) FindNext() (*model.Parallelsentence, error) {
 	return datastream.ModelParallelsentence(), nil
 }
 
-// CountByStatusID returns comments from status id
+// Count returns comments from status id
 func (d *Parallelsentences) Count() (int64, error) {
 	//objectID, err := primitive.ObjectIDFromHex(id)
 
