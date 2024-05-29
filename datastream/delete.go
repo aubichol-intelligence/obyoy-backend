@@ -28,7 +28,7 @@ func (d *delete) toModel(userdatastream *dto.Delete) (datastream *model.Datastre
 	datastream = &model.Datastream{}
 
 	datastream.ID = userdatastream.DatastreamID
-	datastream.UpdatedAt = time.Now().UTC()
+	datastream.DeletedAt = time.Now().UTC()
 	datastream.IsDeleted = true
 
 	return
