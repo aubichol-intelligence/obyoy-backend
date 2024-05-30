@@ -24,7 +24,7 @@ type countHandler struct {
 	countByStatusReader parallelsentence.CountReader
 }
 
-// querySkip skips number of users for a request
+// querySkip skips number of parallelsentences for a request
 func (read *countHandler) querySkip(
 	r *http.Request,
 ) (
@@ -43,7 +43,7 @@ func (read *countHandler) querySkip(
 	return
 }
 
-// queryLimit limits number of users per query
+// queryLimit limits number of parallelsentences per query
 func (read *countHandler) queryLimit(
 	r *http.Request,
 ) (
@@ -139,7 +139,7 @@ func (read *countHandler) handleCountParallelsentence(
 
 }
 
-// ServeHTTP implements http.Handler interface
+// ServeHTTP implements http.Handler interface of a parallelsentence
 func (read *countHandler) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request,
