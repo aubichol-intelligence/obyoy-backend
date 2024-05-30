@@ -11,12 +11,14 @@ type Session struct {
 	UserID    string    `json:"user_id"`
 	ExpiredAt time.Time `json:"expire_at"`
 	CreatedAt time.Time `json:"created_at"`
+	UserType  string    `json:"user_type"`
 }
 
 func (s *Session) ToByte() ([]byte, error) {
 	return json.Marshal(s)
 }
-	//Username  string
+
+//Username  string
 
 func (s *Session) FromBytes(bytes []byte) error {
 	return json.Unmarshal(bytes, s)
