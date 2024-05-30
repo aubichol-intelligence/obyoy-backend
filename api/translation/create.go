@@ -97,7 +97,7 @@ func (ch *createHandler) ServeHTTP(
 type CreateParams struct {
 	dig.In
 	Create     translation.Creater
-	Middleware *middleware.Auth
+	Middleware *middleware.AdminAuth
 }
 
 // CreateRoute provides a route that lets to create translations
