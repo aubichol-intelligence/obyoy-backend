@@ -113,7 +113,7 @@ type CreateParams struct {
 	dig.In
 	Create           dataset.Creater
 	CreateDataStream datastream.Creater
-	Middleware       *middleware.Auth
+	Middleware       *middleware.AdminAuth
 }
 
 // CreateRoute provides a route that lets to create datasets
