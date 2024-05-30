@@ -39,6 +39,7 @@ func (l *login) CreateToken(loginDto *dto.Login) (*dto.Token, error) {
 		UserID:    user.ID,
 		ExpiredAt: time.Now().Add(l.cfg.Length),
 		CreatedAt: time.Now(),
+		UserType:  user.AccountType,
 	}
 
 	if err = l.cacheSession.Create(&session); err != nil {
