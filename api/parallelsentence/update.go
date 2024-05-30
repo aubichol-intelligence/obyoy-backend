@@ -113,7 +113,7 @@ func (update *updateHandler) ServeHTTP(
 type UpdateRouteParams struct {
 	dig.In
 	Updater    parallelsentence.Updater
-	Middleware *middleware.Auth
+	Middleware *middleware.AdminAuth
 }
 
 // UpdateRoute provides a route to get a parallelsentence item
