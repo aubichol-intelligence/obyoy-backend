@@ -113,7 +113,7 @@ func (update *updateHandler) ServeHTTP(
 type UpdateRouteParams struct {
 	dig.In
 	Updater    translation.Updater
-	Middleware *middleware.Auth
+	Middleware *middleware.AdminAuth
 }
 
 // ReadRoute provides a route to get a translation item
