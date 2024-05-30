@@ -113,7 +113,7 @@ func (update *updateHandler) ServeHTTP(
 type UpdateRouteParams struct {
 	dig.In
 	Updater    dataset.Updater
-	Middleware *middleware.Auth
+	Middleware *middleware.AdminAuth
 }
 
 // UpdateRoute provides a route to get a dataset item
