@@ -97,7 +97,7 @@ func (dh *deleteHandler) ServeHTTP(
 type DeleteParams struct {
 	dig.In
 	Delete     parallelsentence.Deleter
-	Middleware *middleware.Auth
+	Middleware *middleware.AdminAuth
 }
 
 // DeleteRoute provides a route that deletes parallelsentence
