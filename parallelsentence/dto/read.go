@@ -10,7 +10,8 @@ type ReadReq struct {
 
 // ReadReq stores parallelsentence read request data
 type ReadResp struct {
-	ID                  string   `json:id"`
+	ID                  string   `json:"id"`
+	State               string   `json:"state"`
 	SourceSentence      string   `json:"source_sentence"`
 	SourceLanguage      string   `json:"source_language"`
 	DestinationSentence string   `json:"destination_sentence"`
@@ -32,6 +33,7 @@ func (r *ReadResp) FromModel(ps *model.Parallelsentence) {
 	r.TranslatorID = ps.TranslatorID
 	r.ReviewedLines = ps.ReviewedLines
 	r.Name = ps.DatasetName
+	r.State = ps.State
 	r.ID = ps.ID
 	r.DatasetID = ps.DatasetID
 	r.DatastreamID = ps.DatastreamID
