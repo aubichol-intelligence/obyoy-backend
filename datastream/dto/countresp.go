@@ -6,7 +6,7 @@ import (
 
 // CountResp holds the response data for counting comments
 type CountResp struct {
-	DatasetCount string `json:"dataset_count"`
+	DatasetCount string `json:"datastream_count"`
 }
 
 // FromModel converts the model data to response data
