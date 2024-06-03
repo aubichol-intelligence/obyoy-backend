@@ -14,7 +14,7 @@ import (
 type Create struct {
 	ID                  string   `json:"parallelsentence_id"`
 	Name                string   `json:"name"`
-	State               string   `json:"state"`
+	Status              string   `json:"status"`
 	SourceSentence      string   `json:"source_sentence"`
 	DatasetID           string   `json:"dataset_id"`
 	LineNumber          int      `json:"line_number"`

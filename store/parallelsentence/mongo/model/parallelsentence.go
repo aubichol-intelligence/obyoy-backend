@@ -13,7 +13,7 @@ import (
 type Parallelsentence struct {
 	ID                  primitive.ObjectID   `bson:"_id,omitempty"`
 	Name                string               `bson:"name,omitempty"`
-	State               string               `bson:"state,omitempty"`
+	Status              string               `bson:"status,omitempty"`
 	DatasetID           primitive.ObjectID   `bson:"dataset_id,omitempty"`
 	LineNumber          int                  `bson:"line_number"`
 	DatastreamID        primitive.ObjectID   `bson:"datastream_id,omitempty"`
@@ -36,7 +36,7 @@ func (d *Parallelsentence) FromModel(modelParallelsentence *model.Parallelsenten
 	d.CreatedAt = modelParallelsentence.CreatedAt
 	d.UpdatedAt = modelParallelsentence.UpdatedAt
 	d.DeletedAt = modelParallelsentence.DeletedAt
-	d.State = modelParallelsentence.State
+	d.Status = modelParallelsentence.Status
 	d.SourceSentence = modelParallelsentence.SourceSentence
 	d.SourceLanguage = modelParallelsentence.SourceLanguage
 	d.DestinationSentence = modelParallelsentence.DestinationSentence
@@ -46,7 +46,7 @@ func (d *Parallelsentence) FromModel(modelParallelsentence *model.Parallelsenten
 	d.IsDeleted = modelParallelsentence.IsDeleted
 	d.Name = modelParallelsentence.DatasetName
 	d.LineNumber = modelParallelsentence.LineNumber
-	d.State = modelParallelsentence.State
+	d.Status = modelParallelsentence.Status
 
 	var err error
 
@@ -97,7 +97,7 @@ func (d *Parallelsentence) FromModel(modelParallelsentence *model.Parallelsenten
 func (d *Parallelsentence) ModelParallelsentence() *model.Parallelsentence {
 	Parallelsentence := model.Parallelsentence{}
 	Parallelsentence.ID = d.ID.Hex()
-	Parallelsentence.State = d.State
+	Parallelsentence.Status = d.Status
 	Parallelsentence.CreatedAt = d.CreatedAt
 	Parallelsentence.UpdatedAt = d.UpdatedAt
 	Parallelsentence.SourceSentence = d.SourceSentence

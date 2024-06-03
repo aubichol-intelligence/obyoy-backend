@@ -8,7 +8,7 @@ import (
 // Translation defines user's translation
 type Parallelsentence struct {
 	ID                  string    `json:"id"`
-	State               string    `json:"state"`
+	Status              string    `json:"status"`
 	DatastreamID        string    `json:"datastream_id"`
 	DatasetID           string    `json:"dataset_id"`
 	DatasetName         string    `json:"name"`

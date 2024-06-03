@@ -13,7 +13,7 @@ import (
 // Update provides dto for parallelsentence update
 type Update struct {
 	ID                  string   `json:"parallelsentence_id"`
-	State               string   `json:"state"`
+	Status              string   `json:"status"`
 	SourceSentence      string   `json:"source_sentence"`
 	DatasetID           string   `json:"dataset_id"`
 	DatastreamID        string   `json:"datastream_id"`
