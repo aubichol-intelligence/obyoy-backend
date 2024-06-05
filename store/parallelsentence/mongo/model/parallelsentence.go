@@ -15,13 +15,13 @@ type Parallelsentence struct {
 	Name                string               `bson:"name,omitempty"`
 	Status              string               `bson:"status,omitempty"`
 	DatasetID           primitive.ObjectID   `bson:"dataset_id,omitempty"`
-	LineNumber          int                  `bson:"line_number"`
+	LineNumber          int                  `bson:"line_number,omitempty"`
 	DatastreamID        primitive.ObjectID   `bson:"datastream_id,omitempty"`
 	SourceSentence      string               `bson:"source_sentence,omitempty"`
 	SourceLanguage      string               `bson:"source_language,omitempty"`
 	DestinationSentence string               `bson:"destination_sentence,omitempty"`
 	DestinationLanguage string               `bson:"destination_language,omitempty"`
-	TimesReviewed       int                  `bson:"times_reviewed"`
+	TimesReviewed       int                  `bson:"times_reviewed,omitempty"`
 	TranslatorID        primitive.ObjectID   `bson:"translator_id,omitempty"`
 	Reviewers           []primitive.ObjectID `bson:"reviewers,omitempty"`
 	ReviewedLines       []string             `bson:"reviewed_lines,omitempty"`
